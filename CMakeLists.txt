@@ -18,4 +18,17 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)
 endif()
 
+# Add installation prefix of vcpkg to CMAKE_PREFIX_PATH
+list(APPEND CMAKE_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg_installed/x64-windows)
+
+# Packages
+find_package(glad CONFIG REQUIRED)
+target_link_libraries(CMakeTarget PRIVATE glad::glad )
+
+find_package(glfw3 CONFIG REQUIRED)
+target_link_libraries(CMakeTarget PRIVATE glfw)
+
+find_package(imgui CONFIG REQUIRED)
+target_link_libraries(CMakeTarget PRIVATE imgui::imgui)
+
 # TODO: Add tests and install targets if needed.
