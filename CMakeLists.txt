@@ -21,6 +21,12 @@ endif()
 # Add installation prefix of vcpkg to CMAKE_PREFIX_PATH
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg_installed/x64-windows)
 
+# Copy GLFW DLL to output directory
+add_custom_command(TARGET CMakeTarget POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+	"${CMAKE_CURRENT_SOURCE_DIR}/vcpkg_installed/x64-windows/bin/glfw3.dll"
+	$<TARGET_FILE_DIR:CMakeTarget>)
+
 # Packages
 find_package(glad CONFIG REQUIRED)
 target_link_libraries(CMakeTarget PRIVATE glad::glad )
