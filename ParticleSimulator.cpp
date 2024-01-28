@@ -1,7 +1,7 @@
 ﻿// Particle Simulator.cpp : Defines the entry point for the application.
 //
 
-#include "Particle Simulator.h"
+#include "ParticleSimulator.h"
 
 using namespace std;
 
