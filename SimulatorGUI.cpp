@@ -14,8 +14,18 @@ void SimulatorGUI::Init(GLFWwindow* window, const char* glsl_version)
 	ImGui::StyleColorsDark();
 }
 
-void SimulatorGUI::Update()
+void SimulatorGUI::NewFrame()
 {
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
+
+	//ImGui::ShowDemoWindow();
+}
+
+void SimulatorGUI::Update()
+{	
+	// Render GUI
 }
 
 void SimulatorGUI::Render()

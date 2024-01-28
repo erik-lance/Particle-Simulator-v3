@@ -42,6 +42,7 @@ int main()
 
 	while (1) {
 		glfwPollEvents(); // Checks for keyboard input (and closes window if needed)
+		gui.NewFrame();
 		gui.Update();
 		gui.Render();
 	}
