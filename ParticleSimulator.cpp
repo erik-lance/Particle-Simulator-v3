@@ -2,11 +2,21 @@
 //
 
 #include "ParticleSimulator.h"
+#include "SimulatorGUI.h"
 
 using namespace std;
 
 int main()
 {
-	cout << "Hello CMake." << endl;
+	SimulatorGUI gui;
+	gui.Init();
+
+	while (1) {
+		gui.Update();
+		gui.Render();
+	}
+
+	gui.Shutdown();
+
 	return 0;
 }
