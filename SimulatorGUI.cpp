@@ -37,4 +37,7 @@ void SimulatorGUI::Render()
 
 void SimulatorGUI::Shutdown()
 {
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 }
