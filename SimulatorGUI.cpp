@@ -30,6 +30,9 @@ void SimulatorGUI::Update()
 
 void SimulatorGUI::Render()
 {
+	// Render Dear ImGui
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void SimulatorGUI::Shutdown()
