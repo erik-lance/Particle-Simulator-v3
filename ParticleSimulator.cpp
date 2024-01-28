@@ -34,7 +34,7 @@ int main()
 #endif
 
 	// Create window with graphics context
-	GLFWwindow* window = glfwCreateWindow(1280, 720, "Particle Simulator", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(1600, 900, "Particle Simulator", NULL, NULL);
 	if (window == NULL)
 			return 1;
 	glfwMakeContextCurrent(window);
@@ -43,6 +43,11 @@ int main()
 	// Initialize OpenGL loader
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) // the window context to glad's opengl loader
 		throw("Unable to context OpenGL");
+
+	// Get screen size
+	int screen_width, screen_height;
+	glfwGetFramebufferSize(window, &screen_width, &screen_height);
+	glViewport(0, 0, screen_width, screen_height);
 
 	SimulatorGUI gui;
 	gui.Init();
