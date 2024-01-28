@@ -6,7 +6,7 @@
 
 class SimulatorGUI {
 public:
-	void Init(GLFWwindow* window, const char8_t* glsl_version);
+	void Init(GLFWwindow* window, const char* glsl_version);
 	virtual void Update();
 	void Render();
 	void Shutdown();
