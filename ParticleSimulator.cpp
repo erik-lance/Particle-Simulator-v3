@@ -45,6 +45,7 @@ int main()
 		gui.NewFrame();
 		gui.Update();
 		gui.Render();
+		glfwSwapBuffers(window);
 	}
 
 	gui.Shutdown();
