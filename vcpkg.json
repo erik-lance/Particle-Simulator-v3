@@ -1,0 +1,5 @@
+{
+	"name": "particle-simulator",
+	"version": "1.0",
+	"dependencies": [ "imgui", "glfw3", "glad" ]
+}
