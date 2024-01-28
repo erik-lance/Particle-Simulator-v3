@@ -26,6 +26,11 @@ void SimulatorGUI::NewFrame()
 void SimulatorGUI::Update()
 {	
 	// Render GUI
+	ImGui::Begin("Simulator");
+	ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
+	ImGui::Text("Frame Time: %.3f ms", 1000.0f / ImGui::GetIO().Framerate);
+	ImGui::Text("Total Time: %.3f s", ImGui::GetTime());
+	ImGui::End();
 }
 
 void SimulatorGUI::Render()
