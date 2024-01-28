@@ -41,6 +41,7 @@ int main()
 	gui.Init(window, glsl_version);
 
 	while (1) {
+		glfwPollEvents(); // Checks for keyboard input (and closes window if needed)
 		gui.Update();
 		gui.Render();
 	}
