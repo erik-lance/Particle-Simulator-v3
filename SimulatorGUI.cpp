@@ -14,6 +14,8 @@ void SimulatorGUI::Init(GLFWwindow* window, const char* glsl_version)
 	ImGui::StyleColorsDark();
 }
 
+void SimulatorGUI::setParticles(std::vector<Particle> particles) { this->particles = particles; }
+
 void SimulatorGUI::NewFrame()
 {
 	ImGui_ImplOpenGL3_NewFrame();

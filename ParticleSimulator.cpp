@@ -3,8 +3,10 @@
 
 #include "ParticleSimulator.h"
 #include "SimulatorGUI.h"
+#include "Particle.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <vector>
 
 using namespace std;
 
@@ -37,11 +39,25 @@ int main()
 	glfwGetFramebufferSize(window, &screen_width, &screen_height);
 	glViewport(0, 0, screen_width, screen_height);
 
+	// Particle Vector
+	vector<Particle> particles;
+
 	SimulatorGUI gui;
 	gui.Init(window, glsl_version);
 
 	while (1) {
+		// Process Input
 		glfwPollEvents(); // Checks for keyboard input (and closes window if needed)
+
+		// Clear the screen
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black
+
+		// Bind Shaders and Buffers
+
+		// Draw
+
+
+		// Render ImGui
 		gui.NewFrame();
 		gui.Update();
 		gui.Render();
