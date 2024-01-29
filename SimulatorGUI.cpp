@@ -30,6 +30,28 @@ void SimulatorGUI::Update()
 	ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
 	ImGui::Text("Frame Time: %.3f ms", 1000.0f / ImGui::GetIO().Framerate);
 	ImGui::Text("Total Time: %.3f s", ImGui::GetTime());
+
+	// Input Sections (Particle)
+	ImGui::Separator();
+	ImGui::Text("Particle");
+	ImGui::InputInt("ID", &m_particle_id);
+	ImGui::InputInt("X", &m_particle_x);
+	ImGui::InputInt("Y", &m_particle_y);
+	ImGui::InputInt("Angle", &m_particle_angle);
+	ImGui::InputInt("Velocity", &m_particle_velocity);
+
+	if (ImGui::Button("Add Particle")) {
+
+	}
+
+	// Input Sections (Obstacle)
+	ImGui::Separator();
+	ImGui::Text("Obstacle");
+	ImGui::InputInt("ID", &m_obstacle_id);
+
+
+
+
 	ImGui::End();
 }
 

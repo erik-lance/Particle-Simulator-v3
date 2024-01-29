@@ -11,4 +11,12 @@ public:
 	virtual void Update();
 	void Render();
 	void Shutdown();
+private:
+	int m_particle_id = 0;
+	int m_particle_x = 0;
+	int m_particle_y = 0;
+	int m_particle_angle = 0;
+	int m_particle_velocity = 0;
+
+	int m_obstacle_id = 0;
 };
