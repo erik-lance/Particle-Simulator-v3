@@ -55,8 +55,29 @@ void SimulatorGUI::Update()
 	ImGui::Text("Obstacle");
 	ImGui::InputInt("ID", &m_obstacle_id);
 
+	ImGui::End();
 
 
+	// Simulator Window
+	ImGui::Begin("Simulator", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
+
+	// Set window position
+	ImGui::SetWindowPos(ImVec2(0, 0));
+
+	// Set window size and positiong
+	ImGui::SetWindowSize(ImVec2(1280, 720));
+
+	// Draw grid
+	for (int i = 0; i < 1280; i += 10) { ImGui::GetWindowDrawList()->AddLine(ImVec2(i, 0), ImVec2(i, 720), IM_COL32(255, 255, 255, 255)); }
+	for (int i = 0; i < 720; i += 10) { ImGui::GetWindowDrawList()->AddLine(ImVec2(0, i), ImVec2(1280, i), IM_COL32(255, 255, 255, 255)); }
+
+	// Set background color
+	ImGui::GetWindowDrawList()->AddRectFilled(ImVec2(0, 0), ImVec2(1280, 720), IM_COL32(0, 0, 0, 255));
+
+	// Draw particles here
+	for (int i = 0; i < particles.size(); i++) {
+		particles[i].draw();
+	}
 
 	ImGui::End();
 }
