@@ -74,7 +74,17 @@ int main()
 		std::cerr << "OpenGL Error: " << error << std::endl;
 	}
 
+	// Calculate delta time
+	Uint64 current_time = SDL_GetPerformanceCounter();
+	Uint64 last_time = 0;
+	double delta_time = 0;
+
 	while (1) {
+		// Calculate delta time
+		last_time = current_time;
+		current_time = SDL_GetPerformanceCounter();
+		delta_time = (double)((current_time - last_time) * 1000 / (double)SDL_GetPerformanceFrequency());
+
 		// Process Input
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
@@ -94,6 +104,12 @@ int main()
 		// Draw a line
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderDrawLine(renderer, 0, 0, 100, 100);
+
+		// Update particles
+		for (int i = 0; i < particles.size(); i++) {
+			particles[i].updatePosition(delta_time);
+			particles[i].handleScreenCollision(screen_width, screen_height);
+		}
 
 		// Draw particles
 		for (int i = 0; i < particles.size(); i++) {

@@ -29,6 +29,9 @@ public:
 	void setAngle(int angle);
 	void setVelocity(int velocity);
 
+	void updatePosition(double delta);
+	void handleScreenCollision(int screen_width, int screen_height);
+
 	void draw(SDL_Renderer* renderer);
 
 private:
