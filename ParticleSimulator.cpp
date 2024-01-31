@@ -66,14 +66,13 @@ int main()
 
 	SimulatorGUI gui;
 	gui.Init(window, gl_context, renderer, "#version 330");
+	gui.setParticles(particles);
 
 	// Check for OpenGL errors
 	GLenum error = glGetError();
 	if (error != GL_NO_ERROR) {
 		std::cerr << "OpenGL Error: " << error << std::endl;
 	}
-
-	
 
 	while (1) {
 		// Process Input

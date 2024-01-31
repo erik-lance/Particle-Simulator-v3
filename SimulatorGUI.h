@@ -11,13 +11,13 @@
 class SimulatorGUI {
 public:
 	void Init(SDL_Window* window, SDL_GLContext gl_context, SDL_Renderer* renderer, const char* glsl_version);
-	void setParticles(std::vector<Particle> particles);
+	void setParticles(std::vector<Particle>& particles);
 	void NewFrame();
 	virtual void Update();
 	void Render();
 	void Shutdown();
 private:
-	std::vector<Particle> particles;
+	std::vector<Particle>* particles;
 	int m_particle_id = 0;
 	int m_particle_x = 0;
 	int m_particle_y = 0;

@@ -15,7 +15,7 @@ void SimulatorGUI::Init(SDL_Window* window, SDL_GLContext gl_context, SDL_Render
 	ImGui::StyleColorsDark();
 }
 
-void SimulatorGUI::setParticles(std::vector<Particle> particles) { this->particles = particles; }
+void SimulatorGUI::setParticles(std::vector<Particle>& particles) { this->particles = &particles; }
 
 void SimulatorGUI::NewFrame()
 {
@@ -50,7 +50,7 @@ void SimulatorGUI::Update()
 	if (ImGui::Button("Add Particle")) {
 		std:: cout << "Particle Added" << std::endl;
 		Particle p(m_particle_id, m_particle_x, m_particle_y, m_particle_angle, m_particle_velocity);
-		particles.push_back(p);
+		particles->push_back(p);
 	}
 
 	// Input Sections (Obstacle)
