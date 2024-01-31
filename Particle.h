@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SDL.h>
+
 /**
 * @brief Particle class
 * @details This class is used to create a particle object
@@ -26,6 +28,8 @@ public:
 	void setY(int y);
 	void setAngle(int angle);
 	void setVelocity(int velocity);
+
+	void draw(SDL_Renderer* renderer);
 
 private:
 	int m_id;
