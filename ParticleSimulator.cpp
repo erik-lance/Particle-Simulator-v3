@@ -40,10 +40,16 @@ int main()
 	glViewport(0, 0, screen_width, screen_height);
 
 	// Particle Vector
-	vector<Particle> particles;
+	vector<Particle> particles = vector<Particle>();
 
 	SimulatorGUI gui;
 	gui.Init(window, glsl_version);
+
+	// Check for OpenGL errors
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR) {
+		std::cerr << "OpenGL Error: " << error << std::endl;
+	}
 
 	while (1) {
 		// Process Input
@@ -51,20 +57,25 @@ int main()
 
 		// Clear the screen
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black
-
-		// Bind Shaders and Buffers
-
-		// Draw
-
+		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Render ImGui
 		gui.NewFrame();
 		gui.Update();
 		gui.Render();
+
+		error = glGetError();
+		if (error != GL_NO_ERROR) {
+			std::cerr << "OpenGL Error: " << error << std::endl;
+		}
+
 		glfwSwapBuffers(window);
 	}
 
 	gui.Shutdown();
+
+	glfwDestroyWindow(window);
+	glfwTerminate();
 
 	return 0;
 }
