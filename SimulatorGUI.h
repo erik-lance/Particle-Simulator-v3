@@ -3,13 +3,14 @@
 #include <imgui.h>
 #include <SDL.h>
 #include <imgui_impl_sdl2.h>
+#include <imgui_impl_sdlrenderer2.h>
 #include <imgui_impl_opengl3.h>
 #include <vector>
 #include "Particle.h"
 
 class SimulatorGUI {
 public:
-	void Init(SDL_Window* window, SDL_GLContext gl_context, const char* glsl_version);
+	void Init(SDL_Window* window, SDL_GLContext gl_context, SDL_Renderer* renderer, const char* glsl_version);
 	void setParticles(std::vector<Particle> particles);
 	void NewFrame();
 	virtual void Update();

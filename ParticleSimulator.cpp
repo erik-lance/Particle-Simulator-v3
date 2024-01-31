@@ -46,6 +46,16 @@ int main()
 		return 1;
 	}
 
+	// SDL Renderer Object
+	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	if (renderer == NULL) {
+		cerr << "Renderer creation failed: " << SDL_GetError() << endl;
+		SDL_DestroyWindow(window);
+		SDL_Quit();
+		return 1;
+	}
+
+
 	// Get screen size
 	int screen_width, screen_height;
 	SDL_GetWindowSize(window, &screen_width, &screen_height);
@@ -55,13 +65,15 @@ int main()
 	vector<Particle> particles = vector<Particle>();
 
 	SimulatorGUI gui;
-	gui.Init(window, gl_context, "#version 330");
+	gui.Init(window, gl_context, renderer, "#version 330");
 
 	// Check for OpenGL errors
 	GLenum error = glGetError();
 	if (error != GL_NO_ERROR) {
 		std::cerr << "OpenGL Error: " << error << std::endl;
 	}
+
+	
 
 	while (1) {
 		// Process Input
@@ -76,9 +88,18 @@ int main()
 			}
 		}
 
-		// Clear the screen
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black
-		glClear(GL_COLOR_BUFFER_BIT);
+		// Clear the renderer
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		SDL_RenderClear(renderer);
+
+		// Draw a line
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		SDL_RenderDrawLine(renderer, 0, 0, 100, 100);
+
+		// Draw particles
+		for (int i = 0; i < particles.size(); i++) {
+			particles[i].draw(renderer);
+		}
 
 		// Render ImGui
 		gui.NewFrame();
@@ -90,7 +111,7 @@ int main()
 			std::cerr << "OpenGL Error: " << error << std::endl;
 		}
 
-		SDL_GL_SwapWindow(window);
+		SDL_RenderPresent(renderer);
 	}
 
 	gui.Shutdown();
