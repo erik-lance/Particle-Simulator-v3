@@ -1,14 +1,15 @@
 #include "SimulatorGUI.h"
+#include <iostream>
 
-void SimulatorGUI::Init(GLFWwindow* window, const char* glsl_version)
+void SimulatorGUI::Init(SDL_Window* window, SDL_GLContext gl_context, const char* glsl_version)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
 
 	// Setup Platform/Renderer bindings
-	ImGui_ImplGlfw_InitForOpenGL(window, true);
-	ImGui_ImplOpenGL3_Init("#version 330");
+	ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
+	ImGui_ImplOpenGL3_Init(glsl_version);
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
@@ -19,7 +20,7 @@ void SimulatorGUI::setParticles(std::vector<Particle> particles) { this->particl
 void SimulatorGUI::NewFrame()
 {
 	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplGlfw_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
 	//ImGui::ShowDemoWindow();
@@ -47,7 +48,9 @@ void SimulatorGUI::Update()
 	ImGui::InputInt("Velocity", &m_particle_velocity);
 
 	if (ImGui::Button("Add Particle")) {
-
+		std:: cout << "Particle Added" << std::endl;
+		Particle p(m_particle_id, m_particle_x, m_particle_y, m_particle_angle, m_particle_velocity);
+		particles.push_back(p);
 	}
 
 	// Input Sections (Obstacle)
@@ -58,28 +61,6 @@ void SimulatorGUI::Update()
 	ImGui::End();
 
 
-	// Simulator Window
-	ImGui::Begin("Simulator", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
-
-	// Set window position
-	ImGui::SetWindowPos(ImVec2(0, 0));
-
-	// Set window size and positiong
-	ImGui::SetWindowSize(ImVec2(1280, 720));
-
-	// Draw grid
-	for (int i = 0; i < 1280; i += 10) { ImGui::GetWindowDrawList()->AddLine(ImVec2(i, 0), ImVec2(i, 720), IM_COL32(255, 255, 255, 255)); }
-	for (int i = 0; i < 720; i += 10) { ImGui::GetWindowDrawList()->AddLine(ImVec2(0, i), ImVec2(1280, i), IM_COL32(255, 255, 255, 255)); }
-
-	// Set background color
-	ImGui::GetWindowDrawList()->AddRectFilled(ImVec2(0, 0), ImVec2(1280, 720), IM_COL32(0, 0, 0, 255));
-
-	// Draw particles here
-	for (int i = 0; i < particles.size(); i++) {
-		particles[i].draw();
-	}
-
-	ImGui::End();
 }
 
 void SimulatorGUI::Render()
@@ -92,6 +73,6 @@ void SimulatorGUI::Render()
 void SimulatorGUI::Shutdown()
 {
 	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
 }

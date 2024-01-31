@@ -18,21 +18,24 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)
 endif()
 
+# Copy DLLs to the output directory
+add_custom_command(TARGET CMakeTarget POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_if_different
+		"${CMAKE_CURRENT_SOURCE_DIR}/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-dbg/SDL2d.dll"
+		$<TARGET_FILE_DIR:CMakeTarget>)
+
 # Add installation prefix of vcpkg to CMAKE_PREFIX_PATH
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg_installed/x64-windows)
-
-# Copy GLFW DLL to output directory
-add_custom_command(TARGET CMakeTarget POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different
-	"${CMAKE_CURRENT_SOURCE_DIR}/vcpkg_installed/x64-windows/bin/glfw3.dll"
-	$<TARGET_FILE_DIR:CMakeTarget>)
 
 # Packages
 find_package(glad CONFIG REQUIRED)
 target_link_libraries(CMakeTarget PRIVATE glad::glad )
 
-find_package(glfw3 CONFIG REQUIRED)
-target_link_libraries(CMakeTarget PRIVATE glfw)
+find_package(SDL2 CONFIG REQUIRED)
+target_link_libraries(CMakeTarget PRIVATE
+	$<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
+	$<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+)
 
 find_package(imgui CONFIG REQUIRED)
 target_link_libraries(CMakeTarget PRIVATE imgui::imgui)

@@ -1,49 +1,61 @@
 ﻿// Particle Simulator.cpp : Defines the entry point for the application.
 //
 
+#define SDL_MAIN_HANDLED
+
 #include "ParticleSimulator.h"
 #include "SimulatorGUI.h"
 #include "Particle.h"
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include <SDL.h>
 #include <vector>
 
 using namespace std;
 
 int main()
 {
-	// Setup Window
-	if (!glfwInit())
+	// Setup SDL2
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0) {
+		cerr << "Error: " << SDL_GetError() << endl;
 		return 1;
-
-	// GL 3.0 + GLSL 130
-	const char* glsl_version = "#version 130";
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
-	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
+	}
 
 	// Create window with graphics context
-	GLFWwindow* window = glfwCreateWindow(1600, 900, "Particle Simulator", NULL, NULL);
-	if (window == NULL)
-			return 1;
-	glfwMakeContextCurrent(window);
-	glfwSwapInterval(1); // Enable vsync
+	SDL_Window* window = SDL_CreateWindow("Particle Simulator", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
+		1600, 900, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+	if (window == NULL) {
+		cerr << "Window creation failed: " << SDL_GetError() << endl;
+		SDL_Quit();
+		return 1;
+	}
 
-	// Initialize OpenGL loader
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) // the window context to glad's opengl loader
-		throw("Unable to context OpenGL");
+	// Create OpenGL context
+	SDL_GLContext gl_context = SDL_GL_CreateContext(window);
+	if (gl_context == NULL) {
+		cerr << "OpenGL context creation failed: " << SDL_GetError() << endl;
+		SDL_DestroyWindow(window);
+		SDL_Quit();
+		return 1;
+	}
+
+	// Initialized OpenGL loader (GLAD)
+	if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
+		cerr << "Failed to initialize OpenGL context" << endl;
+		SDL_DestroyWindow(window);
+		SDL_Quit();
+		return 1;
+	}
 
 	// Get screen size
 	int screen_width, screen_height;
-	glfwGetFramebufferSize(window, &screen_width, &screen_height);
+	SDL_GetWindowSize(window, &screen_width, &screen_height);
 	glViewport(0, 0, screen_width, screen_height);
 
 	// Particle Vector
 	vector<Particle> particles = vector<Particle>();
 
 	SimulatorGUI gui;
-	gui.Init(window, glsl_version);
+	gui.Init(window, gl_context, "#version 330");
 
 	// Check for OpenGL errors
 	GLenum error = glGetError();
@@ -53,7 +65,16 @@ int main()
 
 	while (1) {
 		// Process Input
-		glfwPollEvents(); // Checks for keyboard input (and closes window if needed)
+		SDL_Event event;
+		while (SDL_PollEvent(&event)) {
+			ImGui_ImplSDL2_ProcessEvent(&event);
+			if (event.type == SDL_QUIT) {
+				SDL_GL_DeleteContext(gl_context);
+				SDL_DestroyWindow(window);
+				SDL_Quit();
+				return 0;
+			}
+		}
 
 		// Clear the screen
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black
@@ -69,13 +90,14 @@ int main()
 			std::cerr << "OpenGL Error: " << error << std::endl;
 		}
 
-		glfwSwapBuffers(window);
+		SDL_GL_SwapWindow(window);
 	}
 
 	gui.Shutdown();
 
-	glfwDestroyWindow(window);
-	glfwTerminate();
+	SDL_GL_DeleteContext(gl_context);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 
 	return 0;
 }
