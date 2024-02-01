@@ -35,7 +35,15 @@ void SimulatorGUI::Update()
 	ImGui::SetWindowPos(ImVec2(1290, 10));
 
 	// FPS and Delta Time and total time
-	ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
+	// FPS updates every 0.5 seconds
+	static double prev_time = 0;
+	static int fps = 0;
+	double current_time = ImGui::GetTime();
+	if (current_time - prev_time >= 0.5) {
+		prev_time = current_time;
+		fps = ImGui::GetIO().Framerate;
+	}
+	ImGui::Text("FPS: %d", fps);
 	ImGui::Text("Delta Time: %.4f", ImGui::GetIO().DeltaTime);
 	ImGui::Text("Total Time: %.4f", ImGui::GetTime());
 
