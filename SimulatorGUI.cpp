@@ -34,9 +34,11 @@ void SimulatorGUI::Update()
 	// Set window position
 	ImGui::SetWindowPos(ImVec2(1290, 10));
 
+	// FPS and Delta Time and total time
 	ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
-	ImGui::Text("Frame Time: %.3f ms", 1000.0f / ImGui::GetIO().Framerate);
-	ImGui::Text("Total Time: %.3f s", ImGui::GetTime());
+	ImGui::Text("Delta Time: %.4f", ImGui::GetIO().DeltaTime);
+	ImGui::Text("Total Time: %.4f", ImGui::GetTime());
+
 
 	// Input Sections (Particle)
 	ImGui::Separator();
