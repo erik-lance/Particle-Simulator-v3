@@ -4,17 +4,6 @@
 
 #include <iostream>
 
-int Particle::getID() { return m_id; }
-int Particle::getX() { return pos_x; }
-int Particle::getY() { return pos_y; }
-int Particle::getAngle() { return p_angle; }
-int Particle::getVelocity() { return p_velocity; }
-
-void Particle::setX(int x) { pos_x = x; }
-void Particle::setY(int y) { pos_y = y; }
-void Particle::setAngle(int angle) { p_angle = angle; }
-void Particle::setVelocity(int velocity) { p_velocity = velocity; }
-
 void Particle::updatePosition(double delta)
 {
 	// Update position based on velocity and angle using elapsed time

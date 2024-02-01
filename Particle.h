@@ -18,16 +18,16 @@ public:
 	Particle(int id, int x, int y, int angle, int velocity);
 	~Particle();
 
-	int getID();
-	int getX();
-	int getY();
-	int getAngle();
-	int getVelocity();
+	int getID() const { return m_id; }
+	int getX() const { return pos_x; }
+	int getY() const { return pos_y; }
+	int getAngle() const { return p_angle; }
+	int getVelocity() const { return p_velocity; }
 
-	void setX(int x);
-	void setY(int y);
-	void setAngle(int angle);
-	void setVelocity(int velocity);
+	void setX(int x) { pos_x = x; }
+	void setY(int y) { pos_y = y; }
+	void setAngle(int angle) { p_angle = angle; }
+	void setVelocity(int velocity) { p_velocity = velocity; }
 
 	void updatePosition(double delta);
 	void handleScreenCollision(int screen_width, int screen_height);
