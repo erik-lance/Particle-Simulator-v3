@@ -9,8 +9,11 @@
 #include <glad/glad.h>
 #include <SDL.h>
 #include <vector>
+#include <iostream>
 
 using namespace std;
+double delta_time = 0;
+vector<Particle> particles = vector<Particle>();
 
 int main()
 {
@@ -46,8 +49,8 @@ int main()
 		return 1;
 	}
 
-	// SDL Renderer Object
-	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	// SDL Renderer Object with VSync
+	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (renderer == NULL) {
 		cerr << "Renderer creation failed: " << SDL_GetError() << endl;
 		SDL_DestroyWindow(window);
@@ -59,9 +62,6 @@ int main()
 	int screen_width = 1280;
 	int screen_height = 720;
 	glViewport(0, 0, screen_width, screen_height);
-
-	// Particle Vector
-	vector<Particle> particles = vector<Particle>();
 
 	SimulatorGUI gui;
 	gui.Init(window, gl_context, renderer, "#version 330");
@@ -76,7 +76,6 @@ int main()
 	// Calculate delta time
 	Uint64 current_time = SDL_GetPerformanceCounter();
 	Uint64 last_time = 0;
-	double delta_time = 0;
 
 	while (1) {
 		// Calculate delta time
@@ -104,7 +103,7 @@ int main()
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderDrawLine(renderer, 0, 0, 100, 100);
 
-		// Update particles
+		// Move the particles
 		for (int i = 0; i < particles.size(); i++) {
 			particles[i].updatePosition(delta_time);
 			particles[i].handleScreenCollision(screen_width, screen_height);
