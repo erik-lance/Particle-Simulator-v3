@@ -41,4 +41,5 @@ private:
 
 	int p_angle;
 	int p_velocity;
+	int radius = 3;
 };

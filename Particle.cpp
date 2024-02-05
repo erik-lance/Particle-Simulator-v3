@@ -32,8 +32,13 @@ void Particle::draw(SDL_Renderer* renderer)
 	// Set color to white
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-	// Draw a point
-	SDL_RenderDrawPoint(renderer, pos_x, pos_y);
+	// Draw a circle
+	for (int i = 0; i < 360; i++)
+	{
+		float x = pos_x + radius * cos(i);
+		float y = pos_y + radius * sin(i);
+		SDL_RenderDrawPoint(renderer, x, y);
+	}
 }
 
 Particle::Particle(int id, int x, int y) {
