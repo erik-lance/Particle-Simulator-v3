@@ -6,18 +6,25 @@
 
 void Particle::updatePosition(double delta)
 {
+	// Convert the angle from degrees to radians
+	double angle_rad = p_angle * M_PI / 180.0;
+
 	// Update position based on velocity and angle using elapsed time
-	pos_x += p_velocity * cos(p_angle) * delta;
-	pos_y += p_velocity * sin(p_angle) * delta;
+	pos_x += p_velocity * cos(angle_rad) * delta;
+	pos_y += p_velocity * sin(angle_rad) * delta;
 }
 
 void Particle::handleScreenCollision(int screen_width, int screen_height)
 {
 	// Bounce off the walls
-	// Reflect vertically if particle hits left or right wall
-	if (pos_x < 0 || pos_x > screen_width) { p_angle = -p_angle; }
-	// Reflect horizontally if particle hits top or bottom wall
-	if (pos_y < 0 || pos_y > screen_height) { p_angle = M_PI - p_angle; }
+	if (pos_x < 0 || pos_x > screen_width) {
+		// Reflect horizontally if particle hits left or right wall
+		p_angle = 180 - p_angle;
+	}
+	if (pos_y < 0 || pos_y > screen_height) {
+		// Reflect vertically if particle hits top or bottom wall
+		p_angle = -p_angle;
+	}
 }
 
 /**
