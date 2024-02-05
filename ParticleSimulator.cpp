@@ -55,10 +55,9 @@ int main()
 		return 1;
 	}
 
-
 	// Get screen size
-	int screen_width, screen_height;
-	SDL_GetWindowSize(window, &screen_width, &screen_height);
+	int screen_width = 1280;
+	int screen_height = 720;
 	glViewport(0, 0, screen_width, screen_height);
 
 	// Particle Vector
@@ -111,7 +110,7 @@ int main()
 			particles[i].handleScreenCollision(screen_width, screen_height);
 		}
 
-		// Draw particles
+		// Batch render particles
 		for (int i = 0; i < particles.size(); i++) {
 			particles[i].draw(renderer);
 		}
