@@ -51,7 +51,7 @@ void SimulatorGUI::Update()
 	// Input Sections (Particle)
 	ImGui::Separator();
 	ImGui::Text("Particle");
-	ImGui::InputInt("ID", &m_particle_id);
+	ImGui::Text("ID: %d", m_particle_id);
 	ImGui::InputInt("X", &m_particle_x);
 	ImGui::InputInt("Y", &m_particle_y);
 	ImGui::InputInt("Angle", &m_particle_angle);
@@ -61,6 +61,9 @@ void SimulatorGUI::Update()
 		std:: cout << "Particle Added" << std::endl;
 		Particle p(m_particle_id, m_particle_x, m_particle_y, m_particle_angle, m_particle_velocity);
 		particles->push_back(p);
+
+		// Increment particle id
+		m_particle_id++;
 	}
 
 	// Input Sections (Obstacle)
