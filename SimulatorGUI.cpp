@@ -170,23 +170,23 @@ void SimulatorGUI::ParticlesBatchMethodOneGUI()
 
 	// Relatively Clamp x and y to 0-1280 and 1-720
 	// So that the start and end points are within the window
-	ImGui::InputInt("M1 Start X", &method_one_start_x);
+	ImGui::InputInt("Start X", &method_one_start_x);
 	InputClampRelativeStart(method_one_start_x, 0, 1280, method_one_end_x);
 
-	ImGui::InputInt("M1 End X", &method_one_end_x);
+	ImGui::InputInt("End X", &method_one_end_x);
 	InputClampRelativeEnd(method_one_end_x, 0, 1280, method_one_start_x);
 
-	ImGui::InputInt("M1 Start Y", &method_one_start_y);
+	ImGui::InputInt("Start Y", &method_one_start_y);
 	InputClampRelativeStart(method_one_start_y, 0, 720, method_one_end_y);
 
-	ImGui::InputInt("M1 End Y", &method_one_end_y);
+	ImGui::InputInt("End Y", &method_one_end_y);
 	InputClampRelativeEnd(method_one_end_y, 0, 720, method_one_start_y);
 
 
 	// Angle and Velocity constant for all particles
-	ImGui::InputInt("M1 Angle", &method_one_angle);
+	ImGui::InputInt("Angle", &method_one_angle);
 	InputClamp(method_one_angle, 0, 360);
-	ImGui::InputInt("M1 Velocity", &method_one_velocity);
+	ImGui::InputInt("Velocity", &method_one_velocity);
 	InputClamp(method_one_velocity, 1, 50);
 
 	if (ImGui::Button("Add Particle Batch (Method 1)")) {
@@ -220,19 +220,19 @@ void SimulatorGUI::ParticlesBatchMethodTwoGUI()
 	ImGui::Text("Method 2");
 
 	// Relatively Clamp Angle Start and End to 0-360
-	ImGui::InputInt("M2 Start Angle", &method_two_start_angle);
+	ImGui::InputInt("Start Angle", &method_two_start_angle);
 	InputClampRelativeStart(method_two_start_angle, 0, 360, method_two_end_angle);
 
-	ImGui::InputInt("M2 End Angle", &method_two_end_angle);
+	ImGui::InputInt("End Angle", &method_two_end_angle);
 	InputClampRelativeEnd(method_two_end_angle, 0, 360, method_two_start_angle);
 
-	ImGui::InputInt("M2 Start X", &method_two_start_x);
+	ImGui::InputInt("Start X", &method_two_start_x);
 	InputClamp(method_two_start_x, 0, 1280);
 
-	ImGui::InputInt("M2 Start Y", &method_two_start_y);
+	ImGui::InputInt("Start Y", &method_two_start_y);
 	InputClamp(method_two_start_y, 0, 720);
 
-	ImGui::InputInt("M2 Velocity", &method_two_velocity);
+	ImGui::InputInt("Velocity", &method_two_velocity);
 	InputClamp(method_two_velocity, 1, 50);
 
 	if (ImGui::Button("Add Particle Batch (Method 2)")) {
