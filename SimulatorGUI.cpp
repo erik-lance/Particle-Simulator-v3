@@ -32,7 +32,7 @@ void SimulatorGUI::Update()
 	ImGui::Begin("GUI", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 
 	// Set window position
-	ImGui::SetWindowPos(ImVec2(1290, 10));
+	ImGui::SetWindowPos(ImVec2(1300, 10));
 
 	// FPS and Delta Time and total time
 	// FPS updates every 0.5 seconds
@@ -52,10 +52,24 @@ void SimulatorGUI::Update()
 	ImGui::Separator();
 	ImGui::Text("Particle");
 	ImGui::Text("ID: %d", m_particle_id);
+
+	// Clamp x and y to 0-1280 and 1-720
 	ImGui::InputInt("X", &m_particle_x);
 	ImGui::InputInt("Y", &m_particle_y);
+	if (m_particle_x < 0) m_particle_x = 0;
+	if (m_particle_x > 1280) m_particle_x = 1280;
+	if (m_particle_y < 0) m_particle_y = 0;
+	if (m_particle_y > 720) m_particle_y = 720;
+
+	// Clamp angle to 0-360
 	ImGui::InputInt("Angle", &m_particle_angle);
+	if (m_particle_angle < 0) m_particle_angle = 0;
+	if (m_particle_angle > 360) m_particle_angle = 360;
+
+	// Clamp velocity to 1-50
 	ImGui::InputInt("Velocity", &m_particle_velocity);
+	if (m_particle_velocity < 1) m_particle_velocity = 1;
+	if (m_particle_velocity > 50) m_particle_velocity = 50;
 
 	if (ImGui::Button("Add Particle")) {
 		std:: cout << "Particle Added" << std::endl;
