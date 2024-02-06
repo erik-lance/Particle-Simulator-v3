@@ -11,6 +11,14 @@
 #include <vector>
 #include <iostream>
 
+// Window Dimensions
+const int SCREEN_WIDTH = 1600;
+const int SCREEN_HEIGHT = 900;
+
+// Simulation Dimensions
+const int SIM_WIDTH = 1280;
+const int SIM_HEIGHT = 720;
+
 using namespace std;
 double delta_time = 0;
 vector<Particle> particles = vector<Particle>();
@@ -25,7 +33,7 @@ int main()
 
 	// Create window with graphics context
 	SDL_Window* window = SDL_CreateWindow("Particle Simulator", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
-		1600, 900, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+		SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 	if (window == NULL) {
 		cerr << "Window creation failed: " << SDL_GetError() << endl;
 		SDL_Quit();
@@ -58,10 +66,8 @@ int main()
 		return 1;
 	}
 
-	// Get screen size
-	int screen_width = 1280;
-	int screen_height = 720;
-	glViewport(0, 0, screen_width, screen_height);
+	// Viewport for Simulation
+	glViewport(0, 0, SIM_WIDTH, SIM_HEIGHT);
 
 	SimulatorGUI gui;
 	gui.Init(window, gl_context, renderer, "#version 330");
@@ -106,7 +112,7 @@ int main()
 		// Move the particles
 		for (int i = 0; i < particles.size(); i++) {
 			particles[i].updatePosition(delta_time);
-			particles[i].handleScreenCollision(screen_width, screen_height);
+			particles[i].handleScreenCollision(SIM_WIDTH, SIM_HEIGHT);
 		}
 
 		// Batch render particles
