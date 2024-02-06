@@ -42,7 +42,7 @@ private:
 	int particle_batch_pos_y = 10;
 
 	int particle_batch_method_size_x[3] = { particle_batch_size_x, particle_batch_size_x, particle_batch_size_x };
-	int particle_batch_method_size_y[3] = { 250, 200, 250 };
+	int particle_batch_method_size_y[3] = { 220, 195, 250 };
 	int particle_batch_method_pos_x[3] = { particle_batch_pos_x, particle_batch_pos_x, particle_batch_pos_x };
 	int particle_batch_method_pos_y[3] = { 
 		particle_batch_pos_y + particle_batch_size_y + 10, 

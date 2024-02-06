@@ -113,6 +113,8 @@ void SimulatorGUI::MainMenuGUI()
 	ImGui::InputInt("Velocity", &m_particle_velocity);
 	InputClamp(m_particle_velocity, 1, 50);
 
+	ImGui::Spacing();
+
 	if (ImGui::Button("Add Particle")) {
 		std::cout << "Particle Added" << std::endl;
 		Particle p(m_particle_id, m_particle_x, m_particle_y, m_particle_angle, m_particle_velocity);
@@ -189,6 +191,8 @@ void SimulatorGUI::ParticlesBatchMethodOneGUI()
 	ImGui::InputInt("Velocity", &method_one_velocity);
 	InputClamp(method_one_velocity, 1, 50);
 
+	ImGui::Spacing();
+
 	if (ImGui::Button("Add Particle Batch (Method 1)")) {
 		std::cout << "Particle Batch Added (Method 1)" << std::endl;
 		for (int i = 0; i < m_batch_size; i++) {
@@ -234,6 +238,8 @@ void SimulatorGUI::ParticlesBatchMethodTwoGUI()
 
 	ImGui::InputInt("Velocity", &method_two_velocity);
 	InputClamp(method_two_velocity, 1, 50);
+
+	ImGui::Spacing();
 
 	if (ImGui::Button("Add Particle Batch (Method 2)")) {
 		std::cout << "Particle Batch Added (Method 2)" << std::endl;
