@@ -23,6 +23,7 @@ public:
 
 	// Clamper (Wrapper for ImGui::InputInt)
 	void InputClamp(const char* text, int& num, int min, int max);
+	void InputClampRelativeStartEnd(const char* text[], int& start, int& end, int min, int max);
 
 private:
 	// GUI Variables
