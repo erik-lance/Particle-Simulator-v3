@@ -41,4 +41,27 @@ private:
 	int m_particle_velocity = 0;
 
 	int m_obstacle_id = 0;
+
+	// Batch Inputs
+	int m_batch_size = 0;
+
+	int method_one_angle = 0;
+	int method_one_velocity = 0;
+	int method_one_start_x = 0;
+	int method_one_start_y = 0;
+	int method_one_end_x = 0;
+	int method_one_end_y = 0;
+
+	int method_two_start_x = 0;
+	int method_two_start_y = 0;
+	int method_two_velocity = 0;
+	int method_two_start_angle = 0;
+	int method_two_end_angle = 0;
+
+	int method_three_start_x = 0;
+	int method_three_start_y = 0;
+	int method_three_angle = 0;
+	int method_three_start_velocity = 0;
+	int method_three_end_velocity = 0;
+	
 };
