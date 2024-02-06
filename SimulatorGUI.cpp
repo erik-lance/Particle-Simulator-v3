@@ -122,12 +122,19 @@ void SimulatorGUI::ParticlesBatchGUI()
 	ImGui::Separator();
 	ImGui::Text("Method 1");
 
-	// Clamp x and y to 0-1280 and 1-720
-	InputClamp("Start X", method_one_start_x, 0, 1280);
-	InputClamp("Start Y", method_one_start_y, 0, 720);
+	// Relatively Clamp x and y to 0-1280 and 1-720
+	// So that the start and end points are within the window
+	ImGui::InputInt("Start X", &method_one_start_x);
+	ImGui::InputInt("Start Y", &method_one_start_y);
+	ImGui::InputInt("End X", &method_one_end_x);
+	ImGui::InputInt("End Y", &method_one_end_y);
+	if (method_one_start_x < 0) method_one_start_x = 0;
+	if (method_one_start_y < 0) method_one_start_y = 0;
+	if (method_one_end_x > 1280) method_one_end_x = 1280;
+	if (method_one_end_y > 720) method_one_end_y = 720;
 
-	InputClamp("End X", method_one_end_x, 0, 1280);
-	InputClamp("End Y", method_one_end_y, 0, 720);
+	if (method_one_start_x > method_one_end_x && method_one_start_x <= 1280) method_one_end_x = method_one_start_x;
+	if (method_one_start_y > method_one_end_y && method_one_start_y <= 720) method_one_end_y = method_one_start_y;
 
 	// Angle and Velocity constant for all particles
 	InputClamp("Angle", method_one_angle, 0, 360);
