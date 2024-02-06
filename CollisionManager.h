@@ -1,8 +1,9 @@
 #pragma once
 
 /**
- * @brief CollisionManager class
- * @details This class is used to manage collisions
+ * The CollisionManager splits the simulation into a grid and checks for collisions within the grid.
+ * If a particle is in the same cell as a line, it is then able to check for collisions as long as
+ * they are in the same cell. This will reduce the number of collision checks and improve performance.
  */
 class CollisionManager {
 public:
