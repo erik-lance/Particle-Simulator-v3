@@ -79,14 +79,18 @@ void SimulatorGUI::MainMenuGUI()
 	ImGui::Text("ID: %d", m_particle_id);
 
 	// Clamp x and y to 0-1280 and 1-720
-	InputClamp("X", m_particle_x, 0, 1280);
-	InputClamp("Y", m_particle_y, 0, 720);
+	ImGui::InputInt("X", &m_particle_x);
+	ImGui::InputInt("Y", &m_particle_y);
+	InputClamp(m_particle_x, 0, 1280);
+	InputClamp(m_particle_y, 0, 720);
 
 	// Clamp angle to 0-360
-	InputClamp("Angle", m_particle_angle, 0, 360);
+	ImGui::InputInt("Angle", &m_particle_angle);
+	InputClamp(m_particle_angle, 0, 360);
 
 	// Clamp velocity to 1-50
-	InputClamp("Velocity", m_particle_velocity, 1, 50);
+	ImGui::InputInt("Velocity", &m_particle_velocity);
+	InputClamp(m_particle_velocity, 1, 50);
 
 	if (ImGui::Button("Add Particle")) {
 		std::cout << "Particle Added" << std::endl;
@@ -115,7 +119,8 @@ void SimulatorGUI::ParticlesBatchGUI()
 	ImGui::SetWindowSize(ImVec2(particle_batch_size_x, particle_batch_size_y));
 
 	// Clamp batch size to 1-1000
-	InputClamp("Batch Size", m_batch_size, 1, 1000);
+	ImGui::InputInt("Batch Size", &m_batch_size);
+	InputClamp(m_batch_size, 1, 1000);
 
 	// Method 1 (Provide a start and end point)
 	// Particles are added with a uniform distance between given start and end points
@@ -124,16 +129,24 @@ void SimulatorGUI::ParticlesBatchGUI()
 
 	// Relatively Clamp x and y to 0-1280 and 1-720
 	// So that the start and end points are within the window
+	ImGui::InputInt("M1 Start X", &method_one_start_x);
+	InputClampRelativeStart(method_one_start_x, 0, 1280, method_one_end_x);
 
-	const char* startEndX[] = { "Start X", "End X" };
-	InputClampRelativeStartEnd(startEndX, method_one_start_x, method_one_end_x, 0, 1280);
+	ImGui::InputInt("M1 End X", &method_one_end_x);
+	InputClampRelativeEnd(method_one_end_x, 0, 1280, method_one_start_x);
 
-	const char* startEndY[] = { "Start Y", "End Y" };
-	InputClampRelativeStartEnd(startEndY, method_one_start_y, method_one_end_y, 0, 720);
+	ImGui::InputInt("M1 Start Y", &method_one_start_y);
+	InputClampRelativeStart(method_one_start_y, 0, 720, method_one_end_y);
+
+	ImGui::InputInt("M1 End Y", &method_one_end_y);
+	InputClampRelativeEnd(method_one_end_y, 0, 720, method_one_start_y);
+
 
 	// Angle and Velocity constant for all particles
-	InputClamp("Angle", method_one_angle, 0, 360);
-	InputClamp("Velocity", method_one_velocity, 1, 50);
+	ImGui::InputInt("M1 Angle", &method_one_angle);
+	InputClamp(method_one_angle, 0, 360);
+	ImGui::InputInt("M1 Velocity", &method_one_velocity);
+	InputClamp(method_one_velocity, 1, 50);
 
 	if (ImGui::Button("Add Particle Batch (Method 1)")) {
 		std::cout << "Particle Batch Added (Method 1)" << std::endl;
@@ -150,10 +163,38 @@ void SimulatorGUI::ParticlesBatchGUI()
 		}
 	}
 
-
-
 	// Method 2 (Provide a start angle and end angle)
 	// Particles are added with a uniform distance between given start and end angles
+	ImGui::Separator();
+	ImGui::Text("Method 2");
+
+	// Relatively Clamp Angle Start and End to 0-360
+	ImGui::InputInt("M2 Start Angle", &method_two_start_angle);
+	InputClampRelativeStart(method_two_start_angle, 0, 360, method_two_end_angle);
+
+	ImGui::InputInt("M2 End Angle", &method_two_end_angle);
+	InputClampRelativeEnd(method_two_end_angle, 0, 360, method_two_start_angle);
+
+	ImGui::InputInt("M2 Start X", &method_two_start_x);
+	InputClamp(method_two_start_x, 0, 1280);
+
+	ImGui::InputInt("M2 Start Y", &method_two_start_y);
+	InputClamp(method_two_start_y, 0, 720);
+
+	ImGui::InputInt("M2 Velocity", &method_two_velocity);
+	InputClamp(method_two_velocity, 1, 50);
+
+	if (ImGui::Button("Add Particle Batch (Method 2)")) {
+		std::cout << "Particle Batch Added (Method 2)" << std::endl;
+		for (int i = 0; i < m_batch_size; i++) {
+			double angle = method_two_start_angle + (method_two_end_angle - method_two_start_angle) * i / m_batch_size;
+			Particle p(m_particle_id, method_two_start_x, method_two_start_y, angle, method_two_velocity);
+			particles->push_back(p);
+
+			// Increment particle id
+			m_particle_id++;
+		}
+	}
 
 	// Method 3 (Provide a start velocity and end velocity)
 	// Particles are added with a uniform distance between given start and end velocities
@@ -161,20 +202,16 @@ void SimulatorGUI::ParticlesBatchGUI()
 	ImGui::End();
 }
 
-void SimulatorGUI::InputClamp(const char* text, int& num, int min, int max)
+void SimulatorGUI::InputClamp(int& num, int min, int max) { if (num < min) num = min; if (num > max) num = max; }
+
+void SimulatorGUI::InputClampRelativeStart(int& num, int min, int max, int& relative_max)
 {
-	ImGui::InputInt(text, &num);
 	if (num < min) num = min;
-	if (num > max) num = max;
+	if (num > relative_max && num <= max) relative_max = num;	// If start is greater than end, set end to start (Increment)
 }
 
-void SimulatorGUI::InputClampRelativeStartEnd(const char* text[], int& start, int& end, int min, int max)
+void SimulatorGUI::InputClampRelativeEnd(int& num, int min, int max, int& relative_min)
 {
-	ImGui::InputInt(text[0], &start);
-	if (start < min) start = min;
-	if (start > end && start <= max) end = start;	// If start is greater than end, set end to start (Increment)
-
-	ImGui::InputInt(text[1], &end);
-	if (end > max) end = max;
-	if (end < start && end >= min) start = end;		// If end is less than start, set start to end (Decrement)
+	if (num > max) num = max;
+	if (num < relative_min && num >= min) relative_min = num;		// If end is less than start, set start to end (Decrement)
 }

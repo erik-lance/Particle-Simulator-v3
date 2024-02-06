@@ -22,8 +22,9 @@ public:
 	void ParticlesBatchGUI();
 
 	// Clamper (Wrapper for ImGui::InputInt)
-	void InputClamp(const char* text, int& num, int min, int max);
-	void InputClampRelativeStartEnd(const char* text[], int& start, int& end, int min, int max);
+	void InputClamp(int& num, int min, int max);
+	void InputClampRelativeStart(int& num, int min, int max, int& relative_max);
+	void InputClampRelativeEnd(int& num, int min, int max, int & relative_min);
 
 private:
 	// GUI Variables
@@ -33,7 +34,7 @@ private:
 	int menu_pos_y = 10;
 
 	int particle_batch_size_x = 250;
-	int particle_batch_size_y = 300;
+	int particle_batch_size_y = 500;
 	int particle_batch_pos_x = 1300;
 	int particle_batch_pos_y = menu_pos_y + menu_size_y + 10;
 
