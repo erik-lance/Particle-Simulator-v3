@@ -21,6 +21,18 @@ public:
 	void MainMenuGUI();
 	void ParticlesBatchGUI();
 private:
+	// GUI Variables
+	int menu_size_x = 250;
+	int menu_size_y = 300;
+	int menu_pos_x = 1300;
+	int menu_pos_y = 10;
+
+	int particle_batch_size_x = 250;
+	int particle_batch_size_y = 300;
+	int particle_batch_pos_x = 1300;
+	int particle_batch_pos_y = menu_pos_y + menu_size_y + 10;
+
+	// Main Inputs
 	std::vector<Particle>* particles;
 	int m_particle_id = 0;
 	int m_particle_x = 0;

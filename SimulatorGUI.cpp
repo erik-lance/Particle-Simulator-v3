@@ -54,10 +54,10 @@ void SimulatorGUI::MainMenuGUI()
 	ImGui::Begin("GUI", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 
 	// Set window position
-	ImGui::SetWindowPos(ImVec2(1300, 10));
+	ImGui::SetWindowPos(ImVec2(menu_pos_x, menu_pos_y));
 
 	// Set window size
-	ImGui::SetWindowSize(ImVec2(250, 300));
+	ImGui::SetWindowSize(ImVec2(menu_size_x, menu_size_y));
 
 	// FPS and Delta Time and total time
 	// FPS updates every 0.5 seconds
@@ -115,4 +115,13 @@ void SimulatorGUI::MainMenuGUI()
 
 void SimulatorGUI::ParticlesBatchGUI()
 {
+	ImGui::Begin("Particle Batch", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+
+	// Set window position
+	ImGui::SetWindowPos(ImVec2(particle_batch_pos_x, particle_batch_pos_y));
+
+	// Set window size
+	ImGui::SetWindowSize(ImVec2(particle_batch_size_x, particle_batch_size_y));
+
+	ImGui::End();
 }
