@@ -79,22 +79,14 @@ void SimulatorGUI::MainMenuGUI()
 	ImGui::Text("ID: %d", m_particle_id);
 
 	// Clamp x and y to 0-1280 and 1-720
-	ImGui::InputInt("X", &m_particle_x);
-	ImGui::InputInt("Y", &m_particle_y);
-	if (m_particle_x < 0) m_particle_x = 0;
-	if (m_particle_x > 1280) m_particle_x = 1280;
-	if (m_particle_y < 0) m_particle_y = 0;
-	if (m_particle_y > 720) m_particle_y = 720;
+	InputClamp("X", m_particle_x, 0, 1280);
+	InputClamp("Y", m_particle_y, 0, 720);
 
 	// Clamp angle to 0-360
-	ImGui::InputInt("Angle", &m_particle_angle);
-	if (m_particle_angle < 0) m_particle_angle = 0;
-	if (m_particle_angle > 360) m_particle_angle = 360;
+	InputClamp("Angle", m_particle_angle, 0, 360);
 
 	// Clamp velocity to 1-50
-	ImGui::InputInt("Velocity", &m_particle_velocity);
-	if (m_particle_velocity < 1) m_particle_velocity = 1;
-	if (m_particle_velocity > 50) m_particle_velocity = 50;
+	InputClamp("Velocity", m_particle_velocity, 1, 50);
 
 	if (ImGui::Button("Add Particle")) {
 		std::cout << "Particle Added" << std::endl;
@@ -108,7 +100,6 @@ void SimulatorGUI::MainMenuGUI()
 	// Input Sections (Obstacle)
 	ImGui::Separator();
 	ImGui::Text("Obstacle");
-	ImGui::InputInt("ID", &m_obstacle_id);
 
 	ImGui::End();
 }
@@ -124,9 +115,7 @@ void SimulatorGUI::ParticlesBatchGUI()
 	ImGui::SetWindowSize(ImVec2(particle_batch_size_x, particle_batch_size_y));
 
 	// Clamp batch size to 1-1000
-	ImGui::InputInt("Batch Size", &m_batch_size);
-	if (m_batch_size < 1) m_batch_size = 1;
-	if (m_batch_size > 1000) m_batch_size = 1000;
+	InputClamp("Batch Size", m_batch_size, 1, 1000);
 
 	// Method 1 (Provide a start and end point)
 	// Particles are added with a uniform distance between given start and end points
@@ -134,27 +123,15 @@ void SimulatorGUI::ParticlesBatchGUI()
 	ImGui::Text("Method 1");
 
 	// Clamp x and y to 0-1280 and 1-720
-	ImGui::InputInt("Start X", &method_one_start_x);
-	ImGui::InputInt("Start Y", &method_one_start_y);
-	if (method_one_start_x < 0) method_one_start_x = 0;
-	if (method_one_start_x > 1280) method_one_start_x = 1280;
-	if (method_one_start_y < 0) method_one_start_y = 0;
-	if (method_one_start_y > 720) method_one_start_y = 720;
+	InputClamp("Start X", method_one_start_x, 0, 1280);
+	InputClamp("Start Y", method_one_start_y, 0, 720);
 
-	ImGui::InputInt("End X", &method_one_end_x);
-	ImGui::InputInt("End Y", &method_one_end_y);
-	if (method_one_end_x < 0) method_one_end_x = 0;
-	if (method_one_end_x > 1280) method_one_end_x = 1280;
-	if (method_one_end_y < 0) method_one_end_y = 0;
+	InputClamp("End X", method_one_end_x, 0, 1280);
+	InputClamp("End Y", method_one_end_y, 0, 720);
 
 	// Angle and Velocity constant for all particles
-	ImGui::InputInt("Angle", &method_one_angle);
-	if (method_one_angle < 0) method_one_angle = 0;
-	if (method_one_angle > 360) method_one_angle = 360;
-
-	ImGui::InputInt("Velocity", &method_one_velocity);
-	if (method_one_velocity < 1) method_one_velocity = 1;
-	if (method_one_velocity > 50) method_one_velocity = 50;
+	InputClamp("Angle", method_one_angle, 0, 360);
+	InputClamp("Velocity", method_one_velocity, 1, 50);
 
 	if (ImGui::Button("Add Particle Batch (Method 1)")) {
 		std::cout << "Particle Batch Added (Method 1)" << std::endl;
