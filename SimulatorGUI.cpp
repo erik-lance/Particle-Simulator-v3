@@ -147,9 +147,6 @@ void SimulatorGUI::ParticlesBatchGUI()
 	ImGui::InputInt("Batch Size", &m_batch_size);
 	InputClamp(m_batch_size, 1, 1000);
 
-	// Method 3 (Provide a start velocity and end velocity)
-	// Particles are added with a uniform distance between given start and end velocities
-
 	ImGui::End();
 
 	ParticlesBatchMethodOneGUI();
@@ -262,7 +259,40 @@ void SimulatorGUI::ParticlesBatchMethodThreeGUI()
 
 	// Set Window
 	ImGui::SetWindowPos(ImVec2(particle_batch_method_pos_x[2], particle_batch_method_pos_y[2]));
-	ImGui::SetWindowSize(ImVec2(particle_batch_size_x, particle_batch_size_y));
+	ImGui::SetWindowSize(ImVec2(particle_batch_method_size_x[2], particle_batch_method_size_y[2]));
+
+	// Method 3 (Provide a start velocity and end velocity)
+	// Particles are added with a uniform distance between given start and end velocities
+	ImGui::Text("Method 3");
+
+	ImGui::InputInt("Start X", &method_three_start_x);
+	InputClamp(method_three_start_x, 0, 1280);
+
+	ImGui::InputInt("Start Y", &method_three_start_y);
+	InputClamp(method_three_start_y, 0, 720);
+
+	ImGui::InputInt("Angle", &method_three_angle);
+	InputClamp(method_three_angle, 0, 360);
+
+	ImGui::InputInt("Start Velocity", &method_three_start_velocity);
+	InputClampRelativeStart(method_three_start_velocity, 1, 50, method_three_end_velocity);
+
+	ImGui::InputInt("End Velocity", &method_three_end_velocity);
+	InputClampRelativeEnd(method_three_end_velocity, 1, 50, method_three_start_velocity);
+
+	ImGui::Spacing();
+
+	if (ImGui::Button("Add Particle Batch (Method 3)")) {
+		std::cout << "Particle Batch Added (Method 3)" << std::endl;
+		for (int i = 0; i < m_batch_size; i++) {
+			double velocity = method_three_start_velocity + (method_three_end_velocity - method_three_start_velocity) * i / m_batch_size;
+			Particle p(m_particle_id, method_three_start_x, method_three_start_y, method_three_angle, velocity);
+			particles->push_back(p);
+
+			// Increment particle id
+			m_particle_id++;
+		}
+	}
 
 	ImGui::End();
 }
