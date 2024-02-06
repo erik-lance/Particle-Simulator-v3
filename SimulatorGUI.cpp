@@ -130,6 +130,48 @@ void SimulatorGUI::ParticlesBatchGUI()
 
 	// Method 1 (Provide a start and end point)
 	// Particles are added with a uniform distance between given start and end points
+	ImGui::Separator();
+	ImGui::Text("Method 1");
+
+	// Clamp x and y to 0-1280 and 1-720
+	ImGui::InputInt("Start X", &method_one_start_x);
+	ImGui::InputInt("Start Y", &method_one_start_y);
+	if (method_one_start_x < 0) method_one_start_x = 0;
+	if (method_one_start_x > 1280) method_one_start_x = 1280;
+	if (method_one_start_y < 0) method_one_start_y = 0;
+	if (method_one_start_y > 720) method_one_start_y = 720;
+
+	ImGui::InputInt("End X", &method_one_end_x);
+	ImGui::InputInt("End Y", &method_one_end_y);
+	if (method_one_end_x < 0) method_one_end_x = 0;
+	if (method_one_end_x > 1280) method_one_end_x = 1280;
+	if (method_one_end_y < 0) method_one_end_y = 0;
+
+	// Angle and Velocity constant for all particles
+	ImGui::InputInt("Angle", &method_one_angle);
+	if (method_one_angle < 0) method_one_angle = 0;
+	if (method_one_angle > 360) method_one_angle = 360;
+
+	ImGui::InputInt("Velocity", &method_one_velocity);
+	if (method_one_velocity < 1) method_one_velocity = 1;
+	if (method_one_velocity > 50) method_one_velocity = 50;
+
+	if (ImGui::Button("Add Particle Batch (Method 1)")) {
+		std::cout << "Particle Batch Added (Method 1)" << std::endl;
+		for (int i = 0; i < m_batch_size; i++) {
+			// Calculate the distance between start and end points
+			double distance = sqrt(pow(method_one_end_x - method_one_start_x, 2) + pow(method_one_end_y - method_one_start_y, 2));
+			double x = method_one_start_x + (method_one_end_x - method_one_start_x) * i / m_batch_size;
+			double y = method_one_start_y + (method_one_end_y - method_one_start_y) * i / m_batch_size;
+			Particle p(m_particle_id, x, y, method_one_angle, method_one_velocity);
+			particles->push_back(p);
+
+			// Increment particle id
+			m_particle_id++;
+		}
+	}
+
+
 
 	// Method 2 (Provide a start angle and end angle)
 	// Particles are added with a uniform distance between given start and end angles
