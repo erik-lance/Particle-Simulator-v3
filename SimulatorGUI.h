@@ -20,6 +20,10 @@ public:
 	// GUI Functions
 	void MainMenuGUI();
 	void ParticlesBatchGUI();
+
+	// Clamper (Wrapper for ImGui::InputInt)
+	void InputClamp(char* text, int& num, int min, int max);
+
 private:
 	// GUI Variables
 	int menu_size_x = 250;

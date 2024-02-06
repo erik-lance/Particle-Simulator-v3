@@ -181,3 +181,10 @@ void SimulatorGUI::ParticlesBatchGUI()
 
 	ImGui::End();
 }
+
+void SimulatorGUI::InputClamp(char* text, int& num, int min, int max)
+{
+	ImGui::InputInt(text, &num);
+	if (num < min) num = min;
+	if (num > max) num = max;
+}
