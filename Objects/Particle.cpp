@@ -80,6 +80,9 @@ Particle::Particle(int id, int x, int y, int angle, int velocity)
 
 	// Fix angle to counter-clockwise
 	p_angle = 360 - p_angle;
+
+	// Fix velocity to pixels per second
+	p_velocity = (double)velocity / 10;
 }
 
 Particle::~Particle()

@@ -41,6 +41,6 @@ private:
 	int pos_y;
 
 	int p_angle;
-	int p_velocity;
+	double p_velocity;
 	int radius = 3;
 };
