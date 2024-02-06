@@ -23,6 +23,14 @@ using namespace std;
 double delta_time = 0;
 vector<Particle> particles = vector<Particle>();
 
+void draw_sim_borders(SDL_Renderer* renderer) {
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	SDL_RenderDrawLine(renderer, 0, 0, SIM_WIDTH, 0);
+	SDL_RenderDrawLine(renderer, 0, 0, 0, SIM_HEIGHT);
+	SDL_RenderDrawLine(renderer, SIM_WIDTH, 0, SIM_WIDTH, SIM_HEIGHT);
+	SDL_RenderDrawLine(renderer, 0, SIM_HEIGHT, SIM_WIDTH, SIM_HEIGHT);
+}
+
 int main()
 {
 	// Setup SDL2
@@ -105,9 +113,7 @@ int main()
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
 
-		// Draw a line
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-		SDL_RenderDrawLine(renderer, 0, 0, 100, 100);
+		draw_sim_borders(renderer);
 
 		// Move the particles
 		for (int i = 0; i < particles.size(); i++) {
