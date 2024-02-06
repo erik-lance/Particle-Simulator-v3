@@ -31,7 +31,7 @@ public:
 
 private:
 	// GUI Variables
-	int menu_size_x = 1270;
+	int menu_size_x = 1260;
 	int menu_size_y = 160;
 	int menu_pos_x = 10;
 	int menu_pos_y = 730;

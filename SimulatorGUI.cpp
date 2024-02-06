@@ -68,15 +68,36 @@ void SimulatorGUI::MainMenuGUI()
 		prev_time = current_time;
 		fps = ImGui::GetIO().Framerate;
 	}
+
+	// Create a two column for statistics
+	ImGui::BeginTable("Stats", 4);
+	ImGui::TableNextRow();
+	ImGui::TableNextColumn();
+
+	// Title
+	ImGui::Text("Particle Simulator");
+	ImGui::Text("STDISCM S11");
+	ImGui::Spacing();
+
+	ImGui::Text("Authors:");
+	ImGui::Text("P1: Erik Tiongquico");
+	ImGui::Text("P2: Clyla Rafanan");
+
+	// Data
+	ImGui::TableNextColumn();
 	ImGui::Text("FPS: %d", fps);
 	ImGui::Text("Delta Time: %.4f", ImGui::GetIO().DeltaTime);
 	ImGui::Text("Total Time: %.4f", ImGui::GetTime());
 
+	ImGui::Separator();
+	ImGui::Spacing();
+
+	ImGui::Text("Number of Particles: %d", m_particle_id);
+	ImGui::Text("Number of Obstacles: %d", m_obstacle_id);
 
 	// Input Sections (Particle)
-	ImGui::Separator();
+	ImGui::TableNextColumn();
 	ImGui::Text("Particle");
-	ImGui::Text("ID: %d", m_particle_id);
 
 	// Clamp x and y to 0-1280 and 1-720
 	ImGui::InputInt("X", &m_particle_x);
@@ -102,8 +123,10 @@ void SimulatorGUI::MainMenuGUI()
 	}
 
 	// Input Sections (Obstacle)
-	ImGui::Separator();
+	ImGui::TableNextColumn();
 	ImGui::Text("Obstacle");
+
+	ImGui::EndTable();
 
 	ImGui::End();
 }
