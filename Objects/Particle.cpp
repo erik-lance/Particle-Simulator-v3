@@ -27,6 +27,20 @@ void Particle::handleScreenCollision(int screen_width, int screen_height)
 	}
 }
 
+void Particle::handleLineCollision(int x1, int y1, int x2, int y2)
+{
+	// Calculate the distance between the particle and the line
+	// Formula: |(x2 - x1)(y1 - y) - (x1 - x)(y2 - y1)| / sqrt((x2 - x1)^2 + (y2 - y1)^2)
+	double distance = abs((x2 - x1) * (y1 - pos_y) - (x1 - pos_x) * (y2 - y1)) / sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+
+	// If the distance is less than the radius of the particle, then there is a collision
+	if (distance < radius)
+	{
+		// Reflect the particle's angle
+		p_angle = 180 - p_angle;
+	}
+}
+
 /**
  * @brief Draws the particle
  * @details This function draws the particle
