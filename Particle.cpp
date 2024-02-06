@@ -63,6 +63,9 @@ Particle::Particle(int id, int x, int y, int angle, int velocity)
 	pos_y = y;
 	p_angle = angle;
 	p_velocity = velocity;
+
+	// Fix angle to counter-clockwise
+	p_angle = 360 - p_angle;
 }
 
 Particle::~Particle()
