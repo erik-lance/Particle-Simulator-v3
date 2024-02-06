@@ -123,5 +123,19 @@ void SimulatorGUI::ParticlesBatchGUI()
 	// Set window size
 	ImGui::SetWindowSize(ImVec2(particle_batch_size_x, particle_batch_size_y));
 
+	// Clamp batch size to 1-1000
+	ImGui::InputInt("Batch Size", &m_batch_size);
+	if (m_batch_size < 1) m_batch_size = 1;
+	if (m_batch_size > 1000) m_batch_size = 1000;
+
+	// Method 1 (Provide a start and end point)
+	// Particles are added with a uniform distance between given start and end points
+
+	// Method 2 (Provide a start angle and end angle)
+	// Particles are added with a uniform distance between given start and end angles
+
+	// Method 3 (Provide a start velocity and end velocity)
+	// Particles are added with a uniform distance between given start and end velocities
+
 	ImGui::End();
 }
