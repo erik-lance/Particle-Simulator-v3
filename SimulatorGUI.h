@@ -22,7 +22,7 @@ public:
 	void ParticlesBatchGUI();
 
 	// Clamper (Wrapper for ImGui::InputInt)
-	void InputClamp(char* text, int& num, int min, int max);
+	void InputClamp(const char* text, int& num, int min, int max);
 
 private:
 	// GUI Variables
