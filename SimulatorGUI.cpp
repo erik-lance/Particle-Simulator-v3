@@ -160,8 +160,8 @@ void SimulatorGUI::ParticlesBatchMethodOneGUI()
 	ImGui::Begin("Particle Batch (Method 1)", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 
 	// Set Window
-	ImGui::SetWindowPos(ImVec2(particle_batch_method_one_pos_x, particle_batch_method_one_pos_y));
-	ImGui::SetWindowSize(ImVec2(particle_batch_method_one_size_x, particle_batch_method_one_size_y));
+	ImGui::SetWindowPos(ImVec2(particle_batch_method_pos_x[0], particle_batch_method_pos_y[0]));
+	ImGui::SetWindowSize(ImVec2(particle_batch_method_size_x[0], particle_batch_method_size_y[0]));
 
 	// Method 1 (Provide a start and end point)
 	// Particles are added with a uniform distance between given start and end points
@@ -212,8 +212,8 @@ void SimulatorGUI::ParticlesBatchMethodTwoGUI()
 	ImGui::Begin("Particle Batch (Method 2)", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 
 	// Set Window
-	ImGui::SetWindowPos(ImVec2(particle_batch_method_two_pos_x, particle_batch_method_two_pos_y));
-	ImGui::SetWindowSize(ImVec2(particle_batch_method_two_size_x, particle_batch_method_two_size_y));
+	ImGui::SetWindowPos(ImVec2(particle_batch_method_pos_x[1], particle_batch_method_pos_y[1]));
+	ImGui::SetWindowSize(ImVec2(particle_batch_method_size_x[1], particle_batch_method_size_y[1]));
 
 	// Method 2 (Provide a start angle and end angle)
 	// Particles are added with a uniform distance between given start and end angles
@@ -252,6 +252,13 @@ void SimulatorGUI::ParticlesBatchMethodTwoGUI()
 
 void SimulatorGUI::ParticlesBatchMethodThreeGUI()
 {
+	ImGui::Begin("Particle Batch (Method 3)", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+
+	// Set Window
+	ImGui::SetWindowPos(ImVec2(particle_batch_method_pos_x[2], particle_batch_method_pos_y[2]));
+	ImGui::SetWindowSize(ImVec2(particle_batch_size_x, particle_batch_size_y));
+
+	ImGui::End();
 }
 
 void SimulatorGUI::InputClamp(int& num, int min, int max) { if (num < min) num = min; if (num > max) num = max; }

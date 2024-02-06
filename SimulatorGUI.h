@@ -41,20 +41,14 @@ private:
 	int particle_batch_pos_x = 1290;
 	int particle_batch_pos_y = 10;
 
-	int particle_batch_method_one_size_x = particle_batch_size_x;
-	int particle_batch_method_one_size_y = 300;
-	int particle_batch_method_one_pos_x = particle_batch_pos_x;
-	int particle_batch_method_one_pos_y = particle_batch_pos_y + particle_batch_size_y + 10;
-
-	int particle_batch_method_two_size_x = particle_batch_size_x;
-	int particle_batch_method_two_size_y = 300;
-	int particle_batch_method_two_pos_x = particle_batch_pos_x;
-	int particle_batch_method_two_pos_y = particle_batch_method_one_pos_y + particle_batch_method_one_size_y + 10;
-
-	int particle_batch_method_three_size_x = particle_batch_size_x;
-	int particle_batch_method_three_size_y = 300;
-	int particle_batch_method_three_pos_x = particle_batch_pos_x;
-	int particle_batch_method_three_pos_y = particle_batch_method_two_pos_y + particle_batch_method_two_size_y + 10;
+	int particle_batch_method_size_x[3] = { particle_batch_size_x, particle_batch_size_x, particle_batch_size_x };
+	int particle_batch_method_size_y[3] = { 250, 200, 250 };
+	int particle_batch_method_pos_x[3] = { particle_batch_pos_x, particle_batch_pos_x, particle_batch_pos_x };
+	int particle_batch_method_pos_y[3] = { 
+		particle_batch_pos_y + particle_batch_size_y + 10, 
+		particle_batch_method_pos_y[0] + particle_batch_method_size_y[0] + 10, 
+		particle_batch_method_pos_y[1] + particle_batch_method_size_y[1] + 10 
+	};
 
 	// Main Inputs
 	std::vector<Particle>* particles;
