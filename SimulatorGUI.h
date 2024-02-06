@@ -16,6 +16,10 @@ public:
 	virtual void Update();
 	void Render();
 	void Shutdown();
+
+	// GUI Functions
+	void MainMenuGUI();
+	void ParticlesBatchGUI();
 private:
 	std::vector<Particle>* particles;
 	int m_particle_id = 0;

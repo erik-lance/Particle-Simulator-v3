@@ -28,11 +28,36 @@ void SimulatorGUI::NewFrame()
 
 void SimulatorGUI::Update()
 {	
+	// Main Menu
+	MainMenuGUI();
+
+	// Particles Batch
+	ParticlesBatchGUI();
+}
+
+void SimulatorGUI::Render()
+{
+	// Render Dear ImGui
+	ImGui::Render();
+	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
+}
+
+void SimulatorGUI::Shutdown()
+{
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+}
+
+void SimulatorGUI::MainMenuGUI()
+{
 	// Render GUI
 	ImGui::Begin("GUI", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 
 	// Set window position
 	ImGui::SetWindowPos(ImVec2(1300, 10));
+
+	// Set window size
+	ImGui::SetWindowSize(ImVec2(250, 300));
 
 	// FPS and Delta Time and total time
 	// FPS updates every 0.5 seconds
@@ -72,7 +97,7 @@ void SimulatorGUI::Update()
 	if (m_particle_velocity > 50) m_particle_velocity = 50;
 
 	if (ImGui::Button("Add Particle")) {
-		std:: cout << "Particle Added" << std::endl;
+		std::cout << "Particle Added" << std::endl;
 		Particle p(m_particle_id, m_particle_x, m_particle_y, m_particle_angle, m_particle_velocity);
 		particles->push_back(p);
 
@@ -86,19 +111,8 @@ void SimulatorGUI::Update()
 	ImGui::InputInt("ID", &m_obstacle_id);
 
 	ImGui::End();
-
-
 }
 
-void SimulatorGUI::Render()
+void SimulatorGUI::ParticlesBatchGUI()
 {
-	// Render Dear ImGui
-	ImGui::Render();
-	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
-}
-
-void SimulatorGUI::Shutdown()
-{
-	ImGui_ImplSDL2_Shutdown();
-	ImGui::DestroyContext();
 }
