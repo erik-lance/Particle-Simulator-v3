@@ -20,6 +20,9 @@ public:
 	// GUI Functions
 	void MainMenuGUI();
 	void ParticlesBatchGUI();
+	void ParticlesBatchMethodOneGUI();
+	void ParticlesBatchMethodTwoGUI();
+	void ParticlesBatchMethodThreeGUI();
 
 	// Clamper (Wrapper for ImGui::InputInt)
 	void InputClamp(int& num, int min, int max);
@@ -28,15 +31,30 @@ public:
 
 private:
 	// GUI Variables
-	int menu_size_x = 250;
-	int menu_size_y = 300;
-	int menu_pos_x = 1300;
-	int menu_pos_y = 10;
+	int menu_size_x = 1270;
+	int menu_size_y = 160;
+	int menu_pos_x = 10;
+	int menu_pos_y = 730;
 
-	int particle_batch_size_x = 250;
-	int particle_batch_size_y = 500;
-	int particle_batch_pos_x = 1300;
-	int particle_batch_pos_y = menu_pos_y + menu_size_y + 10;
+	int particle_batch_size_x = 300;
+	int particle_batch_size_y = 60;
+	int particle_batch_pos_x = 1290;
+	int particle_batch_pos_y = 10;
+
+	int particle_batch_method_one_size_x = particle_batch_size_x;
+	int particle_batch_method_one_size_y = 300;
+	int particle_batch_method_one_pos_x = particle_batch_pos_x;
+	int particle_batch_method_one_pos_y = particle_batch_pos_y + particle_batch_size_y + 10;
+
+	int particle_batch_method_two_size_x = particle_batch_size_x;
+	int particle_batch_method_two_size_y = 300;
+	int particle_batch_method_two_pos_x = particle_batch_pos_x;
+	int particle_batch_method_two_pos_y = particle_batch_method_one_pos_y + particle_batch_method_one_size_y + 10;
+
+	int particle_batch_method_three_size_x = particle_batch_size_x;
+	int particle_batch_method_three_size_y = 300;
+	int particle_batch_method_three_pos_x = particle_batch_pos_x;
+	int particle_batch_method_three_pos_y = particle_batch_method_two_pos_y + particle_batch_method_two_size_y + 10;
 
 	// Main Inputs
 	std::vector<Particle>* particles;

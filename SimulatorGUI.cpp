@@ -122,6 +122,24 @@ void SimulatorGUI::ParticlesBatchGUI()
 	ImGui::InputInt("Batch Size", &m_batch_size);
 	InputClamp(m_batch_size, 1, 1000);
 
+	// Method 3 (Provide a start velocity and end velocity)
+	// Particles are added with a uniform distance between given start and end velocities
+
+	ImGui::End();
+
+	ParticlesBatchMethodOneGUI();
+	ParticlesBatchMethodTwoGUI();
+	ParticlesBatchMethodThreeGUI();
+}
+
+void SimulatorGUI::ParticlesBatchMethodOneGUI()
+{
+	ImGui::Begin("Particle Batch (Method 1)", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+
+	// Set Window
+	ImGui::SetWindowPos(ImVec2(particle_batch_method_one_pos_x, particle_batch_method_one_pos_y));
+	ImGui::SetWindowSize(ImVec2(particle_batch_method_one_size_x, particle_batch_method_one_size_y));
+
 	// Method 1 (Provide a start and end point)
 	// Particles are added with a uniform distance between given start and end points
 	ImGui::Separator();
@@ -163,9 +181,19 @@ void SimulatorGUI::ParticlesBatchGUI()
 		}
 	}
 
+	ImGui::End();
+}
+
+void SimulatorGUI::ParticlesBatchMethodTwoGUI()
+{
+	ImGui::Begin("Particle Batch (Method 2)", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+
+	// Set Window
+	ImGui::SetWindowPos(ImVec2(particle_batch_method_two_pos_x, particle_batch_method_two_pos_y));
+	ImGui::SetWindowSize(ImVec2(particle_batch_method_two_size_x, particle_batch_method_two_size_y));
+
 	// Method 2 (Provide a start angle and end angle)
 	// Particles are added with a uniform distance between given start and end angles
-	ImGui::Separator();
 	ImGui::Text("Method 2");
 
 	// Relatively Clamp Angle Start and End to 0-360
@@ -196,10 +224,11 @@ void SimulatorGUI::ParticlesBatchGUI()
 		}
 	}
 
-	// Method 3 (Provide a start velocity and end velocity)
-	// Particles are added with a uniform distance between given start and end velocities
-
 	ImGui::End();
+}
+
+void SimulatorGUI::ParticlesBatchMethodThreeGUI()
+{
 }
 
 void SimulatorGUI::InputClamp(int& num, int min, int max) { if (num < min) num = min; if (num > max) num = max; }
