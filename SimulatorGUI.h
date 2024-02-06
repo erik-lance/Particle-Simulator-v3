@@ -6,7 +6,7 @@
 #include <imgui_impl_sdlrenderer2.h>
 #include <imgui_impl_opengl3.h>
 #include <vector>
-#include "Particle.h"
+#include "Objects/Particle.h"
 
 class SimulatorGUI {
 public:

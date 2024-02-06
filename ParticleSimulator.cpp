@@ -5,7 +5,7 @@
 
 #include "ParticleSimulator.h"
 #include "SimulatorGUI.h"
-#include "Particle.h"
+#include "Objects/Particle.h"
 #include <glad/glad.h>
 #include <SDL.h>
 #include <vector>
