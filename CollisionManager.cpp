@@ -30,6 +30,15 @@ void CollisionManager::setGridDimensions(int columns, int rows)
 	grid_cell_height = simulator_height / grid_rows;
 
 	// Initialize the grid
+	grid.resize(grid_columns);
+	for (int i = 0; i < grid_columns; i++)
+	{
+		grid[i].resize(grid_rows);
+		for (int j = 0; j < grid_rows; j++)
+		{
+			grid[i][j].resize(2); // Initialize the grid cell to have 2 elements (particle and line) to hold IDs
+		}
+	}
 }
 
 /**

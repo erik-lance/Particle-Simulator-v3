@@ -22,6 +22,12 @@ private:
 	int grid_columns, grid_rows;
 	int grid_cell_width, grid_cell_height;
 
-	// Grid
-	std::vector<std::vector<int>> grid;
+	// Array Grid of Wall and Particle IDs on each cell
+	// grid[x][y][0] = Particle ID
+	// grid[x][y][1] = Line ID
+	std::vector<std::vector<std::vector<int>>> grid;
+
+	// Objects
+	std::vector<int> particles;
+	std::vector<int> lines;
 };
