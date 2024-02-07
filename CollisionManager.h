@@ -9,6 +9,7 @@
 class CollisionManager {
 public:
 	CollisionManager(int width, int height);
+	CollisionManager(int width, int height, int columns, int rows);
 	~CollisionManager();
 
 	void setSimulatorDimensions(int width, int height) { simulator_width = width; simulator_height = height; }
