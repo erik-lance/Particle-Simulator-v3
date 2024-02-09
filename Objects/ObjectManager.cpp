@@ -33,14 +33,30 @@ void ObjectManager::addParticle(int x, int y, int angle, int velocity)
 
 /**
  * Adds wall to the wall array. If the array is full, it will double the capacity
- * @param x1 The wall's first x position
- * @param y1 The wall's first y position
- * @param x2 The wall's second x position
- * @param y2 The wall's second y 
+ * @param line The line to add to the wall array
  */
-void ObjectManager::addWall(int x1, int y1, int x2, int y2)
+void ObjectManager::addWall(Line line)
 {
-	
+	// If the array is full, double the capacity
+    if (current_max_walls >= wall_capacity)
+    {
+		wall_capacity *= 2;
+		Wall* new_walls = new Wall[wall_capacity];
+        for (int i = 0; i < current_max_walls; i++)
+        {
+			new_walls[i] = walls[i];
+		}
+		delete[] walls;
+		walls = new_walls;
+	}
+
+	// Add the wall to the array
+	walls[current_max_walls] = Wall(line);
+
+    // Add to the collision manager
+    collision_manager->addWall(walls[current_max_walls]);
+
+	current_max_walls++; // Increment the counter after adding the wall
 }
 
 /**

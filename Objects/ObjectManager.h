@@ -11,7 +11,7 @@ public:
 	~ObjectManager();
 
 	void addParticle(int x, int y, int angle, int velocity);
-	void addWall(int x1, int y1, int x2, int y2);
+	void addWall(Line line);
 
 	void updateParticles(double delta);
 	void updateAndDrawParticles(double delta, SDL_Renderer* renderer);
