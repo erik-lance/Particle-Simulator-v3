@@ -19,6 +19,7 @@ public:
 
 	int getParticleCount() { return current_max_particles; }
 	int getWallCount() { return current_max_walls; }
+	CollisionManager getCollisionManager() { return *collision_manager; }
 
 private:
 	int screen_width, screen_height;
