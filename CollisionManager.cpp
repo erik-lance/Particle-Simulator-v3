@@ -30,6 +30,15 @@ CollisionManager::~CollisionManager()
 }
 
 /**
+ * Adds wall to cell/s in the grid.
+ * @param wall The wall to add to the grid
+ */
+void CollisionManager::addWall(Wall wall)
+{
+	// Since wall can span multiple cells, add the wall to the cells it intersects
+}
+
+/**
  * Sets up the grid dimensions, cell sizes, and initializes the grid
  * @param columns The number of columns in the grid
  * @param rows The number of rows in the grid
@@ -230,7 +239,7 @@ void CollisionManager::checkParticleCollisionsInCells(Particle particle)
 		Wall wall = start_cell.walls[i];
 
 		// Check for collisions
-		bool collided = particle.handleLineCollision(wall.getLine().x1, wall.getLine().y1, wall.getLine().x2, wall.getLine().y2);
+		bool collided = particle.handleLineCollision(wall.getLine());
 
 		// If there is a collision, stop checking for collisions for this particle
 		if (collided) { return; }
@@ -243,7 +252,7 @@ void CollisionManager::checkParticleCollisionsInCells(Particle particle)
 		Wall wall = end_cell.walls[i];
 
 		// Check for collisions
-		bool collided = particle.handleLineCollision(wall.getLine().x1, wall.getLine().y1, wall.getLine().x2, wall.getLine().y2);
+		bool collided = particle.handleLineCollision(wall.getLine());
 
 		// If there is a collision, stop checking for collisions for this particle
 		if (collided) { return; }

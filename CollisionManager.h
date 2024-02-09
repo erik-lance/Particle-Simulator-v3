@@ -35,6 +35,8 @@ public:
 	CollisionManager(int width, int height, int columns, int rows);
 	~CollisionManager();
 
+	void addWall(Wall wall);
+
 	void setSimulatorDimensions(int width, int height) { simulator_width = width; simulator_height = height; }
 	void setGridDimensions(int columns, int rows);
 
