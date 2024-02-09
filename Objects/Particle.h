@@ -16,6 +16,7 @@ class Particle {
 public:
 	Particle(int id, int x, int y);
 	Particle(int id, int x, int y, int angle, int velocity);
+	Particle();
 	~Particle();
 
 	int getID() const { return m_id; }
@@ -24,6 +25,7 @@ public:
 	int getAngle() const { return p_angle; }
 	int getVelocity() const { return p_velocity; }
 
+	void setID(int id) { m_id = id; }
 	void setX(int x) { pos_x = x; }
 	void setY(int y) { pos_y = y; }
 	void setAngle(int angle) { p_angle = angle; }
@@ -44,3 +46,40 @@ private:
 	double p_velocity;
 	int radius = 3;
 };
+
+Particle::Particle(int id, int x, int y) {
+	m_id = id;
+	pos_x = x;
+	pos_y = y;
+	p_angle = 0;
+	p_velocity = 0;
+}
+
+Particle::Particle(int id, int x, int y, int angle, int velocity)
+{
+	m_id = id;
+	pos_x = x;
+	pos_y = y;
+	p_angle = angle;
+	p_velocity = velocity;
+
+	// Fix angle to counter-clockwise
+	p_angle = 360 - p_angle;
+
+	// Fix velocity to pixels per second
+	p_velocity = (double)velocity / 10;
+}
+
+Particle::Particle()
+{
+	m_id = -1;
+	pos_x = 0;
+	pos_y = 0;
+	p_angle = 0;
+	p_velocity = 0;
+}
+
+Particle::~Particle()
+{
+	// TODO: Implement destructor
+}
