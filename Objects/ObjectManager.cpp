@@ -78,7 +78,7 @@ void ObjectManager::drawWalls(SDL_Renderer* renderer)
 
 }
 
-ObjectManager::ObjectManager() { }
+ObjectManager::ObjectManager() { screen_width = 1280; screen_height = 720; }
 
 ObjectManager::ObjectManager(int width, int height)
 {
