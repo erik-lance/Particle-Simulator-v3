@@ -75,7 +75,8 @@ bool Particle::handleLineCollision(Line line)
 		position.y = intersection.y;
 
 		// Reflect the particle's angle
-		p_angle = reflectAngle(p_angle);
+		// p_angle = reflectAngle(p_angle);
+		p_angle = 180 - p_angle;
 
 		// And then move the position by the distance
 		position.x += distance * cos(p_angle * M_PI / 180);

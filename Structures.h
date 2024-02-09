@@ -108,5 +108,5 @@ static inline float normalizeAngle(float angle)
 static inline float reflectAngle(float angle)
 {
     // Reflect the angle by adding pi (180 degrees)
-    return normalizeAngle(angle + PI);
+    return normalizeAngle(angle + 180);
 }
