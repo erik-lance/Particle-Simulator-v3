@@ -42,18 +42,20 @@ void Particle::handleScreenCollision()
 /**
  * Handles the particles collision given a line by checking if
  * there is an intersection between the particle and the line
- * @param x1 The x coordinate of the first point of the line
- * @param y1 The y coordinate of the first point of the line
- * @param x2 The x coordinate of the second point of the line
- * @param y2 The y coordinate of the second point of the line
+ * @param line The line to check for collision
  * @return True if there is a collision, false otherwise
  */
-bool Particle::handleLineCollision(int x1, int y1, int x2, int y2)
+bool Particle::handleLineCollision(Line line)
 {
 	// Check if particle's old and new position intersects with the line
 	bool collided = false;
 
 	// Calculate the distance between the line and the particle's old and new position
+	int x1 = line.start.x;
+	int y1 = line.start.y;
+	int x2 = line.end.x;
+	int y2 = line.end.y;
+
 	double distance1 = abs((x2 - x1) * (old_position.y - y1) - (y2 - y1) * (old_position.x - x1)) / sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 	double distance2 = abs((x2 - x1) * (position.y - y1) - (y2 - y1) * (position.x - x1)) / sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 
