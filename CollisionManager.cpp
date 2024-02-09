@@ -14,6 +14,19 @@ CollisionManager::CollisionManager(int width, int height, int columns, int rows)
 
 CollisionManager::~CollisionManager()
 {
+	// Deallocate memory for the 2D array of cells in the grid
+	for (int i = 0; i < grid_columns; i++)
+	{
+		// Deallocate array of particles and walls in each cell
+		for (int j = 0; j < grid_rows; j++)
+		{
+			delete[] grid.cells[i][j].particles;
+			delete[] grid.cells[i][j].walls;
+		}
+	}
+
+	// Deallocate the array of cells
+	delete[] grid.cells;
 }
 
 /**
