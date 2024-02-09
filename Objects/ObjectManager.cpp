@@ -23,10 +23,10 @@ void ObjectManager::addParticle(int x, int y, int angle, int velocity)
     }
 
     // Add the particle to the array
-    particles[current_max_particles] = Particle(current_max_particles, x, y, angle, velocity);
+    particles[current_max_particles-1] = Particle(current_max_particles, x, y, angle, velocity);
 
     // Set the screen size for the particle
-    particles[current_max_particles].setScreenSize(screen_width, screen_height);
+    particles[current_max_particles-1].setScreenSize(screen_width, screen_height);
 
     current_max_particles++; // Increment the counter after adding the particle
 }
@@ -51,11 +51,11 @@ void ObjectManager::addWall(Line line)
 	}
 
 	// Add the wall to the array
-	walls[current_max_walls] = Wall(line);
+	walls[current_max_walls-1] = Wall(line);
     current_max_walls++; // Increment the counter after adding the wall
 
     // Add to the collision manager
-    collision_manager->addWall(walls[current_max_walls-1]);
+    collision_manager->addWall(walls[current_max_walls-2]);
 }
 
 /**

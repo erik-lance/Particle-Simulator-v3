@@ -28,8 +28,8 @@ private:
 	int initial_capacity = 1024;
 	int particle_capacity = initial_capacity;
 	int wall_capacity = initial_capacity;
-	int current_max_particles = 0;
-	int current_max_walls = 0;
+	int current_max_particles = 1;
+	int current_max_walls = 1;
 	Particle* particles = new Particle[particle_capacity];
 	Wall* walls = new Wall[wall_capacity];
 
