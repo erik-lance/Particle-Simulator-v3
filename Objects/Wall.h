@@ -11,6 +11,7 @@ class Wall {
 public:
 	Wall(int id);
 	Wall();
+	Wall(Line line) { m_line = line; }
 	~Wall();
 
 	int getID() const { return m_id; }
