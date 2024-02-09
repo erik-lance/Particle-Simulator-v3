@@ -16,7 +16,7 @@ public:
 	void draw(SDL_Renderer* renderer);
 
 private:
-	int m_id;
+	int m_id = -1;
 	Line m_line;
 
 };
