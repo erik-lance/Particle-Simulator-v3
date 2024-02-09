@@ -89,9 +89,6 @@ int main()
 	Uint64 current_time = SDL_GetPerformanceCounter();
 	Uint64 last_time = 0;
 
-	// Add a test wall
-	object_manager.addWall(Line(512, 255, 1024, 512));
-
 	while (1) {
 		// Calculate delta time
 		last_time = current_time;
@@ -118,6 +115,7 @@ int main()
 
 		// Move the particles
 		object_manager.updateAndDrawParticles(delta_time, renderer);
+		object_manager.drawWalls(renderer);
 
 		// Render ImGui
 		gui.NewFrame();
