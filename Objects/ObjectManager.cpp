@@ -52,11 +52,10 @@ void ObjectManager::addWall(Line line)
 
 	// Add the wall to the array
 	walls[current_max_walls] = Wall(line);
+    current_max_walls++; // Increment the counter after adding the wall
 
     // Add to the collision manager
-    collision_manager->addWall(walls[current_max_walls]);
-
-	current_max_walls++; // Increment the counter after adding the wall
+    collision_manager->addWall(walls[current_max_walls-1]);
 }
 
 /**
