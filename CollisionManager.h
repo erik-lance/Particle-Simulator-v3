@@ -46,6 +46,7 @@ public:
 	void checkCollisionsColumn(int column);
 	void checkCollisionsRow(int row);
 	void checkParticleLineCollisionsInCell(Cell cell);
+	void checkParticleCollisionsInCells(Particle particle);
 
 private:
 	int simulator_width, simulator_height;

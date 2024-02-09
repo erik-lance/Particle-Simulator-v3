@@ -207,3 +207,45 @@ void CollisionManager::checkParticleLineCollisionsInCell(Cell cell)
 		}
 	}
 }
+
+/**
+ * Checks for a particle's collisions in a start and end cell to see
+ * if its start-end position intersets with any wall in the two cells.
+ * @param particle The particle to check for collisions
+*/
+void CollisionManager::checkParticleCollisionsInCells(Particle particle)
+{
+	Position start_pos = particle.getOldPosition();
+	Position end_pos = particle.getPosition();
+
+	Cell start_cell = getGridCell(start_pos.x, start_pos.y);
+	Cell end_cell = getGridCell(end_pos.x, end_pos.y);
+
+	// Check for collisions between the particle and the walls in the start and end cells
+
+	// Check for collisions in the start cell
+	for (int i = 0; i < start_cell.numWalls; i++)
+	{
+		// Get the wall
+		Wall wall = start_cell.walls[i];
+
+		// Check for collisions
+		bool collided = particle.handleLineCollision(wall.getLine().x1, wall.getLine().y1, wall.getLine().x2, wall.getLine().y2);
+
+		// If there is a collision, stop checking for collisions for this particle
+		if (collided) { return; }
+	}
+
+	// Check for collisions in the end cell
+	for (int i = 0; i < end_cell.numWalls; i++)
+	{
+		// Get the wall
+		Wall wall = end_cell.walls[i];
+
+		// Check for collisions
+		bool collided = particle.handleLineCollision(wall.getLine().x1, wall.getLine().y1, wall.getLine().x2, wall.getLine().y2);
+
+		// If there is a collision, stop checking for collisions for this particle
+		if (collided) { return; }
+	}
+}
