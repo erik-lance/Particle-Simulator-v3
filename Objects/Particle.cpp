@@ -27,7 +27,15 @@ void Particle::handleScreenCollision()
 	}
 }
 
-void Particle::handleLineCollision(int x1, int y1, int x2, int y2)
+/**
+ * Handles the particles collision given a line
+ * @param x1 The x coordinate of the first point of the line
+ * @param y1 The y coordinate of the first point of the line
+ * @param x2 The x coordinate of the second point of the line
+ * @param y2 The y coordinate of the second point of the line
+ * @return True if there is a collision, false otherwise
+ */
+bool Particle::handleLineCollision(int x1, int y1, int x2, int y2)
 {
 	// Calculate the distance between the particle and the line
 	// Formula: |(x2 - x1)(y1 - y) - (x1 - x)(y2 - y1)| / sqrt((x2 - x1)^2 + (y2 - y1)^2)
@@ -38,6 +46,11 @@ void Particle::handleLineCollision(int x1, int y1, int x2, int y2)
 	{
 		// Reflect the particle's angle
 		p_angle = 180 - p_angle;
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
