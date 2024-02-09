@@ -42,6 +42,9 @@ public:
 	void updateParticleGrid(int id, Cell cell, int x, int y);
 	void updateLineGrid(int id, int x1, int y1, int x2, int y2);
 
+	void checkCollisions();
+	void checkCollisionsColumn(int column);
+	void checkCollisionsRow(int row);
 	void checkParticleLineCollisionsInCell(Cell cell);
 
 private:

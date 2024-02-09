@@ -100,6 +100,72 @@ void CollisionManager::updateLineGrid(int id, int x1, int y1, int x2, int y2)
 }
 
 /**
+ * Checks for collisions within the grid. It searches for
+ * cells where there is at least one line and one particle.
+ */
+void CollisionManager::checkCollisions()
+{
+	// Iterate through each cell in the grid
+	for (int i = 0; i < grid_columns; i++)
+	{
+		for (int j = 0; j < grid_rows; j++)
+		{
+			// Get the cell
+			Cell cell = grid.cells[i][j];
+
+			// Check if the cell has particles and lines
+			if (cell.numParticles > 0 && cell.numWalls > 0)
+			{
+				// Check for collisions in the cell
+				checkParticleLineCollisionsInCell(cell);
+			}
+		}
+	}
+}
+
+/**
+ * Checks for collisions in a column
+ * @param column The column to check for collisions
+ */
+void CollisionManager::checkCollisionsColumn(int column)
+{
+	// Iterate through each cell in the column
+	for (int i = 0; i < grid_rows; i++)
+	{
+		// Get the cell
+		Cell cell = grid.cells[column][i];
+
+		// Check if the cell has particles and lines
+		if (cell.numParticles > 0 && cell.numWalls > 0)
+		{
+			// Check for collisions in the cell
+			checkParticleLineCollisionsInCell(cell);
+		}
+	}
+}
+
+/**
+ * Checks for collisions in a row
+ * @param row The row to check for collisions
+ */
+void CollisionManager::checkCollisionsRow(int row)
+{
+	// Iterate through each cell in the row
+	for (int i = 0; i < grid_columns; i++)
+	{
+		// Get the cell
+		Cell cell = grid.cells[i][row];
+
+		// Check if the cell has particles and lines
+		if (cell.numParticles > 0 && cell.numWalls > 0)
+		{
+			// Check for collisions in the cell
+			checkParticleLineCollisionsInCell(cell);
+		}
+	}
+}
+
+/**
  * Checks for particle-line collisions in a cell
  * @param cell The cell to check for collisions
  */
