@@ -28,17 +28,3 @@ private:
 	Wall* walls = new Wall[wall_capacity];
 
 };
-
-ObjectManager::ObjectManager()
-{
-
-}
-
-/**
- * Safely deallocates memory for the particles and walls
- */
-ObjectManager::~ObjectManager()
-{
-	delete[] particles;
-	delete[] walls;
-}

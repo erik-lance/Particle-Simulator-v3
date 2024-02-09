@@ -61,3 +61,40 @@ void Particle::draw(SDL_Renderer* renderer)
 		SDL_RenderDrawPoint(renderer, x, y);
 	}
 }
+
+Particle::Particle(int id, int x, int y) {
+	m_id = id;
+	pos_x = x;
+	pos_y = y;
+	p_angle = 0;
+	p_velocity = 0;
+}
+
+Particle::Particle(int id, int x, int y, int angle, int velocity)
+{
+	m_id = id;
+	pos_x = x;
+	pos_y = y;
+	p_angle = angle;
+	p_velocity = velocity;
+
+	// Fix angle to counter-clockwise
+	p_angle = 360 - p_angle;
+
+	// Fix velocity to pixels per second
+	p_velocity = (double)velocity / 10;
+}
+
+Particle::Particle()
+{
+	m_id = -1;
+	pos_x = 0;
+	pos_y = 0;
+	p_angle = 0;
+	p_velocity = 0;
+}
+
+Particle::~Particle()
+{
+	// TODO: Implement destructor
+}

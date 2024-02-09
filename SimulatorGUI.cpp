@@ -15,8 +15,6 @@ void SimulatorGUI::Init(SDL_Window* window, SDL_GLContext gl_context, SDL_Render
 	ImGui::StyleColorsDark();
 }
 
-void SimulatorGUI::setParticles(std::vector<Particle>& particles) { this->particles = &particles; }
-
 void SimulatorGUI::NewFrame()
 {
 	ImGui_ImplSDLRenderer2_NewFrame();
@@ -117,8 +115,7 @@ void SimulatorGUI::MainMenuGUI()
 
 	if (ImGui::Button("Add Particle")) {
 		std::cout << "Particle Added" << std::endl;
-		Particle p(m_particle_id, m_particle_x, m_particle_y, m_particle_angle, m_particle_velocity);
-		particles->push_back(p);
+		m_object_manager->addParticle(m_particle_x, m_particle_y, m_particle_angle, m_particle_velocity);
 
 		// Increment particle id
 		m_particle_id++;
@@ -197,8 +194,7 @@ void SimulatorGUI::ParticlesBatchMethodOneGUI()
 			double distance = sqrt(pow(method_one_end_x - method_one_start_x, 2) + pow(method_one_end_y - method_one_start_y, 2));
 			double x = method_one_start_x + (method_one_end_x - method_one_start_x) * i / m_batch_size;
 			double y = method_one_start_y + (method_one_end_y - method_one_start_y) * i / m_batch_size;
-			Particle p(m_particle_id, x, y, method_one_angle, method_one_velocity);
-			particles->push_back(p);
+			m_object_manager->addParticle(x, y, method_one_angle, method_one_velocity);
 
 			// Increment particle id
 			m_particle_id++;
@@ -242,8 +238,7 @@ void SimulatorGUI::ParticlesBatchMethodTwoGUI()
 		std::cout << "Particle Batch Added (Method 2)" << std::endl;
 		for (int i = 0; i < m_batch_size; i++) {
 			double angle = method_two_start_angle + (method_two_end_angle - method_two_start_angle) * i / m_batch_size;
-			Particle p(m_particle_id, method_two_start_x, method_two_start_y, angle, method_two_velocity);
-			particles->push_back(p);
+			m_object_manager->addParticle(method_two_start_x, method_two_start_y, angle, method_two_velocity);
 
 			// Increment particle id
 			m_particle_id++;
@@ -286,8 +281,7 @@ void SimulatorGUI::ParticlesBatchMethodThreeGUI()
 		std::cout << "Particle Batch Added (Method 3)" << std::endl;
 		for (int i = 0; i < m_batch_size; i++) {
 			double velocity = method_three_start_velocity + (method_three_end_velocity - method_three_start_velocity) * i / m_batch_size;
-			Particle p(m_particle_id, method_three_start_x, method_three_start_y, method_three_angle, velocity);
-			particles->push_back(p);
+			m_object_manager->addParticle(method_three_start_x, method_three_start_y, method_three_angle, velocity);
 
 			// Increment particle id
 			m_particle_id++;

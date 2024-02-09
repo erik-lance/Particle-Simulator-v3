@@ -73,3 +73,21 @@ void ObjectManager::drawWalls(SDL_Renderer* renderer)
 {
 
 }
+
+ObjectManager::ObjectManager()
+{
+    initial_capacity = 1024;
+    particle_capacity = initial_capacity;
+    wall_capacity = initial_capacity;
+    current_max_particles = 0;
+    current_max_walls = 0;
+}
+
+/**
+ * Safely deallocates memory for the particles and walls
+ */
+ObjectManager::~ObjectManager()
+{
+    delete[] particles;
+    delete[] walls;
+}

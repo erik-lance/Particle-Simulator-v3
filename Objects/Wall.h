@@ -14,13 +14,3 @@ private:
 	int m_id;
 
 };
-
-Wall::Wall(int id) {
-	m_id = id;
-}
-
-Wall::Wall() {
-}
-
-Wall::~Wall() {
-}
