@@ -15,7 +15,7 @@ struct Cell {
 	int maxWalls;        // Maximum number of walls in this cell
 };
 
-bool operator==(const Cell& c1, const Cell& c2) { return c1.position == c2.position; }
+static inline bool operator==(const Cell& c1, const Cell& c2) { return c1.position == c2.position; }
 
 // Represents the grid
 struct Grid {

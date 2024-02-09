@@ -4,13 +4,13 @@ struct Position { int x; int y; };
 struct Line  { Position start; Position end; };
 struct Screen { int width = 1280; int height = 720; };
 
-bool operator==(const Position& lhs, const Position& rhs)
+static inline bool operator==(const Position& lhs, const Position& rhs)
 {
 	return lhs.x == rhs.x && lhs.y == rhs.y;
 }
 
 // Line intersection
-bool lineIntersectsLine(Line l1, Line l2)
+static inline bool lineIntersectsLine(Line l1, Line l2)
 {
     // Get the segments' parameters
     float dx12 = l1.end.x - l1.start.x;
