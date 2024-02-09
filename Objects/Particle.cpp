@@ -10,18 +10,18 @@ void Particle::updatePosition(double delta)
 	double angle_rad = p_angle * M_PI / 180.0;
 
 	// Update position based on velocity and angle using elapsed time
-	pos_x += p_velocity * cos(angle_rad) * delta;
-	pos_y += p_velocity * sin(angle_rad) * delta;
+	position.x += p_velocity * cos(angle_rad) * delta;
+	position.y += p_velocity * sin(angle_rad) * delta;
 }
 
 void Particle::handleScreenCollision()
 {
 	// Bounce off the walls
-	if (pos_x < 0 || pos_x > screen_width) {
+	if (position.x < 0 || position.x > screen_width) {
 		// Reflect horizontally if particle hits left or right wall
 		p_angle = 180 - p_angle;
 	}
-	if (pos_y < 0 || pos_y > screen_height) {
+	if (position.y < 0 || position.y > screen_height) {
 		// Reflect vertically if particle hits top or bottom wall
 		p_angle = -p_angle;
 	}
@@ -39,7 +39,7 @@ bool Particle::handleLineCollision(int x1, int y1, int x2, int y2)
 {
 	// Calculate the distance between the particle and the line
 	// Formula: |(x2 - x1)(y1 - y) - (x1 - x)(y2 - y1)| / sqrt((x2 - x1)^2 + (y2 - y1)^2)
-	double distance = abs((x2 - x1) * (y1 - pos_y) - (x1 - pos_x) * (y2 - y1)) / sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+	double distance = abs((x2 - x1) * (y1 - position.y) - (x1 - position.x) * (y2 - y1)) / sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 
 	// If the distance is less than the radius of the particle, then there is a collision
 	if (distance < radius)
@@ -69,16 +69,18 @@ void Particle::draw(SDL_Renderer* renderer)
 	// Draw a circle
 	for (int i = 0; i < 360; i++)
 	{
-		float x = pos_x + radius * cos(i);
-		float y = pos_y + radius * sin(i);
+		float x = position.x + radius * cos(i);
+		float y = position.y + radius * sin(i);
 		SDL_RenderDrawPoint(renderer, x, y);
 	}
 }
 
 Particle::Particle(int id, int x, int y) {
 	m_id = id;
-	pos_x = x;
-	pos_y = y;
+	position.x = x;
+	position.y = y;
+	old_position.x = x;
+	old_position.y = y;
 	p_angle = 0;
 	p_velocity = 0;
 }
@@ -86,8 +88,10 @@ Particle::Particle(int id, int x, int y) {
 Particle::Particle(int id, int x, int y, int angle, int velocity)
 {
 	m_id = id;
-	pos_x = x;
-	pos_y = y;
+	position.x = x;
+	position.y = y;
+	old_position.x = x;
+	old_position.y = y;
 	p_angle = angle;
 	p_velocity = velocity;
 
@@ -101,8 +105,10 @@ Particle::Particle(int id, int x, int y, int angle, int velocity)
 Particle::Particle()
 {
 	m_id = -1;
-	pos_x = 0;
-	pos_y = 0;
+	position.x = 0;
+	position.y = 0;
+	old_position.x = 0;
+	old_position.y = 0;
 	p_angle = 0;
 	p_velocity = 0;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL.h>
+#include "../Structures.h"
 
 /**
 * @brief Particle class
@@ -20,14 +21,13 @@ public:
 	~Particle();
 
 	int getID() const { return m_id; }
-	int getX() const { return pos_x; }
-	int getY() const { return pos_y; }
+	Position getPosition() const { return position; }
+	Position getOldPosition() const { return old_position; }
 	int getAngle() const { return p_angle; }
 	int getVelocity() const { return p_velocity; }
 
 	void setID(int id) { m_id = id; }
-	void setX(int x) { pos_x = x; }
-	void setY(int y) { pos_y = y; }
+	void setPosition(Position pos) { position = pos; }
 	void setAngle(int angle) { p_angle = angle; }
 	void setVelocity(int velocity) { p_velocity = velocity; }
 	void setScreenSize(int width, int height) { screen_width = width; screen_height = height; }
@@ -40,11 +40,11 @@ public:
 
 private:
 	int m_id;
-	int pos_x;
-	int pos_y;
+	Position position;
+	Position old_position;
 
-	int screen_width;
-	int screen_height;
+	int screen_width = 1280;
+	int screen_height = 720;
 
 	int p_angle;
 	double p_velocity;
