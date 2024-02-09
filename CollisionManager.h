@@ -1,5 +1,28 @@
 #pragma once
-#include <vector>
+
+#include "Structures.h"
+#include "Objects/Particle.h"
+#include "Objects/Wall.h"
+
+// Represents a cell in the grid
+struct Cell {
+	Position position;   // Position of the cell
+	Particle* particles; // Array of particles in this cell
+	Wall* walls;         // Array of walls in this cell
+	int numParticles;    // Number of particles in this cell
+	int numWalls;        // Number of walls in this cell
+	int maxParticles;    // Maximum number of particles in this cell
+	int maxWalls;        // Maximum number of walls in this cell
+};
+
+// Represents the grid
+struct Grid {
+	int columns;
+	int rows;
+	int cell_width;
+	int cell_height;
+	Cell** cells; // 2D array of cells
+};
 
 /**
  * The CollisionManager splits the simulation into a grid and checks for collisions within the grid.
@@ -15,7 +38,9 @@ public:
 	void setSimulatorDimensions(int width, int height) { simulator_width = width; simulator_height = height; }
 	void setGridDimensions(int columns, int rows);
 
-	std::pair<int, int> getGridCell(int x, int y);
+	Cell getGridCell(int x, int y);
+	void updateParticleGrid(int id, Cell cell, int x, int y);
+	void updateLineGrid(int id, int x1, int y1, int x2, int y2);
 
 private:
 	int simulator_width, simulator_height;
@@ -23,11 +48,7 @@ private:
 	int grid_cell_width, grid_cell_height;
 
 	// Array Grid of Wall and Particle IDs on each cell
-	// grid[x][y][0] = Particle ID
-	// grid[x][y][1] = Line ID
-	std::vector<std::vector<std::vector<int>>> grid;
+	// Multiple particles and lines can be in the same cell
+	Grid grid;
 
-	// Objects
-	std::vector<int> particles;
-	std::vector<int> lines;
 };
