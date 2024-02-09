@@ -82,7 +82,10 @@ void ObjectManager::updateAndDrawParticles(double delta, SDL_Renderer* renderer)
     for (int i = 0; i < current_max_particles-1; i++)
     {
 		particles[i].updatePosition(delta);
-        collision_manager->checkParticleCollisionsInCells(particles[i]);
+        // std::cout << "(Before CollisionCheck) Particle " << i << " position: (" << particles[i].getPosition().x << ", " << particles[i].getPosition().y << ")" << std::endl;
+        collision_manager->checkParticleCollisionsInCells(&particles[i]);
+        // std::cout << "(After CollisionCheck) Particle " << i << " position: (" << particles[i].getPosition().x << ", " << particles[i].getPosition().y << ")" << std::endl;
+        // std::cout << "Angle: " << particles[i].getAngle() << std::endl;
 		particles[i].handleScreenCollision();
 		particles[i].draw(renderer);
 	}

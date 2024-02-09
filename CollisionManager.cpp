@@ -1,4 +1,5 @@
 #include "CollisionManager.h"
+#include <iostream>
 
 CollisionManager::CollisionManager(int width, int height)
 {
@@ -63,6 +64,8 @@ void CollisionManager::addWall(Wall wall)
 				intersects = cellIntersectsLine(cell, line);
 			}
 
+			std::cout << "Intersects: " << intersects << std::endl;
+
 			if (intersects)
 			{
 				// Add the wall to the cell. Allocate memory
@@ -80,8 +83,11 @@ void CollisionManager::addWall(Wall wall)
 				}
 
 				// Add the wall to the cell
+				std::cout << "Adding wall to cell: " << "(" << i << ", " << j << ") " << cell.position.x << ", " << cell.position.y << std::endl;
 				cell.walls[cell.numWalls-1] = wall;
 				cell.numWalls++;
+
+				grid.cells[i][j] = cell;
 			}
 		}
 	}
@@ -194,7 +200,7 @@ Cell CollisionManager::getGridCell(int x, int y) const
  * @param x The particle's x position
  * @param y The particle's y position
  */
-void CollisionManager::updateParticleGrid(int id, Cell cell, int x, int y)
+void CollisionManager::updateParticleGrid(int id, Cell cell, int x, int y) const
 {
 	// Get the grid cell
 	Cell new_cell = getGridCell(x, y);
@@ -296,38 +302,40 @@ void CollisionManager::checkParticleLineCollisionsInCell(Cell cell)
 			// Check for collisions
 			bool collided = p.handleLineCollision(line);
 
-			// If there is a collision, stop checking for collisions for this particle
-			if (collided) break;
+			// If there is a collision, update the particle's position
+			
 		}
 	}
 }
 
 /**
  * Checks for a particle's collisions in a start and end cell to see
- * if its start-end position intersets with any wall in the two cells.
+ * if its start-end position intersects with any wall in the two cells.
  * @param particle The particle to check for collisions
 */
-void CollisionManager::checkParticleCollisionsInCells(Particle particle) const
+void CollisionManager::checkParticleCollisionsInCells(Particle* particle) const
 {
-	Position start_pos = particle.getOldPosition();
-	Position end_pos = particle.getPosition();
+	Position start_pos = particle->getOldPosition();
+	Position end_pos = particle->getPosition();
 
 	Cell start_cell = getGridCell(start_pos.x, start_pos.y);
 	Cell end_cell = getGridCell(end_pos.x, end_pos.y);
 
-	std::cout << "Start and End Cell: " << start_cell.position.x << ", " << start_cell.position.y << " and " << end_cell.position.x << ", " << end_cell.position.y << std::endl;
+	// std::cout << "Start and End Cell: " << start_cell.position.x << ", " << start_cell.position.y << " and " << end_cell.position.x << ", " << end_cell.position.y << std::endl;
+	// std::cout << "Num of walls in start cell (" << start_cell.position.x << ", " << start_cell.position.y << "): " << start_cell.numWalls << std::endl;
+	// std::cout << "Num of walls in end cell (" << end_cell.position.x << ", " << end_cell.position.y << "): " << end_cell.numWalls << std::endl;
 
 	// Check for collisions between the particle and the walls in the start and end cells
 
 	// Check for collisions in the start cell
 	for (int i = 0; i < start_cell.numWalls-1; i++)
 	{
-		std::cout << "Start Cell Wall: " << start_cell.walls[i].getLine().start.x << ", " << start_cell.walls[i].getLine().start.y << " and " << start_cell.walls[i].getLine().end.x << ", " << start_cell.walls[i].getLine().end.y << std::endl;
+		// std::cout << "Start Cell Wall: " << start_cell.walls[i].getLine().start.x << ", " << start_cell.walls[i].getLine().start.y << " and " << start_cell.walls[i].getLine().end.x << ", " << start_cell.walls[i].getLine().end.y << std::endl;
 		// Get the wall
 		Wall wall = start_cell.walls[i];
 
 		// Check for collisions
-		bool collided = particle.handleLineCollision(wall.getLine());
+		bool collided = particle->handleLineCollision(wall.getLine());
 
 		// If there is a collision, stop checking for collisions for this particle
 		if (collided) { return; }
@@ -340,7 +348,7 @@ void CollisionManager::checkParticleCollisionsInCells(Particle particle) const
 		Wall wall = end_cell.walls[i];
 
 		// Check for collisions
-		bool collided = particle.handleLineCollision(wall.getLine());
+		bool collided = particle->handleLineCollision(wall.getLine());
 
 		// If there is a collision, stop checking for collisions for this particle
 		if (collided) { return; }
