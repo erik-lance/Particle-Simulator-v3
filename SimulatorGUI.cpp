@@ -125,6 +125,21 @@ void SimulatorGUI::MainMenuGUI()
 	ImGui::TableNextColumn();
 	ImGui::Text("Obstacle");
 
+	if (ImGui::Button("Add Wall")) {
+		std::cout << "Wall Added" << std::endl;
+		Line line = Line();
+		line.start.x = 512;
+		line.start.y = 255;
+		line.end.x = 1024;
+		line.end.y = 512;
+
+		std::cout << "Wall: " << line.start.x << " " << line.start.y << " " << line.end.x << " " << line.end.y << std::endl;
+		m_object_manager->addWall(line);
+
+		// Increment obstacle id
+		m_obstacle_id++;
+	}
+
 	ImGui::EndTable();
 
 	ImGui::End();
