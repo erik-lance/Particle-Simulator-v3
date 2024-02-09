@@ -36,6 +36,82 @@ CollisionManager::~CollisionManager()
 void CollisionManager::addWall(Wall wall)
 {
 	// Since wall can span multiple cells, add the wall to the cells it intersects
+	Position start = wall.getLine().start;
+	Position end = wall.getLine().end;
+
+	Cell start_cell = getGridCell(start.x, start.y);
+	Cell end_cell = getGridCell(end.x, end.y);
+
+	// Check a quadrilateral formed by the start and end cell
+	// and add the wall to the cells it intersects
+
+	for (int i = start_cell.position.x; i <= end_cell.position.x; i++)
+	{
+		for (int j = start_cell.position.y; j <= end_cell.position.y; j++)
+		{
+			// Check if line intersects the cell
+			// If it does, add the wall to the cell
+			Cell cell = grid.cells[i][j];
+			bool intersects = false;
+
+			// Check if start or end cell because it is automatically intersected
+			if (cell == start_cell || cell == end_cell) { intersects = true; }
+			else
+			{
+				// Check if the line intersects the cell
+				Line line = wall.getLine();
+				intersects = cellIntersectsLine(cell, line);
+			}
+
+			if (intersects)
+			{
+				// Add the wall to the cell. Allocate memory
+				// if the cell's walls array is full
+				if (cell.numWalls >= cell.maxWalls)
+				{
+					cell.maxWalls *= 2;
+					Wall* new_walls = new Wall[cell.maxWalls];
+					for (int i = 0; i < cell.numWalls; i++)
+					{
+						new_walls[i] = cell.walls[i];
+					}
+					delete[] cell.walls;
+					cell.walls = new_walls;
+				}
+			}
+		}
+	}
+}
+
+/**
+ * Checks if a cell intersects with a line
+ * @param cell The cell to check for intersection
+ * @param line The line to check for intersection
+ */
+bool CollisionManager::cellIntersectsLine(Cell cell, Line line)
+{
+	// Check if the line intersects the cell
+	bool intersects = false;
+
+	// Check each line of the cell for intersection
+	Line lines[4] = {
+		Line{ cell.position.x, cell.position.y, cell.position.x + grid_cell_width, cell.position.y },
+		Line{ cell.position.x + grid_cell_width, cell.position.y, cell.position.x + grid_cell_width, cell.position.y + grid_cell_height },
+		Line{ cell.position.x + grid_cell_width, cell.position.y + grid_cell_height, cell.position.x, cell.position.y + grid_cell_height },
+		Line{ cell.position.x, cell.position.y + grid_cell_height, cell.position.x, cell.position.y }
+	};
+
+	for (int i = 0; i < 4; i++)
+	{
+		// Check for intersection
+		if (lineIntersectsLine(lines[i], line))
+		{
+			intersects = true;
+			break;
+		}
+	}
+
+	return intersects;
 }
 
 /**
@@ -209,7 +285,7 @@ void CollisionManager::checkParticleLineCollisionsInCell(Cell cell)
 			Line line = l.getLine();
 
 			// Check for collisions
-			bool collided = p.handleLineCollision(line.x1, line.y1, line.x2, line.y2);
+			bool collided = p.handleLineCollision(line);
 
 			// If there is a collision, stop checking for collisions for this particle
 			if (collided) break;

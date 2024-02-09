@@ -15,6 +15,8 @@ struct Cell {
 	int maxWalls;        // Maximum number of walls in this cell
 };
 
+bool operator==(const Cell& c1, const Cell& c2) { return c1.position == c2.position; }
+
 // Represents the grid
 struct Grid {
 	int columns;
@@ -36,6 +38,7 @@ public:
 	~CollisionManager();
 
 	void addWall(Wall wall);
+	bool cellIntersectsLine(Cell cell, Line line);
 
 	void setSimulatorDimensions(int width, int height) { simulator_width = width; simulator_height = height; }
 	void setGridDimensions(int columns, int rows);
