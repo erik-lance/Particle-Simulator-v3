@@ -24,10 +24,18 @@ void Particle::handleScreenCollision()
 	if (position.x < 0 || position.x > screen_width) {
 		// Reflect horizontally if particle hits left or right wall
 		p_angle = 180 - p_angle;
+
+		// Clamp the particle's position to the screen
+		if (position.x < 0) position.x = 0;
+		if (position.x > screen_width) position.x = screen_width;
 	}
 	if (position.y < 0 || position.y > screen_height) {
 		// Reflect vertically if particle hits top or bottom wall
 		p_angle = -p_angle;
+
+		// Clamp the particle's position to the screen
+		if (position.y < 0) position.y = 0;
+		if (position.y > screen_height) position.y = screen_height;
 	}
 }
 
