@@ -1,5 +1,6 @@
 #pragma once
 #include "../Structures.h"
+#include <SDL.h>
 
 class Wall {
 public:
@@ -12,6 +13,7 @@ public:
 	Line getLine() const { return m_line; }
 
 	void setID(int id) { m_id = id; }
+	void draw(SDL_Renderer* renderer);
 
 private:
 	int m_id;
