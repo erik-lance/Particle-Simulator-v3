@@ -5,10 +5,8 @@
 
 #include "ParticleSimulator.h"
 #include "SimulatorGUI.h"
-#include "Objects/Particle.h"
 #include <glad/glad.h>
 #include <SDL.h>
-#include <vector>
 #include <iostream>
 
 // Window Dimensions
@@ -21,7 +19,7 @@ const int SIM_HEIGHT = 720;
 
 using namespace std;
 double delta_time = 0;
-vector<Particle> particles = vector<Particle>();
+ObjectManager object_manager = ObjectManager();
 
 void draw_sim_borders(SDL_Renderer* renderer) {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -79,7 +77,7 @@ int main()
 
 	SimulatorGUI gui;
 	gui.Init(window, gl_context, renderer, "#version 330");
-	gui.setParticles(particles);
+	gui.setManager(&object_manager);
 
 	// Check for OpenGL errors
 	GLenum error = glGetError();
@@ -116,15 +114,7 @@ int main()
 		draw_sim_borders(renderer);
 
 		// Move the particles
-		for (int i = 0; i < particles.size(); i++) {
-			particles[i].updatePosition(delta_time);
-			particles[i].handleScreenCollision(SIM_WIDTH, SIM_HEIGHT);
-		}
-
-		// Batch render particles
-		for (int i = 0; i < particles.size(); i++) {
-			particles[i].draw(renderer);
-		}
+		object_manager.updateAndDrawParticles(delta_time, renderer);
 
 		// Render ImGui
 		gui.NewFrame();
