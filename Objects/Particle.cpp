@@ -47,73 +47,54 @@ void Particle::handleScreenCollision()
  */
 bool Particle::handleLineCollision(Line line)
 {
+
 	// Check if particle's old and new position intersects with the line
 	bool collided = false;
 
-	// Calculate the distance between the line and the particle's old and new position
-	int x1 = line.start.x;
-	int y1 = line.start.y;
-	int x2 = line.end.x;
-	int y2 = line.end.y;
+	Line particle_line = {old_position, position};
 
-	double distance1 = abs((x2 - x1) * (old_position.y - y1) - (y2 - y1) * (old_position.x - x1)) / sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
-	double distance2 = abs((x2 - x1) * (position.y - y1) - (y2 - y1) * (position.x - x1)) / sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+	Position intersection = lineIntersection(line, particle_line);
 
-	// Check if the particle's old and new position is within the line
-	if (distance1 <= radius || distance2 <= radius)
+	if (intersection.x != 0 && intersection.y != 0)
 	{
-		// Check if the particle's old and new position is within the line
-		if ((old_position.x >= x1 && old_position.x <= x2) || (old_position.x <= x1 && old_position.x >= x2))
-		{
-			if ((old_position.y >= y1 && old_position.y <= y2) || (old_position.y <= y1 && old_position.y >= y2))
-			{
-				collided = true;
-			}
-		}
-		if ((position.x >= x1 && position.x <= x2) || (position.x <= x1 && position.x >= x2))
-		{
-			if ((position.y >= y1 && position.y <= y2) || (position.y <= y1 && position.y >= y2))
-			{
-				collided = true;
-			}
-		}
+		std::cout << "Intersection at (" << intersection.x << ", " << intersection.y << ")" << std::endl;
+		collided = true;
 	}
 
-	// If there is a collision, reflect the particle's angle
+	// Distance of new position to intersection point
+	int distance = sqrt(pow(position.x - intersection.x, 2) + pow(position.y - intersection.y, 2));
+
+	// Update the particle's position to the intersection point and adjust the angle
 	if (collided)
 	{
+		std::cout << "Collision detected" << std::endl;
+		std::cout << "Position: (" << position.x << ", " << position.y << ")" << std::endl;
+		std::cout << "Angle: " << p_angle << std::endl;
+		// Update the particle's position to the intersection point
+		position.x = intersection.x;
+		position.y = intersection.y;
+
 		// Reflect the particle's angle
-		p_angle = 180 - p_angle;
+		p_angle = reflectAngle(p_angle);
 
-		// Clamp the particle's position to the line
-		if (distance1 <= radius)
-		{
-			// Reflect the particle's angle
-			p_angle = 180 - p_angle;
+		// And then move the position by the distance
+		position.x += distance * cos(p_angle * M_PI / 180);
+		position.y += distance * sin(p_angle * M_PI / 180);
 
-			// Clamp the particle's position to the line
-			position.x = old_position.x;
-			position.y = old_position.y;
-		}
-		if (distance2 <= radius)
-		{
-			// Reflect the particle's angle
-			p_angle = 180 - p_angle;
+		std::cout << "New Position: (" << position.x << ", " << position.y << ")" << std::endl;
+		std::cout << "New Angle: " << p_angle << std::endl;
 
-			// Clamp the particle's position to the line
-			old_position.x = position.x;
-			old_position.y = position.y;
-		}
+		return true;
 	}
 
-	return collided;
+	return false;
 }
 
 /**
  * @brief Draws the particle
  * @details This function draws the particle
  */
-void Particle::draw(SDL_Renderer* renderer)
+void Particle::draw(SDL_Renderer* renderer) const
 {
 	// std::cout << "Drawing Particle at (" << pos_x << ", " << pos_y << ")" << std::endl;
 	// Draws a white circle at the particle's position
