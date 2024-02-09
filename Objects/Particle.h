@@ -36,7 +36,7 @@ public:
 	void handleScreenCollision();
 	bool handleLineCollision(Line line);
 
-	void draw(SDL_Renderer* renderer);
+	void draw(SDL_Renderer* renderer) const;
 
 private:
 	int m_id;
