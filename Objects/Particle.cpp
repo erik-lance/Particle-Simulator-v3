@@ -9,6 +9,10 @@ void Particle::updatePosition(double delta)
 	// Convert the angle from degrees to radians
 	double angle_rad = p_angle * M_PI / 180.0;
 
+	// Save the old position
+	old_position.x = position.x;
+	old_position.y = position.y;
+
 	// Update position based on velocity and angle using elapsed time
 	position.x += p_velocity * cos(angle_rad) * delta;
 	position.y += p_velocity * sin(angle_rad) * delta;
