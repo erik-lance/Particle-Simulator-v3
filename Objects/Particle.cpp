@@ -14,7 +14,7 @@ void Particle::updatePosition(double delta)
 	pos_y += p_velocity * sin(angle_rad) * delta;
 }
 
-void Particle::handleScreenCollision(int screen_width, int screen_height)
+void Particle::handleScreenCollision()
 {
 	// Bounce off the walls
 	if (pos_x < 0 || pos_x > screen_width) {

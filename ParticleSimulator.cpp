@@ -19,7 +19,7 @@ const int SIM_HEIGHT = 720;
 
 using namespace std;
 double delta_time = 0;
-ObjectManager object_manager = ObjectManager();
+ObjectManager object_manager = ObjectManager(SIM_WIDTH, SIM_HEIGHT);
 
 void draw_sim_borders(SDL_Renderer* renderer) {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);

@@ -30,9 +30,10 @@ public:
 	void setY(int y) { pos_y = y; }
 	void setAngle(int angle) { p_angle = angle; }
 	void setVelocity(int velocity) { p_velocity = velocity; }
+	void setScreenSize(int width, int height) { screen_width = width; screen_height = height; }
 
 	void updatePosition(double delta);
-	void handleScreenCollision(int screen_width, int screen_height);
+	void handleScreenCollision();
 	void handleLineCollision(int x1, int y1, int x2, int y2);
 
 	void draw(SDL_Renderer* renderer);
@@ -41,6 +42,9 @@ private:
 	int m_id;
 	int pos_x;
 	int pos_y;
+
+	int screen_width;
+	int screen_height;
 
 	int p_angle;
 	double p_velocity;

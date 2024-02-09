@@ -6,6 +6,7 @@ class ObjectManager
 {
 public:
 	ObjectManager();
+	ObjectManager(int width, int height);
 	~ObjectManager();
 
 	void addParticle(int x, int y, int angle, int velocity);
@@ -19,6 +20,8 @@ public:
 	int getWallCount() { return current_max_walls; }
 
 private:
+	int screen_width, screen_height;
+
 	int initial_capacity = 1024;
 	int particle_capacity = initial_capacity;
 	int wall_capacity = initial_capacity;

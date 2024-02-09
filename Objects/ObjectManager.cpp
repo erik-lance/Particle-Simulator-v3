@@ -24,6 +24,10 @@ void ObjectManager::addParticle(int x, int y, int angle, int velocity)
 
     // Add the particle to the array
     particles[current_max_particles] = Particle(current_max_particles, x, y, angle, velocity);
+
+    // Set the screen size for the particle
+    particles[current_max_particles].setScreenSize(screen_width, screen_height);
+
     current_max_particles++; // Increment the counter after adding the particle
 }
 
@@ -63,7 +67,7 @@ void ObjectManager::updateAndDrawParticles(double delta, SDL_Renderer* renderer)
     for (int i = 0; i < current_max_particles; i++)
     {
 		particles[i].updatePosition(delta);
-		particles[i].handleScreenCollision(800, 600);
+		particles[i].handleScreenCollision();
 		particles[i].draw(renderer);
 	}
 }
@@ -74,13 +78,12 @@ void ObjectManager::drawWalls(SDL_Renderer* renderer)
 
 }
 
-ObjectManager::ObjectManager()
+ObjectManager::ObjectManager() { }
+
+ObjectManager::ObjectManager(int width, int height)
 {
-    initial_capacity = 1024;
-    particle_capacity = initial_capacity;
-    wall_capacity = initial_capacity;
-    current_max_particles = 0;
-    current_max_walls = 0;
+    screen_width = width;
+	screen_height = height;
 }
 
 /**
