@@ -42,6 +42,8 @@ public:
 	void updateParticleGrid(int id, Cell cell, int x, int y);
 	void updateLineGrid(int id, int x1, int y1, int x2, int y2);
 
+	void checkParticleLineCollisionsInCell(Cell cell);
+
 private:
 	int simulator_width, simulator_height;
 	int grid_columns, grid_rows;

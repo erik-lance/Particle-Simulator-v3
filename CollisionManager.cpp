@@ -98,3 +98,33 @@ void CollisionManager::updateParticleGrid(int id, Cell cell, int x, int y)
 void CollisionManager::updateLineGrid(int id, int x1, int y1, int x2, int y2)
 {
 }
+
+/**
+ * Checks for particle-line collisions in a cell
+ * @param cell The cell to check for collisions
+ */
+void CollisionManager::checkParticleLineCollisionsInCell(Cell cell)
+{
+	// Check for collisions between particles and lines in the cell
+	for (int i = 0; i < cell.numParticles; i++)
+	{
+		// Get the particle
+		Particle p = cell.particles[i];
+
+		// Check for collisions with lines
+		for (int j = 0; j < cell.numWalls; j++)
+		{
+			// Get the line
+			Wall l = cell.walls[j];
+
+			// Line
+			Line line = l.getLine();
+
+			// Check for collisions
+			bool collided = p.handleLineCollision(line.x1, line.y1, line.x2, line.y2);
+
+			// If there is a collision, stop checking for collisions for this particle
+			if (collided) break;
+		}
+	}
+}
