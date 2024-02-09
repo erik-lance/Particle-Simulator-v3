@@ -39,13 +39,33 @@ void ObjectManager::addWall(int x1, int y1, int x2, int y2)
 	
 }
 
+/**
+ * Updates the particle positions
+ * @param delta The time elapsed since the last update
+ * */
 void ObjectManager::updateParticles(double delta)
 {
-
+    // Temporary non multi-threaded update
+    for (int i = 0; i < current_max_particles; i++)
+    {
+		particles[i].updatePosition(delta);
+	}
 }
 
+/**
+ * Updates the particle positions and draws them
+ * @param delta The time elapsed since the last update
+ * @param renderer The SDL renderer to draw the particles
+ */
 void ObjectManager::updateAndDrawParticles(double delta, SDL_Renderer* renderer)
 {
+    // Temporary non multi-threaded update
+    for (int i = 0; i < current_max_particles; i++)
+    {
+		particles[i].updatePosition(delta);
+		particles[i].handleScreenCollision(800, 600);
+		particles[i].draw(renderer);
+	}
 }
 
 
