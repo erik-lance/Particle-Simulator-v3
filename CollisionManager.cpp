@@ -163,7 +163,7 @@ void CollisionManager::setGridDimensions(int columns, int rows)
  * @param y The particle's y position
  * @return A pair of integers representing the grid cell
  */
-Cell CollisionManager::getGridCell(int x, int y)
+Cell CollisionManager::getGridCell(int x, int y) const
 {
 	// Calculates the particle position to correspond to the grid
 	int cell_x = x / grid_cell_width;
@@ -298,7 +298,7 @@ void CollisionManager::checkParticleLineCollisionsInCell(Cell cell)
  * if its start-end position intersets with any wall in the two cells.
  * @param particle The particle to check for collisions
 */
-void CollisionManager::checkParticleCollisionsInCells(Particle particle)
+void CollisionManager::checkParticleCollisionsInCells(Particle particle) const
 {
 	Position start_pos = particle.getOldPosition();
 	Position end_pos = particle.getPosition();

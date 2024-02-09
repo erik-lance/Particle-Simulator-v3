@@ -43,7 +43,7 @@ public:
 	void setSimulatorDimensions(int width, int height) { simulator_width = width; simulator_height = height; }
 	void setGridDimensions(int columns, int rows);
 
-	Cell getGridCell(int x, int y);
+	Cell getGridCell(int x, int y) const;
 	void updateParticleGrid(int id, Cell cell, int x, int y);
 	void updateLineGrid(int id, int x1, int y1, int x2, int y2);
 
@@ -51,7 +51,7 @@ public:
 	void checkCollisionsColumn(int column);
 	void checkCollisionsRow(int row);
 	void checkParticleLineCollisionsInCell(Cell cell);
-	void checkParticleCollisionsInCells(Particle particle);
+	void checkParticleCollisionsInCells(Particle particle) const;
 
 private:
 	int simulator_width, simulator_height;
