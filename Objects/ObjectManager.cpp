@@ -90,7 +90,10 @@ void ObjectManager::updateAndDrawParticles(double delta, SDL_Renderer* renderer)
 
 void ObjectManager::drawWalls(SDL_Renderer* renderer)
 {
-
+    for (int i = 0; i < current_max_walls; i++)
+    {
+		walls[i].draw(renderer);
+	}
 }
 
 ObjectManager::ObjectManager() { screen_width = 1280; screen_height = 720; collision_manager = new CollisionManager(screen_width, screen_height); }
