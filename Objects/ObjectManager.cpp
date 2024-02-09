@@ -78,12 +78,13 @@ void ObjectManager::drawWalls(SDL_Renderer* renderer)
 
 }
 
-ObjectManager::ObjectManager() { screen_width = 1280; screen_height = 720; }
+ObjectManager::ObjectManager() { screen_width = 1280; screen_height = 720; collision_manager = new CollisionManager(screen_width, screen_height); }
 
 ObjectManager::ObjectManager(int width, int height)
 {
     screen_width = width;
 	screen_height = height;
+    collision_manager = new CollisionManager(width, height);
 }
 
 /**
@@ -93,4 +94,5 @@ ObjectManager::~ObjectManager()
 {
     delete[] particles;
     delete[] walls;
+    delete &collision_manager;
 }

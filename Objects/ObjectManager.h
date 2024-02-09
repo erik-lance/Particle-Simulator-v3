@@ -1,4 +1,5 @@
 #pragma once
+#include "../CollisionManager.h"
 #include "Particle.h"
 #include "Wall.h"
 
@@ -21,6 +22,7 @@ public:
 
 private:
 	int screen_width, screen_height;
+	CollisionManager* collision_manager;
 
 	int initial_capacity = 1024;
 	int particle_capacity = initial_capacity;
