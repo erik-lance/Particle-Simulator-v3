@@ -79,9 +79,10 @@ void ObjectManager::updateParticles(double delta)
 void ObjectManager::updateAndDrawParticles(double delta, SDL_Renderer* renderer)
 {
     // Temporary non multi-threaded update
-    for (int i = 0; i < current_max_particles; i++)
+    for (int i = 0; i < current_max_particles-1; i++)
     {
 		particles[i].updatePosition(delta);
+        collision_manager->checkParticleCollisionsInCells(particles[i]);
 		particles[i].handleScreenCollision();
 		particles[i].draw(renderer);
 	}

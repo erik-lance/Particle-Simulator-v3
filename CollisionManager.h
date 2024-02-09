@@ -7,6 +7,8 @@
 // Represents a cell in the grid
 struct Cell {
 	Position position;   // Position of the cell
+	int cell_width;      // Width of the cell
+	int cell_height;     // Height of the cell
 	Particle* particles; // Array of particles in this cell
 	Wall* walls;         // Array of walls in this cell
 	int numParticles;    // Number of particles in this cell

@@ -71,13 +71,17 @@ void CollisionManager::addWall(Wall wall)
 				{
 					cell.maxWalls *= 2;
 					Wall* new_walls = new Wall[cell.maxWalls];
-					for (int i = 0; i < cell.numWalls; i++)
+					for (int i = 0; i < cell.numWalls-1; i++)
 					{
 						new_walls[i] = cell.walls[i];
 					}
 					delete[] cell.walls;
 					cell.walls = new_walls;
 				}
+
+				// Add the wall to the cell
+				cell.walls[cell.numWalls-1] = wall;
+				cell.numWalls++;
 			}
 		}
 	}
@@ -94,11 +98,13 @@ bool CollisionManager::cellIntersectsLine(Cell cell, Line line)
 	bool intersects = false;
 
 	// Check each line of the cell for intersection
+	// Cell position is the position on the grid. So we have to multiply
+	// the cell position by the cell width and height to get the actual
 	Line lines[4] = {
-		Line{ cell.position.x, cell.position.y, cell.position.x + grid_cell_width, cell.position.y },
-		Line{ cell.position.x + grid_cell_width, cell.position.y, cell.position.x + grid_cell_width, cell.position.y + grid_cell_height },
-		Line{ cell.position.x + grid_cell_width, cell.position.y + grid_cell_height, cell.position.x, cell.position.y + grid_cell_height },
-		Line{ cell.position.x, cell.position.y + grid_cell_height, cell.position.x, cell.position.y }
+		{{cell.position.x * grid_cell_width, cell.position.y * grid_cell_height}, {cell.position.x * grid_cell_width + grid_cell_width, cell.position.y * grid_cell_height}},
+		{{cell.position.x * grid_cell_width + grid_cell_width, cell.position.y * grid_cell_height}, {cell.position.x * grid_cell_width + grid_cell_width, cell.position.y * grid_cell_height + grid_cell_height}},
+		{{cell.position.x * grid_cell_width + grid_cell_width, cell.position.y * grid_cell_height + grid_cell_height}, {cell.position.x * grid_cell_width, cell.position.y * grid_cell_height + grid_cell_height}},
+		{{cell.position.x * grid_cell_width, cell.position.y * grid_cell_height + grid_cell_height}, {cell.position.x * grid_cell_width, cell.position.y * grid_cell_height}}
 	};
 
 	for (int i = 0; i < 4; i++)
@@ -145,12 +151,14 @@ void CollisionManager::setGridDimensions(int columns, int rows)
 	{
 		for (int j = 0; j < grid_rows; j++)
 		{
-			Position pos{ i * grid_cell_width, j * grid_cell_height };
+			Position pos{ i, j };
 			grid.cells[i][j].position = pos;
+			grid.cells[i][j].cell_width = grid_cell_width;
+			grid.cells[i][j].cell_height = grid_cell_height;
 			grid.cells[i][j].maxParticles = 1024;
 			grid.cells[i][j].maxWalls = 1024;
-			grid.cells[i][j].numParticles = 0;
-			grid.cells[i][j].numWalls = 0;
+			grid.cells[i][j].numParticles = 1;
+			grid.cells[i][j].numWalls = 1;
 			grid.cells[i][j].particles = new Particle[grid.cells[i][j].maxParticles];
 			grid.cells[i][j].walls = new Wall[grid.cells[i][j].maxWalls];
 		}
@@ -175,7 +183,8 @@ Cell CollisionManager::getGridCell(int x, int y) const
 	if (cell_y < 0) cell_y = 0;
 	if (cell_y >= grid_rows) cell_y = grid_rows - 1;
 
-	return Cell{ cell_x, cell_y };
+	// Return the cell from grid
+	return grid.cells[cell_x][cell_y];
 }
 
 /**
@@ -212,7 +221,7 @@ void CollisionManager::checkCollisions()
 			Cell cell = grid.cells[i][j];
 
 			// Check if the cell has particles and lines
-			if (cell.numParticles > 0 && cell.numWalls > 0)
+			if (cell.numParticles-1 > 0 && cell.numWalls-1 > 0)
 			{
 				// Check for collisions in the cell
 				checkParticleLineCollisionsInCell(cell);
@@ -234,7 +243,7 @@ void CollisionManager::checkCollisionsColumn(int column)
 		Cell cell = grid.cells[column][i];
 
 		// Check if the cell has particles and lines
-		if (cell.numParticles > 0 && cell.numWalls > 0)
+		if (cell.numParticles-1 > 0 && cell.numWalls-1 > 0)
 		{
 			// Check for collisions in the cell
 			checkParticleLineCollisionsInCell(cell);
@@ -255,7 +264,7 @@ void CollisionManager::checkCollisionsRow(int row)
 		Cell cell = grid.cells[i][row];
 
 		// Check if the cell has particles and lines
-		if (cell.numParticles > 0 && cell.numWalls > 0)
+		if (cell.numParticles-1 > 0 && cell.numWalls-1 > 0)
 		{
 			// Check for collisions in the cell
 			checkParticleLineCollisionsInCell(cell);
@@ -276,7 +285,7 @@ void CollisionManager::checkParticleLineCollisionsInCell(Cell cell)
 		Particle p = cell.particles[i];
 
 		// Check for collisions with lines
-		for (int j = 0; j < cell.numWalls; j++)
+		for (int j = 0; j < cell.numWalls-1; j++)
 		{
 			// Get the line
 			Wall l = cell.walls[j];
@@ -306,11 +315,14 @@ void CollisionManager::checkParticleCollisionsInCells(Particle particle) const
 	Cell start_cell = getGridCell(start_pos.x, start_pos.y);
 	Cell end_cell = getGridCell(end_pos.x, end_pos.y);
 
+	std::cout << "Start and End Cell: " << start_cell.position.x << ", " << start_cell.position.y << " and " << end_cell.position.x << ", " << end_cell.position.y << std::endl;
+
 	// Check for collisions between the particle and the walls in the start and end cells
 
 	// Check for collisions in the start cell
-	for (int i = 0; i < start_cell.numWalls; i++)
+	for (int i = 0; i < start_cell.numWalls-1; i++)
 	{
+		std::cout << "Start Cell Wall: " << start_cell.walls[i].getLine().start.x << ", " << start_cell.walls[i].getLine().start.y << " and " << start_cell.walls[i].getLine().end.x << ", " << start_cell.walls[i].getLine().end.y << std::endl;
 		// Get the wall
 		Wall wall = start_cell.walls[i];
 
@@ -322,7 +334,7 @@ void CollisionManager::checkParticleCollisionsInCells(Particle particle) const
 	}
 
 	// Check for collisions in the end cell
-	for (int i = 0; i < end_cell.numWalls; i++)
+	for (int i = 0; i < end_cell.numWalls-1; i++)
 	{
 		// Get the wall
 		Wall wall = end_cell.walls[i];
