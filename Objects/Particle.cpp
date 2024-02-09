@@ -40,7 +40,8 @@ void Particle::handleScreenCollision()
 }
 
 /**
- * Handles the particles collision given a line
+ * Handles the particles collision given a line by checking if
+ * there is an intersection between the particle and the line
  * @param x1 The x coordinate of the first point of the line
  * @param y1 The y coordinate of the first point of the line
  * @param x2 The x coordinate of the second point of the line
@@ -49,21 +50,61 @@ void Particle::handleScreenCollision()
  */
 bool Particle::handleLineCollision(int x1, int y1, int x2, int y2)
 {
-	// Calculate the distance between the particle and the line
-	// Formula: |(x2 - x1)(y1 - y) - (x1 - x)(y2 - y1)| / sqrt((x2 - x1)^2 + (y2 - y1)^2)
-	double distance = abs((x2 - x1) * (y1 - position.y) - (x1 - position.x) * (y2 - y1)) / sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+	// Check if particle's old and new position intersects with the line
+	bool collided = false;
 
-	// If the distance is less than the radius of the particle, then there is a collision
-	if (distance < radius)
+	// Calculate the distance between the line and the particle's old and new position
+	double distance1 = abs((x2 - x1) * (old_position.y - y1) - (y2 - y1) * (old_position.x - x1)) / sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+	double distance2 = abs((x2 - x1) * (position.y - y1) - (y2 - y1) * (position.x - x1)) / sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+
+	// Check if the particle's old and new position is within the line
+	if (distance1 <= radius || distance2 <= radius)
+	{
+		// Check if the particle's old and new position is within the line
+		if ((old_position.x >= x1 && old_position.x <= x2) || (old_position.x <= x1 && old_position.x >= x2))
+		{
+			if ((old_position.y >= y1 && old_position.y <= y2) || (old_position.y <= y1 && old_position.y >= y2))
+			{
+				collided = true;
+			}
+		}
+		if ((position.x >= x1 && position.x <= x2) || (position.x <= x1 && position.x >= x2))
+		{
+			if ((position.y >= y1 && position.y <= y2) || (position.y <= y1 && position.y >= y2))
+			{
+				collided = true;
+			}
+		}
+	}
+
+	// If there is a collision, reflect the particle's angle
+	if (collided)
 	{
 		// Reflect the particle's angle
 		p_angle = 180 - p_angle;
-		return true;
+
+		// Clamp the particle's position to the line
+		if (distance1 <= radius)
+		{
+			// Reflect the particle's angle
+			p_angle = 180 - p_angle;
+
+			// Clamp the particle's position to the line
+			position.x = old_position.x;
+			position.y = old_position.y;
+		}
+		if (distance2 <= radius)
+		{
+			// Reflect the particle's angle
+			p_angle = 180 - p_angle;
+
+			// Clamp the particle's position to the line
+			old_position.x = position.x;
+			old_position.y = position.y;
+		}
 	}
-	else
-	{
-		return false;
-	}
+
+	return collided;
 }
 
 /**
