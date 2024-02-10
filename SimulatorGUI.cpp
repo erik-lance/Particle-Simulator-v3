@@ -138,6 +138,9 @@ void SimulatorGUI::MainMenuGUI()
 		double dy = line.end.y - line.start.y;
 		line.angle = atan2(dy, dx);
 
+		// Normalize the angle
+		line.angle = normalizeAngle(line.angle);
+
 		std::cout << "Wall: " << line.start.x << " " << line.start.y << " " << line.end.x << " " << line.end.y << std::endl;
 		m_object_manager->addWall(line);
 
