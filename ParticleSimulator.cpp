@@ -112,6 +112,7 @@ int main()
 		SDL_RenderClear(renderer);
 
 		draw_sim_borders(renderer);
+		object_manager.drawGridLines(renderer);
 
 		// Move the particles
 		object_manager.updateAndDrawParticles(delta_time, renderer);

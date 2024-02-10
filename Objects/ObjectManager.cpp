@@ -114,6 +114,34 @@ void ObjectManager::drawWalls(SDL_Renderer* renderer)
 	}
 }
 
+/**
+ * Draws the grid lines based on the collision manager's grid
+ * width and height and column and row count
+ * @param renderer The SDL renderer to draw the grid lines
+ */
+void ObjectManager::drawGridLines(SDL_Renderer* renderer)
+{
+    int cell_width = collision_manager->getGridCellWidth();
+    int cell_height = collision_manager->getGridCellHeight();
+    int column_count = collision_manager->getGridColumns();
+    int row_count = collision_manager->getGridRows();
+
+    // Set the color to gray
+    SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
+
+	// Draw vertical lines
+    for (int i = 0; i < column_count; i++)
+    {
+		SDL_RenderDrawLine(renderer, i * cell_width, 0, i * cell_width, screen_height);
+	}
+
+	// Draw horizontal lines
+    for (int i = 0; i < row_count; i++)
+    {
+		SDL_RenderDrawLine(renderer, 0, i * cell_height, screen_width, i * cell_height);
+	}
+}
+
 void ObjectManager::drawDebugCircles(SDL_Renderer* renderer)
 {
     for (int i = 0; i < 10; i++) { debug_circles[i].draw(renderer); }

@@ -23,6 +23,7 @@ public:
 	CollisionManager getCollisionManager() { return *collision_manager; }
 
 	// Debug
+	void drawGridLines(SDL_Renderer* renderer);
 	void drawDebugCircles(SDL_Renderer* renderer);
 	void addDebugCircle(Position pos, int r);
 
