@@ -6,32 +6,29 @@
 
 void Particle::updatePosition(double delta)
 {
-	// Convert the angle from degrees to radians
-	double angle_rad = p_angle * M_PI / 180.0;
-
 	// Save the old position
 	old_position.x = position.x;
 	old_position.y = position.y;
 
 	// Update position based on velocity and angle using elapsed time
-	position.x += p_velocity * cos(angle_rad) * delta;
-	position.y += p_velocity * sin(angle_rad) * delta;
-}
+	position.x += p_velocity * cos(p_angle) * delta;
+	position.y += p_velocity * sin(p_angle) * delta;
+} 
 
 void Particle::handleScreenCollision()
 {
 	// Bounce off the walls
 	if (position.x < 0 || position.x > screen_width) {
-		// Reflect horizontally if particle hits left or right wall
-		p_angle = 180 - p_angle;
+		// Reflect the particle's angle against a vertical wall
+		p_angle = normalizeAngle(180 - p_angle);
 
 		// Clamp the particle's position to the screen
 		if (position.x < 0) position.x = 0;
 		if (position.x > screen_width) position.x = screen_width;
 	}
 	if (position.y < 0 || position.y > screen_height) {
-		// Reflect vertically if particle hits top or bottom wall
-		p_angle = -p_angle;
+		// Reflect the particle's angle against a horizontal wall
+		p_angle = normalizeAngle(-p_angle);
 
 		// Clamp the particle's position to the screen
 		if (position.y < 0) position.y = 0;
@@ -74,9 +71,8 @@ bool Particle::handleLineCollision(Line line)
 		position.x = intersection.x;
 		position.y = intersection.y;
 
-		// Reflect the particle's angle
-		// p_angle = reflectAngle(p_angle);
-		p_angle = 180 - p_angle;
+		// Reflect the particle's angle based on the line's angle
+		p_angle = normalizeAngle(2 * line.angle - p_angle);
 
 		// And then move the position by the distance
 		position.x += distance * cos(p_angle * M_PI / 180);
@@ -134,6 +130,11 @@ Particle::Particle(int id, int x, int y, int angle, int velocity)
 
 	// Fix angle to counter-clockwise
 	p_angle = 360 - p_angle;
+
+	if (p_angle == 360) { p_angle = 0; }
+
+	// Convert degrees to radians
+	p_angle = p_angle * M_PI / 180;
 
 	// Fix velocity to pixels per second
 	p_velocity = (double)velocity / 10;

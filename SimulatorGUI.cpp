@@ -133,11 +133,10 @@ void SimulatorGUI::MainMenuGUI()
 		line.end.x = 1024;
 		line.end.y = 512;
 
-		// Calculate angle of the line
-		int dx = line.end.x - line.start.x;
-		int dy = line.end.y - line.start.y;
-		int angle = atan2(dy, dx) * 180 / M_PI;
-		line.angle = angle;
+		// Calculate angle of the line in radians
+		double dx = line.end.x - line.start.x;
+		double dy = line.end.y - line.start.y;
+		line.angle = atan2(dy, dx);
 
 		std::cout << "Wall: " << line.start.x << " " << line.start.y << " " << line.end.x << " " << line.end.y << std::endl;
 		m_object_manager->addWall(line);

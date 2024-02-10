@@ -46,7 +46,7 @@ private:
 	int screen_width = 1280;
 	int screen_height = 720;
 
-	int p_angle;
+	double p_angle;
 	double p_velocity;
 	int radius = 3;
 };

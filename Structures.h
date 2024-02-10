@@ -5,7 +5,7 @@
 constexpr auto PI = 3.14159265358979323846;
 
 struct Position { int x; int y; };
-struct Line { Position start; Position end; int angle; };
+struct Line { Position start; Position end; double angle; };
 struct Screen { int width = 1280; int height = 720; };
 
 static inline bool operator==(const Position& lhs, const Position& rhs)
@@ -91,22 +91,17 @@ static inline Position lineIntersection(Line l1, Line l2)
     return { 0, 0 }; // Or some other indication of no intersection
 }
 
-// Function to normalize angle to the range [0, 2*pi)
+// Function to normalize angle in Radians [-pi, pi]
 static inline float normalizeAngle(float angle)
 {
-    // Normalize the angle to the range [0, 2*pi)
-    while (angle < 0) {
-		angle += 2 * PI;
-	}
-    while (angle >= 2 * PI) {
-        angle -= 2 * PI;
-    }
+    // Normalize the angle to be between -pi and pi
+    while (angle > PI) angle -= 2 * PI;
+    while (angle < -PI) angle += 2 * PI;
     return angle;
 }
 
-// Function to reflect angle by 180 degrees
+// Function to reflect angle in Radians
 static inline float reflectAngle(float angle)
 {
-    // Reflect the angle by adding pi (180 degrees)
-    return normalizeAngle(angle + 180);
+    return normalizeAngle(angle + PI);
 }
