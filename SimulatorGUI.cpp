@@ -115,10 +115,7 @@ void SimulatorGUI::MainMenuGUI()
 
 	if (ImGui::Button("Add Particle")) {
 		std::cout << "Particle Added" << std::endl;
-
-		// Normalize angle
-		m_particle_angle = normalizeAngle(m_particle_angle);
-
+		
 		m_object_manager->addParticle(m_particle_x, m_particle_y, m_particle_angle, m_particle_velocity);
 
 		// Increment particle id
@@ -146,6 +143,7 @@ void SimulatorGUI::MainMenuGUI()
 		line.angle = normalizeAngle(line.angle);
 
 		std::cout << "Wall: " << line.start.x << " " << line.start.y << " " << line.end.x << " " << line.end.y << std::endl;
+		std::cout << "Wall Angle: " << line.angle << std::endl;
 		m_object_manager->addWall(line);
 
 		// Increment obstacle id
@@ -221,6 +219,7 @@ void SimulatorGUI::ParticlesBatchMethodOneGUI()
 			double distance = sqrt(pow(method_one_end_x - method_one_start_x, 2) + pow(method_one_end_y - method_one_start_y, 2));
 			double x = method_one_start_x + (method_one_end_x - method_one_start_x) * i / m_batch_size;
 			double y = method_one_start_y + (method_one_end_y - method_one_start_y) * i / m_batch_size;
+
 			m_object_manager->addParticle(x, y, method_one_angle, method_one_velocity);
 
 			// Increment particle id

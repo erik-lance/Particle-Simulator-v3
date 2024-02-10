@@ -21,6 +21,7 @@ void Particle::handleScreenCollision()
 	if (position.x < 0 || position.x > screen_width) {
 		// Reflect the particle's angle against a vertical wall in Radians
 		p_angle = M_PI - p_angle;
+		p_angle = normalizeAngle(p_angle);
 
 		// Clamp the particle's position to the screen
 		if (position.x < 0) position.x = 0;
@@ -29,6 +30,7 @@ void Particle::handleScreenCollision()
 	if (position.y < 0 || position.y > screen_height) {
 		// Reflect the particle's angle against a horizontal wall
 		p_angle = 2 * M_PI - p_angle;
+		p_angle = normalizeAngle(p_angle);
 
 		// Clamp the particle's position to the screen
 		if (position.y < 0) position.y = 0;
@@ -54,7 +56,7 @@ bool Particle::handleLineCollision(Line line)
 
 	if (intersection.x != 0 && intersection.y != 0)
 	{
-		// std::cout << "Intersection at (" << intersection.x << ", " << intersection.y << ")" << std::endl;
+		std::cout << "Intersection at (" << intersection.x << ", " << intersection.y << ")" << std::endl;
 		collided = true;
 	}
 
@@ -70,6 +72,7 @@ bool Particle::handleLineCollision(Line line)
 
 		// Reflect the particle's angle based on the line's angle in Radians with a simple reflection formula
 		p_angle = 2 * line.angle - p_angle;
+		p_angle = normalizeAngle(p_angle);
 		
 		// And then move the position by the distance
 		position.x += distance * cos(p_angle);
@@ -126,13 +129,15 @@ Particle::Particle(int id, int x, int y, int angle, int velocity)
 	p_angle = angle;
 	p_velocity = velocity;
 
-	// Fix angle to counter-clockwise
+	// Fix angle to counter-clockwise to match the coordinate system
 	p_angle = 360 - p_angle;
-
 	if (p_angle == 360) { p_angle = 0; }
 
 	// Convert degrees to radians
 	p_angle = p_angle * M_PI / 180;
+
+	// Normalize angle
+	p_angle = normalizeAngle(p_angle);
 
 	// Fix velocity to pixels per second
 	p_velocity = (double)velocity / 10;
