@@ -5,7 +5,7 @@
 constexpr auto PI = 3.14159265358979323846;
 
 struct Position { int x; int y; };
-struct Line  { Position start; Position end; };
+struct Line { Position start; Position end; int angle; };
 struct Screen { int width = 1280; int height = 720; };
 
 static inline bool operator==(const Position& lhs, const Position& rhs)
