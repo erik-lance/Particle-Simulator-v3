@@ -17,26 +17,36 @@ void Particle::updatePosition(double delta)
 
 void Particle::handleScreenCollision()
 {
+	// Distance from the particle's old position to the new position
+	double distance = sqrt(pow(position.x - old_position.x, 2) + pow(position.y - old_position.y, 2));
+
+	// Clamping the particle's position to the screen
+	if (position.x < 0) { position.x = 0; }
+	else if (position.x > screen_width) { position.x = screen_width; }
+
+	if (position.y < 0) { position.y = 0; }
+	else if (position.y > screen_height) { position.y = screen_height; }
+
 	// Bounce off the walls
-	if (position.x < 0 || position.x > screen_width) {
-		// Reflect the particle's angle against a vertical wall in Radians
+	if (position.x <= radius || position.x >= screen_width - radius) {
+		// Reflect the particle's angle against a vertical wall
 		p_angle = M_PI - p_angle;
 		p_angle = normalizeAngle(p_angle);
 
-		// Clamp the particle's position to the screen
-		if (position.x < 0) position.x = 0;
-		if (position.x > screen_width) position.x = screen_width;
+		// Move x by the distance
+		position.x += distance * cos(p_angle);
 	}
-	if (position.y < 0 || position.y > screen_height) {
+
+	if (position.y <= radius || position.y >= screen_height - radius) {
 		// Reflect the particle's angle against a horizontal wall
-		p_angle = 2 * M_PI - p_angle;
+		p_angle = -p_angle;
 		p_angle = normalizeAngle(p_angle);
 
-		// Clamp the particle's position to the screen
-		if (position.y < 0) position.y = 0;
-		if (position.y > screen_height) position.y = screen_height;
+		// Move y by the distance
+		position.y += distance * sin(p_angle);
 	}
 }
+
 
 /**
  * Handles the particles collision given a line by checking if
@@ -79,8 +89,6 @@ bool Particle::handleLineCollision(Line line)
 		position.y += distance * sin(p_angle);
 
 		// To offset radius
-		position.x += 6 * cos(p_angle);
-		position.y += 6 * sin(p_angle);
 
 		return true;
 	}
