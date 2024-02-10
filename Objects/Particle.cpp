@@ -19,8 +19,10 @@ void Particle::handleScreenCollision()
 {
 	// Bounce off the walls
 	if (position.x < 0 || position.x > screen_width) {
-		// Reflect the particle's angle against a vertical wall
-		p_angle = normalizeAngle(180 - p_angle);
+		// Reflect the particle's angle against a vertical wall in Radians
+		p_angle = M_PI - p_angle;
+
+
 
 		// Clamp the particle's position to the screen
 		if (position.x < 0) position.x = 0;
@@ -28,7 +30,7 @@ void Particle::handleScreenCollision()
 	}
 	if (position.y < 0 || position.y > screen_height) {
 		// Reflect the particle's angle against a horizontal wall
-		p_angle = normalizeAngle(-p_angle);
+		p_angle = 2 * M_PI - p_angle;
 
 		// Clamp the particle's position to the screen
 		if (position.y < 0) position.y = 0;
@@ -71,9 +73,11 @@ bool Particle::handleLineCollision(Line line)
 		position.x = intersection.x;
 		position.y = intersection.y;
 
-		// Reflect the particle's angle based on the line's angle
-		p_angle = normalizeAngle(2 * line.angle - p_angle);
-
+		// Reflect the particle's angle based on the line's angle in Radians
+		// Note: We need to consider if particle is hitting left or right side of the line
+		//       and if the line is vertical or horizontal
+		p_angle = reflectAngle(p_angle, line.angle);
+		
 		// And then move the position by the distance
 		position.x += distance * cos(p_angle * M_PI / 180);
 		position.y += distance * sin(p_angle * M_PI / 180);

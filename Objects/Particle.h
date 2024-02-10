@@ -23,8 +23,8 @@ public:
 	int getID() const { return m_id; }
 	Position getPosition() const { return position; }
 	Position getOldPosition() const { return old_position; }
-	int getAngle() const { return p_angle; }
-	int getVelocity() const { return p_velocity; }
+	double getAngle() const { return p_angle; }
+	double getVelocity() const { return p_velocity; }
 
 	void setID(int id) { m_id = id; }
 	void setPosition(Position pos) { position = pos; }
