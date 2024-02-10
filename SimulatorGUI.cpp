@@ -115,6 +115,10 @@ void SimulatorGUI::MainMenuGUI()
 
 	if (ImGui::Button("Add Particle")) {
 		std::cout << "Particle Added" << std::endl;
+
+		// Normalize angle
+		m_particle_angle = normalizeAngle(m_particle_angle);
+
 		m_object_manager->addParticle(m_particle_x, m_particle_y, m_particle_angle, m_particle_velocity);
 
 		// Increment particle id

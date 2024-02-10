@@ -22,8 +22,6 @@ void Particle::handleScreenCollision()
 		// Reflect the particle's angle against a vertical wall in Radians
 		p_angle = M_PI - p_angle;
 
-
-
 		// Clamp the particle's position to the screen
 		if (position.x < 0) position.x = 0;
 		if (position.x > screen_width) position.x = screen_width;
@@ -56,7 +54,7 @@ bool Particle::handleLineCollision(Line line)
 
 	if (intersection.x != 0 && intersection.y != 0)
 	{
-		std::cout << "Intersection at (" << intersection.x << ", " << intersection.y << ")" << std::endl;
+		// std::cout << "Intersection at (" << intersection.x << ", " << intersection.y << ")" << std::endl;
 		collided = true;
 	}
 
@@ -66,24 +64,20 @@ bool Particle::handleLineCollision(Line line)
 	// Update the particle's position to the intersection point and adjust the angle
 	if (collided)
 	{
-		std::cout << "Collision detected" << std::endl;
-		std::cout << "Position: (" << position.x << ", " << position.y << ")" << std::endl;
-		std::cout << "Angle: " << p_angle << std::endl;
 		// Update the particle's position to the intersection point
 		position.x = intersection.x;
 		position.y = intersection.y;
 
-		// Reflect the particle's angle based on the line's angle in Radians
-		// Note: We need to consider if particle is hitting left or right side of the line
-		//       and if the line is vertical or horizontal
-		p_angle = reflectAngle(p_angle, line.angle);
+		// Reflect the particle's angle based on the line's angle in Radians with a simple reflection formula
+		p_angle = 2 * line.angle - p_angle;
 		
 		// And then move the position by the distance
-		position.x += distance * cos(p_angle * M_PI / 180);
-		position.y += distance * sin(p_angle * M_PI / 180);
+		position.x += distance * cos(p_angle);
+		position.y += distance * sin(p_angle);
 
-		std::cout << "New Position: (" << position.x << ", " << position.y << ")" << std::endl;
-		std::cout << "New Angle: " << p_angle << std::endl;
+		// To offset radius
+		position.x += 6 * cos(p_angle);
+		position.y += 6 * sin(p_angle);
 
 		return true;
 	}

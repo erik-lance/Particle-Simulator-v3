@@ -328,6 +328,7 @@ void CollisionManager::checkParticleCollisionsInCells(Particle* particle) const
 	// Check for collisions between the particle and the walls in the start and end cells
 
 	// Check for collisions in the start cell
+	bool done = false;
 	for (int i = 0; i < start_cell.numWalls-1; i++)
 	{
 		// std::cout << "Start Cell Wall: " << start_cell.walls[i].getLine().start.x << ", " << start_cell.walls[i].getLine().start.y << " and " << start_cell.walls[i].getLine().end.x << ", " << start_cell.walls[i].getLine().end.y << std::endl;
@@ -338,8 +339,10 @@ void CollisionManager::checkParticleCollisionsInCells(Particle* particle) const
 		bool collided = particle->handleLineCollision(wall.getLine());
 
 		// If there is a collision, stop checking for collisions for this particle
-		if (collided) { return; }
+		if (collided) { done = true; break; }
 	}
+
+	if (done) return;
 
 	// Check for collisions in the end cell
 	for (int i = 0; i < end_cell.numWalls-1; i++)
@@ -351,6 +354,6 @@ void CollisionManager::checkParticleCollisionsInCells(Particle* particle) const
 		bool collided = particle->handleLineCollision(wall.getLine());
 
 		// If there is a collision, stop checking for collisions for this particle
-		if (collided) { return; }
+		if (collided) { done = true; break; }
 	}
 }
