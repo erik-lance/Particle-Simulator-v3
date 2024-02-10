@@ -2,6 +2,7 @@
 #include "../CollisionManager.h"
 #include "Particle.h"
 #include "Wall.h"
+#include "DebugCircle.h"
 
 class ObjectManager
 {
@@ -21,6 +22,10 @@ public:
 	int getWallCount() { return current_max_walls; }
 	CollisionManager getCollisionManager() { return *collision_manager; }
 
+	// Debug
+	void drawDebugCircles(SDL_Renderer* renderer);
+	void addDebugCircle(Position pos, int r);
+
 private:
 	int screen_width, screen_height;
 	CollisionManager* collision_manager;
@@ -32,5 +37,6 @@ private:
 	int current_max_walls = 1;
 	Particle* particles = new Particle[particle_capacity];
 	Wall* walls = new Wall[wall_capacity];
-
+	
+	DebugCircle debug_circles[10];
 };

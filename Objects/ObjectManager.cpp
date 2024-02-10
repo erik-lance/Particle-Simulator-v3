@@ -81,14 +81,28 @@ void ObjectManager::updateAndDrawParticles(double delta, SDL_Renderer* renderer)
     // Temporary non multi-threaded update
     for (int i = 0; i < current_max_particles-1; i++)
     {
+        // double cur_angle = particles[i].getAngle();
 		particles[i].updatePosition(delta);
         // std::cout << "(Before CollisionCheck) Particle " << i << " position: (" << particles[i].getPosition().x << ", " << particles[i].getPosition().y << ")" << std::endl;
         collision_manager->checkParticleCollisionsInCells(&particles[i]);
         // std::cout << "(After CollisionCheck) Particle " << i << " position: (" << particles[i].getPosition().x << ", " << particles[i].getPosition().y << ")" << std::endl;
-        // std::cout << "Angle: " << particles[i].getAngle() << std::endl;
+        std::cout << "Angle: " << particles[i].getAngle() << std::endl;
+
+        // If angle changes, add debug circle on the particle's position
+        /*
+        if (cur_angle != particles[i].getAngle())
+        {
+			addDebugCircle(particles[i].getPosition(), 3);
+		}
+        */
+
 		particles[i].handleScreenCollision();
 		particles[i].draw(renderer);
+
 	}
+
+    // Draw debug circles
+    // drawDebugCircles(renderer);
 }
 
 
@@ -97,6 +111,25 @@ void ObjectManager::drawWalls(SDL_Renderer* renderer)
     for (int i = 0; i < current_max_walls; i++)
     {
 		walls[i].draw(renderer);
+	}
+}
+
+void ObjectManager::drawDebugCircles(SDL_Renderer* renderer)
+{
+    for (int i = 0; i < 10; i++) { debug_circles[i].draw(renderer); }
+}
+
+void ObjectManager::addDebugCircle(Position pos, int r)
+{
+    DebugCircle new_circle = DebugCircle(pos, r);
+    for (int i = 0; i < 10; i++)
+    {
+        Position slot = debug_circles[i].getPosition();
+        if (slot.x == -1 && slot.y == -1)
+        {
+			debug_circles[i] = new_circle;
+			break;
+		}
 	}
 }
 
