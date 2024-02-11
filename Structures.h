@@ -103,75 +103,9 @@ static inline float normalizeAngle(float angle)
 // Function to reflect angle in Radians
 static inline float reflectAngle(double angle, double line_angle)
 {
-    // Reflect the particle's angle based on the line's angle in Radians
-    // Note: We need to consider if particle is hitting left or right side of the line
-    //       and if the line is vertical or horizontal
-    if (line_angle == 0 || line_angle == PI)
-    {
-		// Vertical line
-		angle = PI - angle;
-	}
-    else if (line_angle == PI / 2 || line_angle == 3 * PI / 2)
-    {
-		// Horizontal line
-		angle = 2 * PI - angle;
-	}
-    else if (line_angle > 0 && line_angle < PI / 2)
-    {
-		// First quadrant
-        if (angle > 0 && angle < PI / 2)
-        {
-			// Top right
-			angle = PI - angle;
-		}
-        else if (angle > PI / 2 && angle < PI)
-        {
-			// Top left
-			angle = 2 * PI - angle;
-		}
-	}
-    else if (line_angle > PI / 2 && line_angle < PI)
-    {
-		// Second quadrant
-        if (angle > 0 && angle < PI / 2)
-        {
-			// Bottom right
-			angle = PI - angle;
-		}
-        else if (angle > PI / 2 && angle < PI)
-        {
-			// Bottom left
-			angle = 2 * PI - angle;
-		}
-	}
-    else if (line_angle > PI && line_angle < 3 * PI / 2)
-    {
-		// Third quadrant
-        if (angle > PI && angle < 3 * PI / 2)
-        {
-			// Bottom left
-			angle = 2 * PI - angle;
-		}
-        else if (angle > 3 * PI / 2 && angle < 2 * PI)
-        {
-			// Bottom right
-			angle = PI - angle;
-		}
-	}
-    else if (line_angle > 3 * PI / 2 && line_angle < 2 * PI)
-    {
-		// Fourth quadrant
-        if (angle > PI && angle < 3 * PI / 2)
-        {
-			// Top left
-			angle = 2 * PI - angle;
-		}
-        else if (angle > 3 * PI / 2 && angle < 2 * PI)
-        {
-			// Top right
-			angle = PI - angle;
-		}
-	}
+    // Reflection formula
+    angle = 2 * line_angle - angle;
 
+    angle = normalizeAngle(angle);
 	return angle;
 }
