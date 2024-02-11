@@ -30,7 +30,7 @@ public:
 	void updateAndDrawParticles(double delta, SDL_Renderer* renderer);
 	void updateAndDrawParticlesMultiThreaded(double delta, SDL_Renderer* renderer);
 	void updateAndDrawParticlesRange(double delta, SDL_Renderer* renderer, int start, int end);
-	void updateAndDrawParticlesIndices(double delta, int* indices, int count);
+	void updateAndDrawParticlesIndices(double delta, SDL_Renderer* renderer, int* indices, int count);
 	void drawWalls(SDL_Renderer* renderer);
 
 	int getParticleCount() { return current_max_particles; }

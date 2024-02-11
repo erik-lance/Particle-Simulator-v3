@@ -141,17 +141,11 @@ void ObjectManager::updateAndDrawParticlesMultiThreaded(double delta, SDL_Render
     // using the updateAndDrawParticlesIndices function
     for (int i = 0; i < THREAD_COUNT; i++)
     {
-        object_threads[i] = std::thread(&ObjectManager::updateAndDrawParticlesIndices, this, delta, thread_data[i].indices, thread_data[i].count);
+        object_threads[i] = std::thread(&ObjectManager::updateAndDrawParticlesIndices, this, delta, renderer, thread_data[i].indices, thread_data[i].count);
     }
 
     // Join the threads
     for (int i = 0; i < THREAD_COUNT; i++) { object_threads[i].join(); }
-
-    // Draw particles
-    for (int i = 0; i < current_max_particles; i++)
-    {
-		particles[i].draw(renderer);
-	}
 }
 
 /**
@@ -178,7 +172,7 @@ void ObjectManager::updateAndDrawParticlesRange(double delta, SDL_Renderer* rend
  * @param indices The array of indices to update and draw
  * @param count The number of indices in the array
  */
-void ObjectManager::updateAndDrawParticlesIndices(double delta, int* indices, int count)
+void ObjectManager::updateAndDrawParticlesIndices(double delta, SDL_Renderer* renderer, int* indices, int count)
 {
     // Iterate through the indices array and update and draw the particles
     for (int i = 0; i < count-1; i++)
@@ -186,6 +180,7 @@ void ObjectManager::updateAndDrawParticlesIndices(double delta, int* indices, in
 		particles[indices[i]].updatePosition(delta);
 		collision_manager->checkParticleCollisionsInCells(&particles[indices[i]]);
 		particles[indices[i]].handleScreenCollision();
+        particles[indices[i]].draw(renderer);
 	}
 }
 
