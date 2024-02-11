@@ -89,6 +89,9 @@ int main()
 	Uint64 current_time = SDL_GetPerformanceCounter();
 	Uint64 last_time = 0;
 
+	// Set delta time of object manager
+	object_manager.setDeltaTime(&delta_time);
+
 	while (1) {
 		// Calculate delta time
 		last_time = current_time;

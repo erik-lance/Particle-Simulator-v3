@@ -95,6 +95,25 @@ void ObjectManager::setupThreads()
 	{
         thread_data[i] = ParticleThreadData();
 	}
+
+    // Start threads
+    for (int i = 0; i < THREAD_COUNT; i++)
+    {
+		object_threads[i] = std::thread(&ObjectManager::threadLoop, this, i);
+	}
+}
+
+void ObjectManager::threadLoop(int index)
+{
+    while (running)
+    {
+        // Only update and draw particles if there are jobs (called from updateAndDrawParticlesMultiThreaded)
+        if (thread_data[index].jobs > 0)
+        {
+            updateAndDrawParticlesIndices(thread_data[index].indices, thread_data[index].count);
+			thread_data[index].jobs--;
+        }
+    }
 }
 
 /**
@@ -141,11 +160,15 @@ void ObjectManager::updateAndDrawParticlesMultiThreaded(double delta, SDL_Render
     // using the updateAndDrawParticlesIndices function
     for (int i = 0; i < THREAD_COUNT; i++)
     {
-        object_threads[i] = std::thread(&ObjectManager::updateAndDrawParticlesIndices, this, delta, renderer, thread_data[i].indices, thread_data[i].count);
+        // Add a job to all threads
+        thread_data[i].jobs += 1;
     }
 
-    // Join the threads
-    for (int i = 0; i < THREAD_COUNT; i++) { object_threads[i].join(); }
+    // Draw the particles
+    for (int i = 0; i < current_max_particles; i++)
+    {
+		particles[i].draw(renderer);
+	}
 }
 
 /**
@@ -172,15 +195,14 @@ void ObjectManager::updateAndDrawParticlesRange(double delta, SDL_Renderer* rend
  * @param indices The array of indices to update and draw
  * @param count The number of indices in the array
  */
-void ObjectManager::updateAndDrawParticlesIndices(double delta, SDL_Renderer* renderer, int* indices, int count)
+void ObjectManager::updateAndDrawParticlesIndices(int* indices, int count)
 {
     // Iterate through the indices array and update and draw the particles
     for (int i = 0; i < count-1; i++)
 	{
-		particles[indices[i]].updatePosition(delta);
+        particles[indices[i]].updatePosition(*cur_delta);
 		collision_manager->checkParticleCollisionsInCells(&particles[indices[i]]);
 		particles[indices[i]].handleScreenCollision();
-        particles[indices[i]].draw(renderer);
 	}
 }
 

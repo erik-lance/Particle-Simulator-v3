@@ -12,6 +12,7 @@ struct ParticleThreadData
 	int capacity = 256;
 	int* indices = new int[capacity];
 	int count = 1;
+	int jobs = 0;
 };
 
 class ObjectManager
@@ -21,16 +22,19 @@ public:
 	ObjectManager(int width, int height);
 	~ObjectManager();
 
+	void setDeltaTime(double* delta) { cur_delta = delta; }
+
 	void addParticle(int x, int y, int angle, int velocity);
 	void distributeParticleToThread(int index);
 	void addWall(Line line);
 
 	void setupThreads();
+	void threadLoop(int index);
 	void updateParticles(double delta);
 	void updateAndDrawParticles(double delta, SDL_Renderer* renderer);
 	void updateAndDrawParticlesMultiThreaded(double delta, SDL_Renderer* renderer);
 	void updateAndDrawParticlesRange(double delta, SDL_Renderer* renderer, int start, int end);
-	void updateAndDrawParticlesIndices(double delta, SDL_Renderer* renderer, int* indices, int count);
+	void updateAndDrawParticlesIndices(int* indices, int count);
 	void drawWalls(SDL_Renderer* renderer);
 
 	int getParticleCount() { return current_max_particles; }
@@ -49,6 +53,7 @@ private:
 	// Object Threads (16)
 	std::thread object_threads[THREAD_COUNT];
 	ParticleThreadData thread_data[THREAD_COUNT];
+	double* cur_delta = new double(0);
 	bool running = true;
 
 	int initial_capacity = 1024;
