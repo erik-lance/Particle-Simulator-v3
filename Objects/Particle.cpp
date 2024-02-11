@@ -102,19 +102,14 @@ bool Particle::handleLineCollision(Line line)
  */
 void Particle::draw(SDL_Renderer* renderer) const
 {
-	// std::cout << "Drawing Particle at (" << pos_x << ", " << pos_y << ")" << std::endl;
-	// Draws a white circle at the particle's position
+	// Draws a white square at the particle's position
 
 	// Set color to white
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-	// Draw a circle
-	for (int i = 0; i < 360; i++)
-	{
-		float x = position.x + radius * cos(i);
-		float y = position.y + radius * sin(i);
-		SDL_RenderDrawPoint(renderer, x, y);
-	}
+	// Draw a Square
+	SDL_Rect rect = {position.x - radius, position.y - radius, radius * 2, radius * 2};
+	SDL_RenderFillRect(renderer, &rect);
 }
 
 Particle::Particle(int id, int x, int y) {
