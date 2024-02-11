@@ -58,6 +58,21 @@ void ObjectManager::addWall(Line line)
     collision_manager->addWall(walls[current_max_walls-2]);
 }
 
+void ObjectManager::setupThreads()
+{
+    // Initialize thread particle capacity
+    // Assuming each thread can initially handle up to 256 particles
+    for (int i = 0; i < 16; ++i) { thread_particle_capacity[i] = 256; }
+
+    // Initialize particle indices array
+    // Assuming each thread starts with an empty array
+    for (int i = 0; i < 16; ++i) {
+        for (int j = 0; j < thread_particle_capacity[i]; ++j) {
+            particle_indices[i][j] = -1; // -1 indicates an empty slot
+        }
+    }
+}
+
 /**
  * Updates the particle positions
  * @param delta The time elapsed since the last update
@@ -78,31 +93,55 @@ void ObjectManager::updateParticles(double delta)
  */
 void ObjectManager::updateAndDrawParticles(double delta, SDL_Renderer* renderer)
 {
-    // Temporary non multi-threaded update
-    for (int i = 0; i < current_max_particles-1; i++)
-    {
-        // double cur_angle = particles[i].getAngle();
-		particles[i].updatePosition(delta);
-        // std::cout << "(Before CollisionCheck) Particle " << i << " position: (" << particles[i].getPosition().x << ", " << particles[i].getPosition().y << ")" << std::endl;
+    // Temporary non multi-threaded update and draw
+    for (int i = 0; i < current_max_particles; i++)
+	{
+        particles[i].updatePosition(delta);
         collision_manager->checkParticleCollisionsInCells(&particles[i]);
-        // std::cout << "(After CollisionCheck) Particle " << i << " position: (" << particles[i].getPosition().x << ", " << particles[i].getPosition().y << ")" << std::endl;
-        std::cout << "Angle: " << particles[i].getAngle() << std::endl;
-
-        // If angle changes, add debug circle on the particle's position
-        /*
-        if (cur_angle != particles[i].getAngle())
-        {
-			addDebugCircle(particles[i].getPosition(), 3);
-		}
-        */
-
-		particles[i].handleScreenCollision();
-		particles[i].draw(renderer);
-
-	}
-
+        particles[i].handleScreenCollision();
+        particles[i].draw(renderer);
+    }
+	
     // Draw debug circles
     // drawDebugCircles(renderer);
+}
+
+/**
+ * Updates and draws the particles in the given range
+ * @param delta The time elapsed since the last update
+ * @param renderer The SDL renderer to draw the particles
+ * @param start The start index of the range
+ * @param end The end index of the range
+
+ */
+void ObjectManager::updateAndDrawParticlesRange(double delta, SDL_Renderer* renderer, int start, int end)
+{
+	for (int i = start; i < end; i++)
+	{
+		particles[i].updatePosition(delta);
+        collision_manager->checkParticleCollisionsInCells(&particles[i]);
+        particles[i].handleScreenCollision();
+		particles[i].draw(renderer);
+	}
+}
+
+/**
+ * Updates and draws the particles in the given indices array
+ * @param delta The time elapsed since the last update
+ * @param renderer The SDL renderer to draw the particles
+ * @param indices The array of indices to update and draw
+ * @param count The number of indices in the array
+ */
+void ObjectManager::updateAndDrawParticlesIndices(double delta, SDL_Renderer* renderer, int* indices, int count)
+{
+    // Iterate through the indices array and update and draw the particles
+    for (int i = 0; i < count; i++)
+	{
+		particles[indices[i]].updatePosition(delta);
+		collision_manager->checkParticleCollisionsInCells(&particles[indices[i]]);
+		particles[indices[i]].handleScreenCollision();
+		particles[indices[i]].draw(renderer);
+	}
 }
 
 
@@ -161,13 +200,15 @@ void ObjectManager::addDebugCircle(Position pos, int r)
 	}
 }
 
-ObjectManager::ObjectManager() { screen_width = 1280; screen_height = 720; collision_manager = new CollisionManager(screen_width, screen_height); }
+ObjectManager::ObjectManager() { screen_width = 1280; screen_height = 720; collision_manager = new CollisionManager(screen_width, screen_height); setupThreads(); }
 
 ObjectManager::ObjectManager(int width, int height)
 {
     screen_width = width;
 	screen_height = height;
     collision_manager = new CollisionManager(width, height);
+
+    setupThreads();
 }
 
 /**

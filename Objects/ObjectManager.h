@@ -1,4 +1,5 @@
 #pragma once
+#include <thread>
 #include "../CollisionManager.h"
 #include "Particle.h"
 #include "Wall.h"
@@ -14,8 +15,11 @@ public:
 	void addParticle(int x, int y, int angle, int velocity);
 	void addWall(Line line);
 
+	void setupThreads();
 	void updateParticles(double delta);
 	void updateAndDrawParticles(double delta, SDL_Renderer* renderer);
+	void updateAndDrawParticlesRange(double delta, SDL_Renderer* renderer, int start, int end);
+	void updateAndDrawParticlesIndices(double delta, SDL_Renderer* renderer, int* indices, int count);
 	void drawWalls(SDL_Renderer* renderer);
 
 	int getParticleCount() { return current_max_particles; }
@@ -30,6 +34,12 @@ public:
 private:
 	int screen_width, screen_height;
 	CollisionManager* collision_manager;
+	
+	// Object Threads (16)
+	std::thread object_threads[16];
+	double cur_delta_time = 0.0;
+	int particle_indices[16][256];
+	int thread_particle_capacity[16];
 
 	int initial_capacity = 1024;
 	int particle_capacity = initial_capacity;
