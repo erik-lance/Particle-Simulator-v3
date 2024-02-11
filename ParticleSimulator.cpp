@@ -115,7 +115,8 @@ int main()
 		object_manager.drawGridLines(renderer);
 
 		// Move the particles
-		object_manager.updateAndDrawParticles(delta_time, renderer);
+		// object_manager.updateAndDrawParticles(delta_time, renderer);
+		object_manager.updateAndDrawParticlesMultiThreaded(delta_time, renderer);
 		object_manager.drawWalls(renderer);
 
 		// Render ImGui
