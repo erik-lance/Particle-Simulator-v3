@@ -5,6 +5,8 @@
 #include "Wall.h"
 #include "DebugCircle.h"
 
+constexpr int THREAD_COUNT = 4;
+
 struct ParticleThreadData
 {
 	int capacity = 256;
@@ -26,8 +28,9 @@ public:
 	void setupThreads();
 	void updateParticles(double delta);
 	void updateAndDrawParticles(double delta, SDL_Renderer* renderer);
+	void updateAndDrawParticlesMultiThreaded(double delta, SDL_Renderer* renderer);
 	void updateAndDrawParticlesRange(double delta, SDL_Renderer* renderer, int start, int end);
-	void updateAndDrawParticlesIndices(double delta, SDL_Renderer* renderer, int* indices, int count);
+	void updateAndDrawParticlesIndices(double delta, int* indices, int count);
 	void drawWalls(SDL_Renderer* renderer);
 
 	int getParticleCount() { return current_max_particles; }
@@ -44,9 +47,9 @@ private:
 	CollisionManager* collision_manager;
 	
 	// Object Threads (16)
-	std::thread object_threads[16];
-	double cur_delta_time = 0.0;
-	ParticleThreadData thread_data[16];
+	std::thread object_threads[THREAD_COUNT];
+	ParticleThreadData thread_data[THREAD_COUNT];
+	bool running = true;
 
 	int initial_capacity = 1024;
 	int particle_capacity = initial_capacity;

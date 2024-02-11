@@ -41,7 +41,7 @@ void ObjectManager::addParticle(int x, int y, int angle, int velocity)
 void ObjectManager::distributeParticleToThread(int index)
 {
     // Distribute the particle to a thread
-	int thread_index = index % 16;
+	int thread_index = index % THREAD_COUNT;
     
     // Check if thread data capacity is full
     if (thread_data[thread_index].count >= thread_data[thread_index].capacity)
@@ -91,7 +91,7 @@ void ObjectManager::addWall(Line line)
 void ObjectManager::setupThreads()
 {
     // Initialize thread particle data
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < THREAD_COUNT; i++)
 	{
         thread_data[i] = ParticleThreadData();
 	}
@@ -117,11 +117,41 @@ void ObjectManager::updateParticles(double delta)
  */
 void ObjectManager::updateAndDrawParticles(double delta, SDL_Renderer* renderer)
 {
-    // Updates delta time for thread calculations
-    cur_delta_time = delta;
-	
+    // Temporary non multi-threaded update
+    for (int i = 0; i < current_max_particles; i++)
+    {
+        particles[i].updatePosition(delta);
+		collision_manager->checkParticleCollisionsInCells(&particles[i]);
+		particles[i].handleScreenCollision();
+        particles[i].draw(renderer);
+    }
+
     // Draw debug circles
     // drawDebugCircles(renderer);
+}
+
+/**
+ * Updates and draws the particles in the particle array using threading
+ * @param delta The time elapsed since the last update
+ * @param renderer The SDL renderer to draw the particles
+ */
+void ObjectManager::updateAndDrawParticlesMultiThreaded(double delta, SDL_Renderer* renderer)
+{
+    // Start threads with individual particle data
+    // using the updateAndDrawParticlesIndices function
+    for (int i = 0; i < THREAD_COUNT; i++)
+    {
+        object_threads[i] = std::thread(&ObjectManager::updateAndDrawParticlesIndices, this, delta, thread_data[i].indices, thread_data[i].count);
+    }
+
+    // Join the threads
+    for (int i = 0; i < THREAD_COUNT; i++) { object_threads[i].join(); }
+
+    // Draw particles
+    for (int i = 0; i < current_max_particles; i++)
+    {
+		particles[i].draw(renderer);
+	}
 }
 
 /**
@@ -145,20 +175,17 @@ void ObjectManager::updateAndDrawParticlesRange(double delta, SDL_Renderer* rend
 
 /**
  * Updates and draws the particles in the given indices array
- * @param delta The time elapsed since the last update
- * @param renderer The SDL renderer to draw the particles
  * @param indices The array of indices to update and draw
  * @param count The number of indices in the array
  */
-void ObjectManager::updateAndDrawParticlesIndices(double delta, SDL_Renderer* renderer, int* indices, int count)
+void ObjectManager::updateAndDrawParticlesIndices(double delta, int* indices, int count)
 {
     // Iterate through the indices array and update and draw the particles
-    for (int i = 0; i < count; i++)
+    for (int i = 0; i < count-1; i++)
 	{
 		particles[indices[i]].updatePosition(delta);
 		collision_manager->checkParticleCollisionsInCells(&particles[indices[i]]);
 		particles[indices[i]].handleScreenCollision();
-		particles[indices[i]].draw(renderer);
 	}
 }
 
@@ -237,4 +264,7 @@ ObjectManager::~ObjectManager()
     delete[] particles;
     delete[] walls;
     delete &collision_manager;
+
+    running = false; // Stop the threads
+    for (int i = 0; i < THREAD_COUNT; i++) { object_threads[i].join(); }
 }
