@@ -1,5 +1,4 @@
 #include "CollisionManager.h"
-#include <iostream>
 
 CollisionManager::CollisionManager(int width, int height)
 {
@@ -64,8 +63,6 @@ void CollisionManager::addWall(Wall wall)
 				intersects = cellIntersectsLine(cell, line);
 			}
 
-			std::cout << "Intersects: " << intersects << std::endl;
-
 			if (intersects)
 			{
 				// Add the wall to the cell. Allocate memory
@@ -83,7 +80,6 @@ void CollisionManager::addWall(Wall wall)
 				}
 
 				// Add the wall to the cell
-				std::cout << "Adding wall to cell: " << "(" << i << ", " << j << ") " << cell.position.x << ", " << cell.position.y << std::endl;
 				cell.walls[cell.numWalls-1] = wall;
 				cell.numWalls++;
 
@@ -321,17 +317,12 @@ void CollisionManager::checkParticleCollisionsInCells(Particle* particle) const
 	Cell start_cell = getGridCell(start_pos.x, start_pos.y);
 	Cell end_cell = getGridCell(end_pos.x, end_pos.y);
 
-	// std::cout << "Start and End Cell: " << start_cell.position.x << ", " << start_cell.position.y << " and " << end_cell.position.x << ", " << end_cell.position.y << std::endl;
-	// std::cout << "Num of walls in start cell (" << start_cell.position.x << ", " << start_cell.position.y << "): " << start_cell.numWalls << std::endl;
-	// std::cout << "Num of walls in end cell (" << end_cell.position.x << ", " << end_cell.position.y << "): " << end_cell.numWalls << std::endl;
-
 	// Check for collisions between the particle and the walls in the start and end cells
 
 	// Check for collisions in the start cell
 	bool done = false;
 	for (int i = 0; i < start_cell.numWalls-1; i++)
 	{
-		// std::cout << "Start Cell Wall: " << start_cell.walls[i].getLine().start.x << ", " << start_cell.walls[i].getLine().start.y << " and " << start_cell.walls[i].getLine().end.x << ", " << start_cell.walls[i].getLine().end.y << std::endl;
 		// Get the wall
 		Wall wall = start_cell.walls[i];
 

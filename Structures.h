@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 
 // PI Constant
 constexpr auto PI = 3.14159265358979323846;
@@ -43,9 +42,6 @@ static inline bool lineIntersectsLine(Line l1, Line l2)
     std::cout << "dx34: " << dx34 << std::endl;
     std::cout << "dy34: " << dy34 << std::endl;
     */
-    std::cout << "t1: " << t1 << std::endl;
-    std::cout << "t2: " << t2 << std::endl;
-    
 
     // Check if the line segments intersect
     if (t1 >= 0 && t1 <= 1 && t2 >= 0 && t2 <= 1) {

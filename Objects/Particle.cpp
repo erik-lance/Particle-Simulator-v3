@@ -2,8 +2,6 @@
 #include <glad/glad.h>
 #include <imgui.h>
 
-#include <iostream>
-
 void Particle::updatePosition(double delta)
 {
 	// Save the old position
@@ -67,7 +65,6 @@ bool Particle::handleLineCollision(Line line)
 
 	if (intersection.x != 0 && intersection.y != 0)
 	{
-		std::cout << "Intersection at (" << intersection.x << ", " << intersection.y << ")" << std::endl;
 		collided = true;
 	}
 
