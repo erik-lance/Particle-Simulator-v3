@@ -29,6 +29,36 @@ void ObjectManager::addParticle(int x, int y, int angle, int velocity)
     particles[current_max_particles-1].setScreenSize(screen_width, screen_height);
 
     current_max_particles++; // Increment the counter after adding the particle
+
+    // Distribute the particle to a thread
+    distributeParticleToThread(current_max_particles-2);
+}
+
+/**
+ * Adds particle to the thread's particle array. If the array is full, it will double the capacity
+ * @param index The index of the particle in the particle array
+ */
+void ObjectManager::distributeParticleToThread(int index)
+{
+    // Distribute the particle to a thread
+	int thread_index = index % 16;
+    
+    // Check if thread data capacity is full
+    if (thread_data[thread_index].count >= thread_data[thread_index].capacity)
+	{
+        thread_data[thread_index].capacity *= 2;
+		int* new_indices = new int[thread_data[thread_index].capacity];
+		for (int i = 0; i < thread_data[thread_index].count; i++)
+		{
+			new_indices[i] = thread_data[thread_index].indices[i];
+		}
+		delete[] thread_data[thread_index].indices;
+		thread_data[thread_index].indices = new_indices;
+	}
+
+	// Add the particle index to the thread's particle array
+	thread_data[thread_index].indices[thread_data[thread_index].count-1] = index;
+	thread_data[thread_index].count++;
 }
 
 /**
@@ -60,17 +90,11 @@ void ObjectManager::addWall(Line line)
 
 void ObjectManager::setupThreads()
 {
-    // Initialize thread particle capacity
-    // Assuming each thread can initially handle up to 256 particles
-    for (int i = 0; i < 16; ++i) { thread_particle_capacity[i] = 256; }
-
-    // Initialize particle indices array
-    // Assuming each thread starts with an empty array
-    for (int i = 0; i < 16; ++i) {
-        for (int j = 0; j < thread_particle_capacity[i]; ++j) {
-            particle_indices[i][j] = -1; // -1 indicates an empty slot
-        }
-    }
+    // Initialize thread particle data
+    for (int i = 0; i < 16; i++)
+	{
+        thread_data[i] = ParticleThreadData();
+	}
 }
 
 /**
@@ -93,14 +117,8 @@ void ObjectManager::updateParticles(double delta)
  */
 void ObjectManager::updateAndDrawParticles(double delta, SDL_Renderer* renderer)
 {
-    // Temporary non multi-threaded update and draw
-    for (int i = 0; i < current_max_particles; i++)
-	{
-        particles[i].updatePosition(delta);
-        collision_manager->checkParticleCollisionsInCells(&particles[i]);
-        particles[i].handleScreenCollision();
-        particles[i].draw(renderer);
-    }
+    // Updates delta time for thread calculations
+    cur_delta_time = delta;
 	
     // Draw debug circles
     // drawDebugCircles(renderer);

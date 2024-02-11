@@ -5,6 +5,13 @@
 #include "Wall.h"
 #include "DebugCircle.h"
 
+struct ParticleThreadData
+{
+	int capacity = 256;
+	int* indices = new int[capacity];
+	int count = 1;
+};
+
 class ObjectManager
 {
 public:
@@ -13,6 +20,7 @@ public:
 	~ObjectManager();
 
 	void addParticle(int x, int y, int angle, int velocity);
+	void distributeParticleToThread(int index);
 	void addWall(Line line);
 
 	void setupThreads();
@@ -38,8 +46,7 @@ private:
 	// Object Threads (16)
 	std::thread object_threads[16];
 	double cur_delta_time = 0.0;
-	int particle_indices[16][256];
-	int thread_particle_capacity[16];
+	ParticleThreadData thread_data[16];
 
 	int initial_capacity = 1024;
 	int particle_capacity = initial_capacity;
