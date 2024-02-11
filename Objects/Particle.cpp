@@ -11,21 +11,22 @@ void Particle::updatePosition(double delta)
 	old_position.y = position.y;
 
 	// Update position based on velocity and angle using elapsed time
-	position.x += p_velocity * cos(p_angle) * delta;
-	position.y += p_velocity * sin(p_angle) * delta;
+	position.x += (int)(p_velocity * cos(p_angle) * delta);
+	position.y += (int)(p_velocity * sin(p_angle) * delta);
 } 
 
 void Particle::handleScreenCollision()
 {
 	// Distance from the particle's old position to the new position
 	double distance = sqrt(pow(position.x - old_position.x, 2) + pow(position.y - old_position.y, 2));
+	distance += radius;
 
 	// Clamping the particle's position to the screen
-	if (position.x < 0) { position.x = 0; }
-	else if (position.x > screen_width) { position.x = screen_width; }
+	if (position.x < 0) { position.x = radius; }
+	else if (position.x > screen_width) { position.x = screen_width - radius; }
 
-	if (position.y < 0) { position.y = 0; }
-	else if (position.y > screen_height) { position.y = screen_height; }
+	if (position.y < 0) { position.y = radius; }
+	else if (position.y > screen_height) { position.y = screen_height - radius; }
 
 	// Bounce off the walls
 	if (position.x <= radius || position.x >= screen_width - radius) {
@@ -34,7 +35,7 @@ void Particle::handleScreenCollision()
 		p_angle = normalizeAngle(p_angle);
 
 		// Move x by the distance
-		position.x += distance * cos(p_angle);
+		position.x += (int)(distance * cos(p_angle));
 	}
 
 	if (position.y <= radius || position.y >= screen_height - radius) {
@@ -43,7 +44,7 @@ void Particle::handleScreenCollision()
 		p_angle = normalizeAngle(p_angle);
 
 		// Move y by the distance
-		position.y += distance * sin(p_angle);
+		position.y += (int)(distance * sin(p_angle));
 	}
 }
 
@@ -81,12 +82,14 @@ bool Particle::handleLineCollision(Line line)
 		position.y = intersection.y;
 
 		// Reflect the particle's angle based on the line's angle in Radians with a simple reflection formula
-		p_angle = 2 * line.angle - p_angle;
-		p_angle = normalizeAngle(p_angle);
+		p_angle = reflectAngle(p_angle, line.angle);
+
+		// Add radius to distance
+		distance += radius + 2;
 		
 		// And then move the position by the distance
-		position.x += distance * cos(p_angle);
-		position.y += distance * sin(p_angle);
+		position.x += (int)(distance * cos(p_angle));
+		position.y += (int)(distance * sin(p_angle));
 
 		// To offset radius
 
