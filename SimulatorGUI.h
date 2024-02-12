@@ -9,7 +9,7 @@
 
 class SimulatorGUI {
 public:
-	void Init(SDL_Window* window, SDL_GLContext gl_context, SDL_Renderer* renderer, const char* glsl_version);
+	void Init(SDL_Window* window, SDL_Renderer* renderer);
 	void setManager(ObjectManager* manager) { m_object_manager = manager; }
 	ObjectManager* getManager() { return m_object_manager; }
 	void NewFrame();

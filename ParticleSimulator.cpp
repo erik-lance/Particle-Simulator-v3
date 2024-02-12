@@ -76,7 +76,7 @@ int main()
 	glViewport(0, 0, SIM_WIDTH, SIM_HEIGHT);
 
 	SimulatorGUI gui;
-	gui.Init(window, gl_context, renderer, "#version 330");
+	gui.Init(window, renderer);
 	gui.setManager(&object_manager);
 
 	// Check for OpenGL errors

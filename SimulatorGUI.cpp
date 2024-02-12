@@ -1,7 +1,7 @@
 #include "SimulatorGUI.h"
 #include <iostream>
 
-void SimulatorGUI::Init(SDL_Window* window, SDL_GLContext gl_context, SDL_Renderer* renderer, const char* glsl_version)
+void SimulatorGUI::Init(SDL_Window* window, SDL_Renderer* renderer)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -220,7 +220,10 @@ void SimulatorGUI::ParticlesBatchMethodOneGUI()
 			double x = method_one_start_x + (method_one_end_x - method_one_start_x) * i / m_batch_size;
 			double y = method_one_start_y + (method_one_end_y - method_one_start_y) * i / m_batch_size;
 
-			m_object_manager->addParticle(x, y, method_one_angle, method_one_velocity);
+			int pos_x = (int)x;
+			int pos_y = (int)y;
+
+			m_object_manager->addParticle(pos_x, pos_y, method_one_angle, method_one_velocity);
 
 			// Increment particle id
 			m_particle_id++;
