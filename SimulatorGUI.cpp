@@ -167,7 +167,7 @@ void SimulatorGUI::ParticlesBatchGUI()
 
 	// Clamp batch size to 1-1000
 	ImGui::InputInt("Batch Size", &m_batch_size);
-	InputClamp(m_batch_size, 1, 1000);
+	InputClamp(m_batch_size, 1, 100000);
 
 	ImGui::End();
 
