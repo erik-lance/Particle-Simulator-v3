@@ -325,8 +325,8 @@ void SimulatorGUI::PresetsAndMenuGUI()
 	ImGui::Begin("Presets", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 
 	// Set window
-	ImGui::SetWindowPos(ImVec2(particle_batch_pos_x, particle_batch_method_pos_y[2]));
-	ImGui::SetWindowSize(ImVec2(particle_batch_size_x, 220));
+	ImGui::SetWindowPos(ImVec2(presets_pos_x, presets_pos_y));
+	ImGui::SetWindowSize(ImVec2(presets_size_x, presets_size_y));
 
 	// Presets
 	ImGui::Text("Presets");

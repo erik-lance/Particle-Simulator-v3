@@ -54,6 +54,12 @@ private:
 		particle_batch_method_pos_y[1] + particle_batch_method_size_y[1] + 10 
 	};
 
+	int presets_size_x = particle_batch_size_x;
+	int presets_size_y = 170;
+
+	int presets_pos_x = particle_batch_pos_x;
+	int presets_pos_y = particle_batch_method_pos_y[2] + particle_batch_method_size_y[2] + 10;
+
 	// Main Inputs
 	ObjectManager* m_object_manager;
 	int m_particle_id = 0;
