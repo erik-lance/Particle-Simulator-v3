@@ -1,7 +1,7 @@
 #include "SimulatorGUI.h"
 #include <iostream>
 
-void SimulatorGUI::Init(SDL_Window* window, SDL_Renderer* renderer)
+void SimulatorGUI::Init(SDL_Window* window, SDL_Renderer* renderer, double* delta, int* fps_ctr)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -13,6 +13,10 @@ void SimulatorGUI::Init(SDL_Window* window, SDL_Renderer* renderer)
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
+
+	// Set timers
+	delta_time = delta;
+	fps = fps_ctr;
 }
 
 void SimulatorGUI::NewFrame()
@@ -57,16 +61,6 @@ void SimulatorGUI::MainMenuGUI()
 	// Set window size
 	ImGui::SetWindowSize(ImVec2(menu_size_x, menu_size_y));
 
-	// FPS and Delta Time and total time
-	// FPS updates every 0.5 seconds
-	static double prev_time = 0;
-	static int fps = 0;
-	double current_time = ImGui::GetTime();
-	if (current_time - prev_time >= 0.5) {
-		prev_time = current_time;
-		fps = ImGui::GetIO().Framerate;
-	}
-
 	// Create a two column for statistics
 	ImGui::BeginTable("Stats", 4);
 	ImGui::TableNextRow();
@@ -83,8 +77,8 @@ void SimulatorGUI::MainMenuGUI()
 
 	// Data
 	ImGui::TableNextColumn();
-	ImGui::Text("FPS: %d", fps);
-	ImGui::Text("Delta Time: %.4f", ImGui::GetIO().DeltaTime);
+	ImGui::Text("FPS: %d", *fps);
+	ImGui::Text("Delta Time: %.4f", *delta_time);
 	ImGui::Text("Total Time: %.4f", ImGui::GetTime());
 
 	ImGui::Separator();

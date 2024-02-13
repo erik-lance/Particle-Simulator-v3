@@ -9,7 +9,7 @@
 
 class SimulatorGUI {
 public:
-	void Init(SDL_Window* window, SDL_Renderer* renderer);
+	void Init(SDL_Window* window, SDL_Renderer* renderer, double* delta, int* fps_ctr);
 	void setManager(ObjectManager* manager) { m_object_manager = manager; }
 	ObjectManager* getManager() { return m_object_manager; }
 	void NewFrame();
@@ -30,6 +30,8 @@ public:
 	void InputClampRelativeEnd(int& num, int min, int max, int & relative_min);
 
 private:
+	double* delta_time = new double(0);
+	int* fps = new int(0);
 	// GUI Variables
 	int menu_size_x = 1260;
 	int menu_size_y = 160;
