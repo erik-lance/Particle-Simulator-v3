@@ -24,9 +24,6 @@ CollisionManager::~CollisionManager()
 			delete[] grid.cells[i][j].walls;
 		}
 	}
-
-	// Deallocate the array of cells
-	delete[] grid.cells;
 }
 
 /**

@@ -22,6 +22,8 @@ double delta_time = 0;
 int fps = 0;
 ObjectManager object_manager = ObjectManager(SIM_WIDTH, SIM_HEIGHT);
 
+bool isRunning = true;
+
 void draw_sim_borders(SDL_Renderer* renderer) {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	SDL_RenderDrawLine(renderer, 0, 0, SIM_WIDTH, 0);
@@ -77,7 +79,7 @@ int main()
 	glViewport(0, 0, SIM_WIDTH, SIM_HEIGHT);
 
 	SimulatorGUI gui;
-	gui.Init(window, renderer, &delta_time, &fps);
+	gui.Init(window, renderer, &delta_time, &fps, &isRunning);
 	gui.setManager(&object_manager);
 
 	// Check for OpenGL errors
@@ -93,7 +95,7 @@ int main()
 	// Set delta time of object manager
 	object_manager.setDeltaTime(&delta_time);
 
-	while (1) {
+	while (isRunning) {
 		// Calculate delta time
 		last_time = current_time;
 		current_time = SDL_GetPerformanceCounter();

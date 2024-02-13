@@ -1,7 +1,7 @@
 #include "SimulatorGUI.h"
 #include <iostream>
 
-void SimulatorGUI::Init(SDL_Window* window, SDL_Renderer* renderer, double* delta, int* fps_ctr)
+void SimulatorGUI::Init(SDL_Window* window, SDL_Renderer* renderer, double* delta, int* fps_ctr, bool* running)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -17,6 +17,9 @@ void SimulatorGUI::Init(SDL_Window* window, SDL_Renderer* renderer, double* delt
 	// Set timers
 	delta_time = delta;
 	fps = fps_ctr;
+
+	// Set running
+	this->running = running;
 }
 
 void SimulatorGUI::NewFrame()
@@ -35,6 +38,9 @@ void SimulatorGUI::Update()
 
 	// Particles Batch
 	ParticlesBatchGUI();
+
+	// Presets and Menu
+	PresetsAndMenuGUI();
 }
 
 void SimulatorGUI::Render()
@@ -309,6 +315,51 @@ void SimulatorGUI::ParticlesBatchMethodThreeGUI()
 			// Increment particle id
 			m_particle_id++;
 		}
+	}
+
+	ImGui::End();
+}
+
+void SimulatorGUI::PresetsAndMenuGUI()
+{
+	ImGui::Begin("Presets", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+
+	// Set window
+	ImGui::SetWindowPos(ImVec2(particle_batch_pos_x, particle_batch_method_pos_y[2]));
+	ImGui::SetWindowSize(ImVec2(particle_batch_size_x, 220));
+
+	// Presets
+	ImGui::Text("Presets");
+	ImGui::Spacing();
+
+	if (ImGui::Button("Preset 1")) {
+		std::cout << "Preset 1" << std::endl;
+	}
+
+	ImGui::SameLine();
+
+	if (ImGui::Button("Preset 2")) {
+		std::cout << "Preset 2" << std::endl;
+	}
+
+	ImGui::SameLine();
+
+	if (ImGui::Button("Preset 3")) {
+		std::cout << "Preset 3" << std::endl;
+	}
+
+	ImGui::SameLine();
+
+	if (ImGui::Button("Preset 4")) {
+		std::cout << "Preset 4" << std::endl;
+	}
+
+	// Exit Button
+	if (ImGui::Button("Exit")) {
+		std::cout << "Exit" << std::endl;
+
+		// Stop the program
+		*running = false;
 	}
 
 	ImGui::End();

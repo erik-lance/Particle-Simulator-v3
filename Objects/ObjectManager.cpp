@@ -278,9 +278,9 @@ ObjectManager::ObjectManager(int width, int height)
  */
 ObjectManager::~ObjectManager()
 {
+    // Destruct the particles and walls
     delete[] particles;
     delete[] walls;
-    delete &collision_manager;
 
     running = false; // Stop the threads
     for (int i = 0; i < THREAD_COUNT; i++) { object_threads[i].join(); }

@@ -9,7 +9,7 @@
 
 class SimulatorGUI {
 public:
-	void Init(SDL_Window* window, SDL_Renderer* renderer, double* delta, int* fps_ctr);
+	void Init(SDL_Window* window, SDL_Renderer* renderer, double* delta, int* fps_ctr, bool* running);
 	void setManager(ObjectManager* manager) { m_object_manager = manager; }
 	ObjectManager* getManager() { return m_object_manager; }
 	void NewFrame();
@@ -23,6 +23,7 @@ public:
 	void ParticlesBatchMethodOneGUI();
 	void ParticlesBatchMethodTwoGUI();
 	void ParticlesBatchMethodThreeGUI();
+	void PresetsAndMenuGUI();
 
 	// Clamper (Wrapper for ImGui::InputInt)
 	void InputClamp(int& num, int min, int max);
@@ -30,6 +31,7 @@ public:
 	void InputClampRelativeEnd(int& num, int min, int max, int & relative_min);
 
 private:
+	bool* running = new bool(true);
 	double* delta_time = new double(0);
 	int* fps = new int(0);
 	// GUI Variables
