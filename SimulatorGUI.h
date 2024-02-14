@@ -29,6 +29,9 @@ public:
 	void InputClamp(int& num, int min, int max);
 	void InputClampRelativeStart(int& num, int min, int max, int& relative_max);
 	void InputClampRelativeEnd(int& num, int min, int max, int & relative_min);
+	void ResolveMethodOne();
+	void ResolveMethodTwo();
+	void ResolveMethodThree();
 
 private:
 	bool* running = new bool(true);
@@ -41,12 +44,12 @@ private:
 	int menu_pos_y = 730;
 
 	int particle_batch_size_x = 300;
-	int particle_batch_size_y = 60;
+	int particle_batch_size_y = 180;
 	int particle_batch_pos_x = 1290;
 	int particle_batch_pos_y = 10;
 
 	int particle_batch_method_size_x[3] = { particle_batch_size_x, particle_batch_size_x, particle_batch_size_x };
-	int particle_batch_method_size_y[3] = { 220, 195, 195 };
+	int particle_batch_method_size_y[3] = { 200, 175, 175 };
 	int particle_batch_method_pos_x[3] = { particle_batch_pos_x, particle_batch_pos_x, particle_batch_pos_x };
 	int particle_batch_method_pos_y[3] = { 
 		particle_batch_pos_y + particle_batch_size_y + 10, 
@@ -55,7 +58,7 @@ private:
 	};
 
 	int presets_size_x = particle_batch_size_x;
-	int presets_size_y = 170;
+	int presets_size_y = 100;
 
 	int presets_pos_x = particle_batch_pos_x;
 	int presets_pos_y = particle_batch_method_pos_y[2] + particle_batch_method_size_y[2] + 10;

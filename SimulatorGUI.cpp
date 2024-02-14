@@ -169,6 +169,32 @@ void SimulatorGUI::ParticlesBatchGUI()
 	ImGui::InputInt("Batch Size", &m_batch_size);
 	InputClamp(m_batch_size, 1, 100000);
 
+	// Separator
+	ImGui::Separator();
+
+	// Display error if any of the batch methods' start is greater than end or vice versa
+	// and button to automatically fix the error
+	if (method_one_start_x > method_one_end_x || method_one_start_y > method_one_end_y) {
+		ImGui::TextColored(ImVec4(1, 0, 0, 1), "Error: Method 1 Start is greater than End");
+		if (ImGui::Button("Fix Error (Method 1)")) {
+			ResolveMethodOne();
+		}
+	}
+
+	if (method_two_start_angle > method_two_end_angle) {
+		ImGui::TextColored(ImVec4(1, 0, 0, 1), "Error: Method 2 Start is greater than End");
+		if (ImGui::Button("Fix Error (Method 2)")) {
+			ResolveMethodTwo();
+		}
+	}
+
+	if (method_three_start_velocity > method_three_end_velocity) {
+		ImGui::TextColored(ImVec4(1, 0, 0, 1), "Error: Method 3 Start is greater than End");
+		if (ImGui::Button("Fix Error (Method 3)")) {
+			ResolveMethodThree();
+		}
+	}
+
 	ImGui::End();
 
 	ParticlesBatchMethodOneGUI();
@@ -186,22 +212,20 @@ void SimulatorGUI::ParticlesBatchMethodOneGUI()
 
 	// Method 1 (Provide a start and end point)
 	// Particles are added with a uniform distance between given start and end points
-	ImGui::Separator();
-	ImGui::Text("Method 1");
 
 	// Relatively Clamp x and y to 0-1280 and 1-720
 	// So that the start and end points are within the window
 	ImGui::InputInt("Start X", &method_one_start_x);
-	InputClampRelativeStart(method_one_start_x, 0, 1280, method_one_end_x);
-
 	ImGui::InputInt("End X", &method_one_end_x);
-	InputClampRelativeEnd(method_one_end_x, 0, 1280, method_one_start_x);
+
+	InputClamp(method_one_start_x, 0, 1280);
+	InputClamp(method_one_end_x, 0, 1280);
 
 	ImGui::InputInt("Start Y", &method_one_start_y);
-	InputClampRelativeStart(method_one_start_y, 0, 720, method_one_end_y);
-
 	ImGui::InputInt("End Y", &method_one_end_y);
-	InputClampRelativeEnd(method_one_end_y, 0, 720, method_one_start_y);
+
+	InputClamp(method_one_start_y, 0, 720);
+	InputClamp(method_one_end_y, 0, 720);
 
 
 	// Angle and Velocity constant for all particles
@@ -213,6 +237,7 @@ void SimulatorGUI::ParticlesBatchMethodOneGUI()
 	ImGui::Spacing();
 
 	if (ImGui::Button("Add Particle Batch (Method 1)")) {
+		ResolveMethodOne();
 		std::cout << "Particle Batch Added (Method 1)" << std::endl;
 		for (int i = 0; i < m_batch_size; i++) {
 			// Calculate the distance between start and end points
@@ -243,14 +268,13 @@ void SimulatorGUI::ParticlesBatchMethodTwoGUI()
 
 	// Method 2 (Provide a start angle and end angle)
 	// Particles are added with a uniform distance between given start and end angles
-	ImGui::Text("Method 2");
 
 	// Relatively Clamp Angle Start and End to 0-360
 	ImGui::InputInt("Start Angle", &method_two_start_angle);
-	InputClampRelativeStart(method_two_start_angle, 0, 360, method_two_end_angle);
-
 	ImGui::InputInt("End Angle", &method_two_end_angle);
-	InputClampRelativeEnd(method_two_end_angle, 0, 360, method_two_start_angle);
+
+	InputClamp(method_two_start_angle, 0, 360);
+	InputClamp(method_two_end_angle, 0, 360);
 
 	ImGui::InputInt("Start X", &method_two_start_x);
 	InputClamp(method_two_start_x, 0, 1280);
@@ -264,6 +288,7 @@ void SimulatorGUI::ParticlesBatchMethodTwoGUI()
 	ImGui::Spacing();
 
 	if (ImGui::Button("Add Particle Batch (Method 2)")) {
+		ResolveMethodTwo();
 		std::cout << "Particle Batch Added (Method 2)" << std::endl;
 		for (int i = 0; i < m_batch_size; i++) {
 			double angle = method_two_start_angle + (method_two_end_angle - method_two_start_angle) * i / m_batch_size;
@@ -287,7 +312,6 @@ void SimulatorGUI::ParticlesBatchMethodThreeGUI()
 
 	// Method 3 (Provide a start velocity and end velocity)
 	// Particles are added with a uniform distance between given start and end velocities
-	ImGui::Text("Method 3");
 
 	ImGui::InputInt("Start X", &method_three_start_x);
 	InputClamp(method_three_start_x, 0, 1280);
@@ -299,14 +323,15 @@ void SimulatorGUI::ParticlesBatchMethodThreeGUI()
 	InputClamp(method_three_angle, 0, 360);
 
 	ImGui::InputInt("Start Velocity", &method_three_start_velocity);
-	InputClampRelativeStart(method_three_start_velocity, 1, 50, method_three_end_velocity);
-
 	ImGui::InputInt("End Velocity", &method_three_end_velocity);
-	InputClampRelativeEnd(method_three_end_velocity, 1, 50, method_three_start_velocity);
+
+	InputClamp(method_three_start_velocity, 1, 50);
+	InputClamp(method_three_end_velocity, 1, 50);
 
 	ImGui::Spacing();
 
 	if (ImGui::Button("Add Particle Batch (Method 3)")) {
+		ResolveMethodThree();
 		std::cout << "Particle Batch Added (Method 3)" << std::endl;
 		for (int i = 0; i < m_batch_size; i++) {
 			double velocity = method_three_start_velocity + (method_three_end_velocity - method_three_start_velocity) * i / m_batch_size;
@@ -329,9 +354,6 @@ void SimulatorGUI::PresetsAndMenuGUI()
 	ImGui::SetWindowSize(ImVec2(presets_size_x, presets_size_y));
 
 	// Presets
-	ImGui::Text("Presets");
-	ImGui::Spacing();
-
 	if (ImGui::Button("Preset 1")) {
 		std::cout << "Preset 1" << std::endl;
 	}
@@ -377,4 +399,20 @@ void SimulatorGUI::InputClampRelativeEnd(int& num, int min, int max, int& relati
 {
 	if (num > max) num = max;
 	if (num < relative_min && num >= min) relative_min = num;		// If end is less than start, set start to end (Decrement)
+}
+
+void SimulatorGUI::ResolveMethodOne()
+{
+	if (method_one_start_x > method_one_end_x) method_one_start_x = method_one_end_x;
+	if (method_one_start_y > method_one_end_y) method_one_start_y = method_one_end_y;
+}
+
+void SimulatorGUI::ResolveMethodTwo()
+{
+	if (method_two_start_angle > method_two_end_angle) method_two_start_angle = method_two_end_angle;
+}
+
+void SimulatorGUI::ResolveMethodThree()
+{
+	if (method_three_start_velocity > method_three_end_velocity) method_three_start_velocity = method_three_end_velocity;
 }
