@@ -356,6 +356,7 @@ void SimulatorGUI::PresetsAndMenuGUI()
 	// Presets
 	if (ImGui::Button("Preset 1")) {
 		std::cout << "Preset 1" << std::endl;
+
 	}
 
 	ImGui::SameLine();
@@ -376,7 +377,10 @@ void SimulatorGUI::PresetsAndMenuGUI()
 		std::cout << "Preset 4" << std::endl;
 	}
 
-	// Exit Button
+	// Exit Button float bottom right
+	ImGui::SetCursorPosX(ImGui::GetWindowWidth() - 50);
+	ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 30);
+
 	if (ImGui::Button("Exit")) {
 		std::cout << "Exit" << std::endl;
 
