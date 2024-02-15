@@ -72,6 +72,10 @@ private:
 	int m_particle_velocity = 0;
 
 	int m_obstacle_id = 0;
+	int m_obstacle_start_x = 0;
+	int m_obstacle_end_x = 0;
+	int m_obstacle_start_y = 0;
+	int m_obstacle_end_y = 0;
 
 	// Batch Inputs
 	int m_batch_size = 0;

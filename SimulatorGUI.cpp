@@ -126,13 +126,25 @@ void SimulatorGUI::MainMenuGUI()
 	ImGui::TableNextColumn();
 	ImGui::Text("Obstacle");
 
+	// Clamp start_x and start_y to 0-1280 and 1-720
+	ImGui::InputInt("Start X", &m_obstacle_start_x);
+	ImGui::InputInt("Start Y", &m_obstacle_start_y);
+	InputClamp(m_obstacle_start_x, 0, 1280);
+	InputClamp(m_obstacle_start_y, 0, 720);
+
+	// Clamp end_x and end_y to 0-1280 and 1-720
+	ImGui::InputInt("End X", &m_obstacle_end_x);
+	ImGui::InputInt("End Y", &m_obstacle_end_y);
+	InputClamp(m_obstacle_end_x, 0, 1280);
+	InputClamp(m_obstacle_end_y, 0, 720);
+
 	if (ImGui::Button("Add Wall")) {
 		std::cout << "Wall Added" << std::endl;
 		Line line = Line();
-		line.start.x = 512;
-		line.start.y = 255;
-		line.end.x = 1024;
-		line.end.y = 512;
+		line.start.x = m_obstacle_start_x;
+		line.start.y = m_obstacle_start_y;
+		line.end.x = m_obstacle_end_x;
+		line.end.y = m_obstacle_end_y;
 
 		// Calculate angle of the line in radians
 		double dx = line.end.x - line.start.x;
