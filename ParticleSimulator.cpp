@@ -99,14 +99,14 @@ int main()
 		// Calculate delta time
 		last_time = current_time;
 		current_time = SDL_GetPerformanceCounter();
-		delta_time = (double)((current_time - last_time) * 1000 / (double)SDL_GetPerformanceFrequency());
+		delta_time = (double)((current_time - last_time) / (double)SDL_GetPerformanceFrequency());
 
 		// Update FPS every 0.5 seconds
 		static double time = 0;
 		time += delta_time;
 		if (time > 500) {
 			time = 0;
-			fps = (int)(1 / (delta_time / 1000));
+			fps = (int)(1 / (delta_time));
 		}
 
 		// Process Input
