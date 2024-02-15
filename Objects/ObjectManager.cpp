@@ -165,7 +165,7 @@ void ObjectManager::updateAndDrawParticlesMultiThreaded(double delta, SDL_Render
     }
 
     // Draw the particles
-    for (int i = 0; i < current_max_particles; i++)
+    for (int i = 0; i < current_max_particles-1; i++)
     {
 		particles[i].draw(renderer);
 	}
