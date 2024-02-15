@@ -368,7 +368,28 @@ void SimulatorGUI::PresetsAndMenuGUI()
 	// Presets
 	if (ImGui::Button("Preset 1")) {
 		std::cout << "Preset 1" << std::endl;
+		
+		// Set Method 1 Preset
+		method_one_start_x = 255;
+		method_one_start_y = 225;
+		method_one_end_x = 1024;
+		method_one_end_y = 512;
+		method_one_angle = 30;
+		method_one_velocity = 5;
 
+		// Set Method 2 Preset
+		method_two_start_angle = 0;
+		method_two_end_angle = 359;
+		method_two_start_x = 255;
+		method_two_start_y = 255;
+		method_two_velocity = 5;
+
+		// Set Method 3 Preset
+		method_three_start_x = 255;
+		method_three_start_y = 255;
+		method_three_angle = 0;
+		method_three_start_velocity = 5;
+		method_three_end_velocity = 15;
 	}
 
 	ImGui::SameLine();
