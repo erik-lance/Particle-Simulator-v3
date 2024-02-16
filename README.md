@@ -8,7 +8,7 @@ A simulation project for Distributed Computing (STDISCM) course. This involves s
 
 # How to run in Visual Studio
 1. Clone the repository
-2. Install the vcpkg dependencies through terminal
+2. Install the vcpkg dependencies through terminal (since the vcpkg_installed is already included in the repository, you can skip this or delete the vcpkg_installed and then do this step)
 	1. `vcpkg install`
 3. Make sure to generate CMake cache
 4. Run the project
