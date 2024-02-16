@@ -101,14 +101,6 @@ int main()
 		current_time = SDL_GetPerformanceCounter();
 		delta_time = (double)((current_time - last_time) / (double)SDL_GetPerformanceFrequency());
 
-		// Update FPS every 0.5 seconds
-		static double time = 0;
-		time += delta_time;
-		if (time > 500) {
-			time = 0;
-			fps = (int)(1 / (delta_time));
-		}
-
 		// Process Input
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
@@ -132,6 +124,14 @@ int main()
 		// object_manager.updateAndDrawParticles(delta_time, renderer);
 		object_manager.updateAndDrawParticlesMultiThreaded(delta_time, renderer);
 		object_manager.drawWalls(renderer);
+
+		// Update FPS every 0.5 seconds
+		static double time = 0;
+		time += delta_time * 1000;
+		if (time > 500) {
+			time = 0;
+			fps = (int)(1 / (delta_time));
+		}
 
 		// Render ImGui
 		gui.NewFrame();
