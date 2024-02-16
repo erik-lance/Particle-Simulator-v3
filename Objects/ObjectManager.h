@@ -33,12 +33,11 @@ public:
 	void updateParticles(double delta);
 	void updateAndDrawParticles(double delta, SDL_Renderer* renderer);
 	void updateAndDrawParticlesMultiThreaded(double delta, SDL_Renderer* renderer);
-	void updateAndDrawParticlesRange(double delta, SDL_Renderer* renderer, int start, int end);
 	void updateAndDrawParticlesIndices(int* indices, int count);
 	void drawWalls(SDL_Renderer* renderer);
 
-	int getParticleCount() { return current_max_particles; }
-	int getWallCount() { return current_max_walls; }
+	int getParticleCount() const { return current_max_particles; }
+	int getWallCount() const { return current_max_walls; }
 	CollisionManager getCollisionManager() { return *collision_manager; }
 
 	// Debug

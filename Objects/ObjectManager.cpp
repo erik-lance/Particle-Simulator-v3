@@ -172,25 +172,6 @@ void ObjectManager::updateAndDrawParticlesMultiThreaded(double delta, SDL_Render
 }
 
 /**
- * Updates and draws the particles in the given range
- * @param delta The time elapsed since the last update
- * @param renderer The SDL renderer to draw the particles
- * @param start The start index of the range
- * @param end The end index of the range
-
- */
-void ObjectManager::updateAndDrawParticlesRange(double delta, SDL_Renderer* renderer, int start, int end)
-{
-	for (int i = start; i < end; i++)
-	{
-		particles[i].updatePosition(delta);
-        collision_manager->checkParticleCollisionsInCells(&particles[i]);
-        particles[i].handleScreenCollision();
-		particles[i].draw(renderer);
-	}
-}
-
-/**
  * Updates and draws the particles in the given indices array
  * @param indices The array of indices to update and draw
  * @param count The number of indices in the array
