@@ -40,30 +40,30 @@ private:
 	double* delta_time = new double(0);
 	int* fps = new int(0);
 	// GUI Variables
-	int menu_size_x = 1260;
-	int menu_size_y = 160;
-	int menu_pos_x = 10;
-	int menu_pos_y = 730;
+	float menu_size_x = 1260.0f;
+	float menu_size_y = 160.0f;
+	float menu_pos_x = 10.0f;
+	float menu_pos_y = 730.0f;
 
-	int particle_batch_size_x = 300;
-	int particle_batch_size_y = 180;
-	int particle_batch_pos_x = 1290;
-	int particle_batch_pos_y = 10;
+	float particle_batch_size_x = 300.0f;
+	float particle_batch_size_y = 180.0f;
+	float particle_batch_pos_x = 1290.0f;
+	float particle_batch_pos_y = 10.0f;
 
-	int particle_batch_method_size_x[3] = { particle_batch_size_x, particle_batch_size_x, particle_batch_size_x };
-	int particle_batch_method_size_y[3] = { 200, 175, 175 };
-	int particle_batch_method_pos_x[3] = { particle_batch_pos_x, particle_batch_pos_x, particle_batch_pos_x };
-	int particle_batch_method_pos_y[3] = { 
-		particle_batch_pos_y + particle_batch_size_y + 10, 
-		particle_batch_method_pos_y[0] + particle_batch_method_size_y[0] + 10, 
-		particle_batch_method_pos_y[1] + particle_batch_method_size_y[1] + 10 
+	float particle_batch_method_size_x[3] = { particle_batch_size_x, particle_batch_size_x, particle_batch_size_x };
+	float particle_batch_method_size_y[3] = { 200.0f, 175.0f, 175.0f };
+	float particle_batch_method_pos_x[3] = { particle_batch_pos_x, particle_batch_pos_x, particle_batch_pos_x };
+	float particle_batch_method_pos_y[3] = {
+		particle_batch_pos_y + particle_batch_size_y + 10.0f, 
+		particle_batch_method_pos_y[0] + particle_batch_method_size_y[0] + 10.0f, 
+		particle_batch_method_pos_y[1] + particle_batch_method_size_y[1] + 10.0f
 	};
 
-	int presets_size_x = particle_batch_size_x;
-	int presets_size_y = 100;
+	float presets_size_x = particle_batch_size_x;
+	float presets_size_y = 100.0f;
 
-	int presets_pos_x = particle_batch_pos_x;
-	int presets_pos_y = particle_batch_method_pos_y[2] + particle_batch_method_size_y[2] + 10;
+	float presets_pos_x = particle_batch_pos_x;
+	float presets_pos_y = particle_batch_method_pos_y[2] + particle_batch_method_size_y[2] + 10.0f;
 
 	// Main Inputs
 	ObjectManager* m_object_manager;
