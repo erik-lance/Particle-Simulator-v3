@@ -46,8 +46,6 @@ void Particle::handleScreenCollision()
 	}
 }
 
-#include <iostream>
-
 /**
  * Handles the particles collision given a line by checking if
  * there is an intersection between the particle and the line
@@ -75,7 +73,6 @@ bool Particle::handleLineCollision(Line line)
 	// Update the particle's position to the intersection point and adjust the angle
 	if (collided)
 	{
-		std::cout << "Distance: " << distance << std::endl;
 		// Update the particle's position to the intersection point
 		position.x = intersection.x;
 		position.y = intersection.y;
