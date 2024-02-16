@@ -19,6 +19,6 @@ void Wall::draw(SDL_Renderer* renderer)
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
 	// Draw the line
-	SDL_RenderDrawLine(renderer, m_line.start.x, m_line.start.y, m_line.end.x, m_line.end.y);
+	SDL_RenderDrawLine(renderer, (int)m_line.start.x, (int)m_line.start.y, (int)m_line.end.x, (int)m_line.end.y);
 }
 

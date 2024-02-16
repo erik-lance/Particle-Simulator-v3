@@ -36,15 +36,15 @@ void CollisionManager::addWall(Wall wall)
 	Position start = wall.getLine().start;
 	Position end = wall.getLine().end;
 
-	Cell start_cell = getGridCell(start.x, start.y);
-	Cell end_cell = getGridCell(end.x, end.y);
+	Cell start_cell = getGridCell((int)start.x, (int)start.y);
+	Cell end_cell = getGridCell((int)end.x, (int)end.y);
 
 	// Check a quadrilateral formed by the start and end cell
 	// and add the wall to the cells it intersects
 
-	for (int i = start_cell.position.x; i <= end_cell.position.x; i++)
+	for (int i = (int)start_cell.position.x; i <= (int)end_cell.position.x; i++)
 	{
-		for (int j = start_cell.position.y; j <= end_cell.position.y; j++)
+		for (int j = (int)start_cell.position.y; j <= (int)end_cell.position.y; j++)
 		{
 			// Check if line intersects the cell
 			// If it does, add the wall to the cell
@@ -150,7 +150,7 @@ void CollisionManager::setGridDimensions(int columns, int rows)
 	{
 		for (int j = 0; j < grid_rows; j++)
 		{
-			Position pos{ i, j };
+			Position pos{ (double)i, (double)j };
 			grid.cells[i][j].position = pos;
 			grid.cells[i][j].cell_width = grid_cell_width;
 			grid.cells[i][j].cell_height = grid_cell_height;
@@ -196,8 +196,8 @@ void CollisionManager::checkParticleCollisionsInCells(Particle* particle) const
 	Position start_pos = particle->getOldPosition();
 	Position end_pos = particle->getPosition();
 
-	Cell start_cell = getGridCell(start_pos.x, start_pos.y);
-	Cell end_cell = getGridCell(end_pos.x, end_pos.y);
+	Cell start_cell = getGridCell((int)start_pos.x, (int)start_pos.y);
+	Cell end_cell = getGridCell((int)end_pos.x, (int)end_pos.y);
 
 	// Check for collisions between the particle and the walls in the start and end cells
 

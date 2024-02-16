@@ -9,8 +9,8 @@ void Particle::updatePosition(double delta)
 	old_position.y = position.y;
 
 	// Update position based on velocity and angle using elapsed time
-	position.x += (int)(p_velocity * cos(p_angle) * delta);
-	position.y += (int)(p_velocity * sin(p_angle) * delta);
+	position.x += (p_velocity * cos(p_angle) * delta);
+	position.y += (p_velocity * sin(p_angle) * delta);
 } 
 
 void Particle::handleScreenCollision()
@@ -46,6 +46,7 @@ void Particle::handleScreenCollision()
 	}
 }
 
+#include <iostream>
 
 /**
  * Handles the particles collision given a line by checking if
@@ -55,7 +56,6 @@ void Particle::handleScreenCollision()
  */
 bool Particle::handleLineCollision(Line line)
 {
-
 	// Check if particle's old and new position intersects with the line
 	bool collided = false;
 
@@ -70,10 +70,12 @@ bool Particle::handleLineCollision(Line line)
 
 	// Distance of new position to intersection point
 	int distance = (int)sqrt(pow(position.x - intersection.x, 2) + pow(position.y - intersection.y, 2));
+	
 
 	// Update the particle's position to the intersection point and adjust the angle
 	if (collided)
 	{
+		std::cout << "Distance: " << distance << std::endl;
 		// Update the particle's position to the intersection point
 		position.x = intersection.x;
 		position.y = intersection.y;
@@ -107,8 +109,11 @@ void Particle::draw(SDL_Renderer* renderer) const
 	// Set color to white
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
+	int round_x = (int)position.x;
+	int round_y = (int)position.y;
+
 	// Draw a Square
-	SDL_Rect rect = {position.x - radius, position.y - radius, radius * 2, radius * 2};
+	SDL_Rect rect = {round_x - radius, round_y - radius, radius * 2, radius * 2};
 	SDL_RenderFillRect(renderer, &rect);
 }
 
@@ -143,7 +148,7 @@ Particle::Particle(int id, int x, int y, int angle, int velocity)
 	p_angle = normalizeAngle(p_angle);
 
 	// Fix velocity to pixels per second
-	p_velocity = (double)velocity * 100.0;
+	p_velocity = (double)velocity;
 }
 
 Particle::Particle()

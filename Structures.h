@@ -3,7 +3,7 @@
 // PI Constant
 constexpr auto PI = 3.14159265358979323846;
 
-struct Position { int x; int y; };
+struct Position { double x; double y; };
 struct Line { Position start; Position end; double angle; };
 struct Screen { int width = 1280; int height = 720; };
 
@@ -30,8 +30,8 @@ static inline bool lineIntersectsLine(Line l1, Line l2)
         return false;
     }
 
-    float t1 = ((l1.start.x - l2.start.x) * dy34 + (l2.start.y - l1.start.y) * dx34) / denominator;
-    float t2 = ((l2.start.x - l1.start.x) * dy12 + (l1.start.y - l2.start.y) * dx12) / (-denominator);
+    float t1 = ((float)(l1.start.x - l2.start.x) * dy34 + (float)(l2.start.y - l1.start.y) * dx34) / denominator;
+    float t2 = ((float)(l2.start.x - l1.start.x) * dy12 + (float)(l1.start.y - l2.start.y) * dx12) / (-denominator);
 
     /*
     std::cout << "Line 1: (" << l1.start.x << ", " << l1.start.y << ") to (" << l1.end.x << ", " << l1.end.y << ")" << std::endl;
@@ -56,32 +56,28 @@ static inline bool lineIntersectsLine(Line l1, Line l2)
 static inline Position lineIntersection(Line l1, Line l2)
 {
     // Get the segments' parameters
-    int dx12 = l1.end.x - l1.start.x;
-    int dy12 = l1.end.y - l1.start.y;
-    int dx34 = l2.end.x - l2.start.x;
-    int dy34 = l2.end.y - l2.start.y;
+    double dx12 = l1.end.x - l1.start.x;
+    double dy12 = l1.end.y - l1.start.y;
+    double dx34 = l2.end.x - l2.start.x;
+    double dy34 = l2.end.y - l2.start.y;
 
     // Solve for t1 and t2
-    int denominator = (dy12 * dx34 - dx12 * dy34); // This is the determinant of the matrix formed by the lines' vectors
+    double denominator = (dy12 * dx34 - dx12 * dy34); // This is the determinant of the matrix formed by the lines' vectors
 
     // Check if the lines are parallel
     if (denominator == 0) {
-        // Lines are parallel, no intersection
-        return { 0, 0 }; // Or some other indication of no intersection
-    }
+		// Lines are parallel
+		return { 0, 0 }; // Or some other indication of no intersection
+	}
 
-    // Calculate t1 and t2 (as floating-point values for more precision)
-    float t1 = static_cast<float>((l1.start.x - l2.start.x) * dy34 + (l2.start.y - l1.start.y) * dx34) / denominator;
-    float t2 = static_cast<float>((l2.start.x - l1.start.x) * dy12 + (l1.start.y - l2.start.y) * dx12) / (-denominator);
+    double t1 = ((l1.start.x - l2.start.x) * dy34 + (l2.start.y - l1.start.y) * dx34) / denominator;
+    double t2 = ((l2.start.x - l1.start.x) * dy12 + (l1.start.y - l2.start.y) * dx12) / (-denominator);
 
     // Check if the line segments intersect
     if (t1 >= 0 && t1 <= 1 && t2 >= 0 && t2 <= 1) {
-        // Line segments intersect, calculate the intersection point
-        Position intersectionPoint = { 0, 0 };
-        intersectionPoint.x = (int)((float)l1.start.x + (float)dx12 * t1);
-        intersectionPoint.y = (int)((float)l1.start.y + (float)dy12 * t1);
-        return intersectionPoint;
-    }
+		// Line segments intersect
+		return { l1.start.x + dx12 * t1, l1.start.y + dy12 * t1 };
+	}
 
     // Line segments do not intersect
     return { 0, 0 }; // Or some other indication of no intersection
