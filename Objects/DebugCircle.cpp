@@ -26,8 +26,8 @@ void DebugCircle::draw(SDL_Renderer* renderer) const
 	// Draw a circle
 	for (int i = 0; i < 360; i++)
 	{
-		float x = position.x + radius * cos(i);
-		float y = position.y + radius * sin(i);
+		int x = (int)((double)position.x + (double)radius * cos(i));
+		int y = (int)((double)position.y + (double)radius * sin(i));
 		SDL_RenderDrawPoint(renderer, x, y);
 	}
 }

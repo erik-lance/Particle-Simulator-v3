@@ -69,7 +69,7 @@ bool Particle::handleLineCollision(Line line)
 	}
 
 	// Distance of new position to intersection point
-	int distance = sqrt(pow(position.x - intersection.x, 2) + pow(position.y - intersection.y, 2));
+	int distance = (int)sqrt(pow(position.x - intersection.x, 2) + pow(position.y - intersection.y, 2));
 
 	// Update the particle's position to the intersection point and adjust the angle
 	if (collided)

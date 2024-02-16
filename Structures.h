@@ -16,10 +16,10 @@ static inline bool operator==(const Position& lhs, const Position& rhs)
 static inline bool lineIntersectsLine(Line l1, Line l2)
 {
     // Get the segments' parameters
-    float dx12 = l1.end.x - l1.start.x;
-    float dy12 = l1.end.y - l1.start.y;
-    float dx34 = l2.end.x - l2.start.x;
-    float dy34 = l2.end.y - l2.start.y;
+    float dx12 = (float)l1.end.x - (float)l1.start.x;
+    float dy12 = (float)l1.end.y - (float)l1.start.y;
+    float dx34 = (float)l2.end.x - (float)l2.start.x;
+    float dy34 = (float)l2.end.y - (float)l2.start.y;
 
     // Solve for t1 and t2
     float denominator = (dy12 * dx34 - dx12 * dy34); // This is the determinant of the matrix formed by the lines' vectors
@@ -77,9 +77,9 @@ static inline Position lineIntersection(Line l1, Line l2)
     // Check if the line segments intersect
     if (t1 >= 0 && t1 <= 1 && t2 >= 0 && t2 <= 1) {
         // Line segments intersect, calculate the intersection point
-        Position intersectionPoint;
-        intersectionPoint.x = l1.start.x + dx12 * t1;
-        intersectionPoint.y = l1.start.y + dy12 * t1;
+        Position intersectionPoint = { 0, 0 };
+        intersectionPoint.x = (int)((float)l1.start.x + (float)dx12 * t1);
+        intersectionPoint.y = (int)((float)l1.start.y + (float)dy12 * t1);
         return intersectionPoint;
     }
 
@@ -88,16 +88,16 @@ static inline Position lineIntersection(Line l1, Line l2)
 }
 
 // Function to normalize angle in Radians [0, 2pi]
-static inline float normalizeAngle(float angle)
+static inline double normalizeAngle(double angle)
 {
     // Normalize the angle to be between 0 and 2pi
-    while (angle < 0) { angle += 2 * PI; }
-    while (angle > 2 * PI) { angle -= 2 * PI; }
+    while (angle < 0) { angle += 2.0 * PI; }
+    while (angle > 2 * PI) { angle -= 2.0 * PI; }
     return angle;
 }
 
 // Function to reflect angle in Radians
-static inline float reflectAngle(double angle, double line_angle)
+static inline double reflectAngle(double angle, double line_angle)
 {
     // Reflection formula
     angle = 2 * line_angle - angle;
