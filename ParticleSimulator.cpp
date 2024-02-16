@@ -23,6 +23,7 @@ int fps = 0;
 ObjectManager object_manager = ObjectManager(SIM_WIDTH, SIM_HEIGHT);
 
 bool isRunning = true;
+bool drawGrid = false;
 
 void draw_sim_borders(SDL_Renderer* renderer) {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -79,7 +80,7 @@ int main()
 	glViewport(0, 0, SIM_WIDTH, SIM_HEIGHT);
 
 	SimulatorGUI gui;
-	gui.Init(window, renderer, &delta_time, &fps, &isRunning);
+	gui.Init(window, renderer, &delta_time, &fps, &isRunning, &drawGrid);
 	gui.setManager(&object_manager);
 
 	// Check for OpenGL errors
@@ -118,7 +119,7 @@ int main()
 		SDL_RenderClear(renderer);
 
 		draw_sim_borders(renderer);
-		object_manager.drawGridLines(renderer);
+		if (drawGrid) object_manager.drawGridLines(renderer);
 
 		// Move the particles
 		// object_manager.updateAndDrawParticles(delta_time, renderer);
