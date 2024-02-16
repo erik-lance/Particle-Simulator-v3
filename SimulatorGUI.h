@@ -7,6 +7,8 @@
 #include <imgui_impl_opengl3.h>
 #include "Objects/ObjectManager.h"
 
+constexpr int MAX_VELOCITY = 1000;
+
 class SimulatorGUI {
 public:
 	void Init(SDL_Window* window, SDL_Renderer* renderer, double* delta, int* fps_ctr, bool* running);

@@ -127,7 +127,7 @@ Particle::Particle(int id, int x, int y) {
 	p_velocity = 0;
 }
 
-Particle::Particle(int id, int x, int y, int angle, int velocity)
+Particle::Particle(int id, int x, int y, double angle, double velocity)
 {
 	m_id = id;
 	position.x = x;

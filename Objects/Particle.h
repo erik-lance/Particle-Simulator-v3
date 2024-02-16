@@ -16,7 +16,7 @@
 class Particle {
 public:
 	Particle(int id, int x, int y);
-	Particle(int id, int x, int y, int angle, int velocity);
+	Particle(int id, int x, int y, double angle, double velocity);
 	Particle();
 	~Particle();
 

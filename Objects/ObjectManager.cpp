@@ -7,7 +7,7 @@
  * @param angle The particle's angle
  * @param velocity The particle's velocity
  */
-void ObjectManager::addParticle(int x, int y, int angle, int velocity)
+void ObjectManager::addParticle(int x, int y, double angle, double velocity)
 {
     // If the array is full, double the capacity
     if (current_max_particles >= particle_capacity)

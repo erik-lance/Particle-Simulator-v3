@@ -109,7 +109,7 @@ void SimulatorGUI::MainMenuGUI()
 
 	// Clamp velocity to 1-50
 	ImGui::InputInt("Velocity", &m_particle_velocity);
-	InputClamp(m_particle_velocity, 1, 50);
+	InputClamp(m_particle_velocity, 1, MAX_VELOCITY);
 
 	ImGui::Spacing();
 
@@ -244,7 +244,7 @@ void SimulatorGUI::ParticlesBatchMethodOneGUI()
 	ImGui::InputInt("Angle", &method_one_angle);
 	InputClamp(method_one_angle, 0, 360);
 	ImGui::InputInt("Velocity", &method_one_velocity);
-	InputClamp(method_one_velocity, 1, 50);
+	InputClamp(method_one_velocity, 1, MAX_VELOCITY);
 
 	ImGui::Spacing();
 
@@ -295,7 +295,7 @@ void SimulatorGUI::ParticlesBatchMethodTwoGUI()
 	InputClamp(method_two_start_y, 0, 720);
 
 	ImGui::InputInt("Velocity", &method_two_velocity);
-	InputClamp(method_two_velocity, 1, 50);
+	InputClamp(method_two_velocity, 1, MAX_VELOCITY);
 
 	ImGui::Spacing();
 
@@ -337,8 +337,8 @@ void SimulatorGUI::ParticlesBatchMethodThreeGUI()
 	ImGui::InputInt("Start Velocity", &method_three_start_velocity);
 	ImGui::InputInt("End Velocity", &method_three_end_velocity);
 
-	InputClamp(method_three_start_velocity, 1, 50);
-	InputClamp(method_three_end_velocity, 1, 50);
+	InputClamp(method_three_start_velocity, 1, MAX_VELOCITY);
+	InputClamp(method_three_end_velocity, 1, MAX_VELOCITY);
 
 	ImGui::Spacing();
 
@@ -346,7 +346,7 @@ void SimulatorGUI::ParticlesBatchMethodThreeGUI()
 		ResolveMethodThree();
 		std::cout << "Particle Batch Added (Method 3)" << std::endl;
 		for (int i = 0; i < m_batch_size; i++) {
-			double velocity = method_three_start_velocity + (method_three_end_velocity - method_three_start_velocity) * i / m_batch_size;
+			double velocity = (double)method_three_start_velocity + (double)(method_three_end_velocity - method_three_start_velocity) * (double)i / (double)m_batch_size;
 			m_object_manager->addParticle(method_three_start_x, method_three_start_y, method_three_angle, velocity);
 
 			// Increment particle id

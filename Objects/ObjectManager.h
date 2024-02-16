@@ -24,7 +24,7 @@ public:
 
 	void setDeltaTime(double* delta) { cur_delta = delta; }
 
-	void addParticle(int x, int y, int angle, int velocity);
+	void addParticle(int x, int y, double angle, double velocity);
 	void distributeParticleToThread(int index);
 	void addWall(Line line);
 
