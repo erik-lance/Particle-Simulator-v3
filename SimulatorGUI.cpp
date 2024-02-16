@@ -375,21 +375,21 @@ void SimulatorGUI::PresetsAndMenuGUI()
 		method_one_end_x = 1024;
 		method_one_end_y = 512;
 		method_one_angle = 30;
-		method_one_velocity = 5;
+		method_one_velocity = 250;
 
 		// Set Method 2 Preset
 		method_two_start_angle = 0;
 		method_two_end_angle = 359;
 		method_two_start_x = 255;
 		method_two_start_y = 255;
-		method_two_velocity = 5;
+		method_two_velocity = 250;
 
 		// Set Method 3 Preset
 		method_three_start_x = 255;
 		method_three_start_y = 255;
 		method_three_angle = 0;
-		method_three_start_velocity = 5;
-		method_three_end_velocity = 15;
+		method_three_start_velocity = 250;
+		method_three_end_velocity = 500;
 	}
 
 	ImGui::SameLine();
@@ -403,21 +403,21 @@ void SimulatorGUI::PresetsAndMenuGUI()
 		method_one_end_x = 1024;
 		method_one_end_y = 512;
 		method_one_angle = 315;
-		method_one_velocity = 5;
+		method_one_velocity = 250;
 
 		// Set Method 2 Preset
 		method_two_start_angle = 0;
 		method_two_end_angle = 180;
 		method_two_start_x = 512;
 		method_two_start_y = 512;
-		method_two_velocity = 3;
+		method_two_velocity = 128;
 
 		// Set Method 3 Preset
 		method_three_start_x = 255;
 		method_three_start_y = 512;
 		method_three_angle = 30;
-		method_three_start_velocity = 5;
-		method_three_end_velocity = 50;
+		method_three_start_velocity = 250;
+		method_three_end_velocity = 1000;
 	}
 
 	ImGui::SameLine();
@@ -431,21 +431,21 @@ void SimulatorGUI::PresetsAndMenuGUI()
 		method_one_end_x = 1024;
 		method_one_end_y = 512;
 		method_one_angle = 60;
-		method_one_velocity = 10;
+		method_one_velocity = 500;
 
 		// Set Method 2 Preset
 		method_two_start_angle = 90;
 		method_two_end_angle = 270;
 		method_two_start_x = 1024;
 		method_two_start_y = 512;
-		method_two_velocity = 5;
+		method_two_velocity = 250;
 
 		// Set Method 3 Preset
 		method_three_start_x = 255;
 		method_three_start_y = 512;
 		method_three_angle = 45;
-		method_three_start_velocity = 5;
-		method_three_end_velocity = 25;
+		method_three_start_velocity = 250;
+		method_three_end_velocity = 1000;
 	}
 
 	// Exit Button float bottom right
