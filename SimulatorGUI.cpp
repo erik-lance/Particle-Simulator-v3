@@ -371,7 +371,7 @@ void SimulatorGUI::PresetsAndMenuGUI()
 		
 		// Set Method 1 Preset
 		method_one_start_x = 255;
-		method_one_start_y = 225;
+		method_one_start_y = 255;
 		method_one_end_x = 1024;
 		method_one_end_y = 512;
 		method_one_angle = 30;
@@ -396,18 +396,56 @@ void SimulatorGUI::PresetsAndMenuGUI()
 
 	if (ImGui::Button("Preset 2")) {
 		std::cout << "Preset 2" << std::endl;
+
+		// Set Method 1 Preset
+		method_one_start_x = 128;
+		method_one_start_y = 128;
+		method_one_end_x = 1024;
+		method_one_end_y = 512;
+		method_one_angle = 315;
+		method_one_velocity = 5;
+
+		// Set Method 2 Preset
+		method_two_start_angle = 0;
+		method_two_end_angle = 180;
+		method_two_start_x = 512;
+		method_two_start_y = 512;
+		method_two_velocity = 3;
+
+		// Set Method 3 Preset
+		method_three_start_x = 255;
+		method_three_start_y = 512;
+		method_three_angle = 30;
+		method_three_start_velocity = 5;
+		method_three_end_velocity = 50;
 	}
 
 	ImGui::SameLine();
 
 	if (ImGui::Button("Preset 3")) {
 		std::cout << "Preset 3" << std::endl;
-	}
 
-	ImGui::SameLine();
+		// Set Method 1 Preset
+		method_one_start_x = 128;
+		method_one_start_y = 128;
+		method_one_end_x = 1024;
+		method_one_end_y = 512;
+		method_one_angle = 60;
+		method_one_velocity = 10;
 
-	if (ImGui::Button("Preset 4")) {
-		std::cout << "Preset 4" << std::endl;
+		// Set Method 2 Preset
+		method_two_start_angle = 90;
+		method_two_end_angle = 270;
+		method_two_start_x = 1024;
+		method_two_start_y = 512;
+		method_two_velocity = 5;
+
+		// Set Method 3 Preset
+		method_three_start_x = 255;
+		method_three_start_y = 512;
+		method_three_angle = 45;
+		method_three_start_velocity = 5;
+		method_three_end_velocity = 25;
 	}
 
 	// Exit Button float bottom right
