@@ -1,0 +1,353 @@
+# ninja log v5
+17	98	7283838172645123	include/SDL2/SDL.h	5ef3027fbef4bfec
+17	98	7283838172645123	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL.h	5ef3027fbef4bfec
+21	101	7283838172655125	include/SDL2/SDL_assert.h	b7fc60a7b8bb5e08
+21	101	7283838172655125	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_assert.h	b7fc60a7b8bb5e08
+23	105	7283838172705123	include/SDL2/SDL_atomic.h	ae4c050ea10e140a
+23	105	7283838172705123	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_atomic.h	ae4c050ea10e140a
+26	107	7283838172735127	include/SDL2/SDL_audio.h	b07a987724ff47e6
+26	107	7283838172735127	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_audio.h	b07a987724ff47e6
+29	110	7283838172795125	include/SDL2/SDL_bits.h	4614a9449450cc55
+29	110	7283838172795125	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_bits.h	4614a9449450cc55
+32	113	7283838172805126	include/SDL2/SDL_blendmode.h	b7be6d9298485a80
+32	113	7283838172805126	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_blendmode.h	b7be6d9298485a80
+34	116	7283838172855126	include/SDL2/SDL_clipboard.h	4906bef08e9d854a
+34	116	7283838172855126	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_clipboard.h	4906bef08e9d854a
+37	119	7283838172875124	include/SDL2/SDL_copying.h	fdbc36f0ea624e9e
+37	119	7283838172875124	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_copying.h	fdbc36f0ea624e9e
+40	121	7283838172885126	include/SDL2/SDL_cpuinfo.h	7e966d5b2ed728b4
+40	121	7283838172885126	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_cpuinfo.h	7e966d5b2ed728b4
+43	124	7283838172925125	include/SDL2/SDL_egl.h	149bccd00f0e3476
+43	124	7283838172925125	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_egl.h	149bccd00f0e3476
+47	127	7283838172955127	include/SDL2/SDL_endian.h	8ac6e5b426653044
+47	127	7283838172955127	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_endian.h	8ac6e5b426653044
+50	129	7283838172965136	include/SDL2/SDL_error.h	6101cff65cc8e55c
+50	129	7283838172965136	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_error.h	6101cff65cc8e55c
+53	132	7283838173005154	include/SDL2/SDL_events.h	b5cdbee5d07ea962
+53	132	7283838173005154	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_events.h	b5cdbee5d07ea962
+56	135	7283838173025131	include/SDL2/SDL_filesystem.h	9459346df52783f3
+56	135	7283838173025131	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_filesystem.h	9459346df52783f3
+59	137	7283838173045126	include/SDL2/SDL_gamecontroller.h	e17d2ab76353a68e
+59	137	7283838173045126	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_gamecontroller.h	e17d2ab76353a68e
+61	141	7283838173075126	include/SDL2/SDL_gesture.h	9c5505d5398a7f8
+61	141	7283838173075126	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_gesture.h	9c5505d5398a7f8
+64	143	7283838173095125	include/SDL2/SDL_guid.h	d25f416aa49e7c91
+64	143	7283838173095125	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_guid.h	d25f416aa49e7c91
+66	146	7283838173125133	include/SDL2/SDL_haptic.h	7aa00bd06143bcc7
+66	146	7283838173125133	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_haptic.h	7aa00bd06143bcc7
+69	149	7283838173145125	include/SDL2/SDL_hidapi.h	e9c183a9f435e78f
+69	149	7283838173145125	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_hidapi.h	e9c183a9f435e78f
+72	152	7283838173175124	include/SDL2/SDL_hints.h	cecdecb070767bd7
+72	152	7283838173175124	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_hints.h	cecdecb070767bd7
+74	156	7283838173205129	include/SDL2/SDL_joystick.h	9b3b02986f42b0f
+74	156	7283838173205129	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_joystick.h	9b3b02986f42b0f
+77	158	7283838173235124	include/SDL2/SDL_keyboard.h	11714c491f257c22
+77	158	7283838173235124	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_keyboard.h	11714c491f257c22
+80	160	7283838173255123	include/SDL2/SDL_keycode.h	a78b50b5a0748fad
+80	160	7283838173255123	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_keycode.h	a78b50b5a0748fad
+82	162	7283838173285125	include/SDL2/SDL_loadso.h	31947c62d914c2bc
+82	162	7283838173285125	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_loadso.h	31947c62d914c2bc
+85	165	7283838173305124	include/SDL2/SDL_locale.h	ebcb485b729a82aa
+85	165	7283838173305124	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_locale.h	ebcb485b729a82aa
+88	167	7283838173335124	include/SDL2/SDL_log.h	a23fcbf3a34b4ab0
+88	167	7283838173335124	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_log.h	a23fcbf3a34b4ab0
+90	170	7283838173355126	include/SDL2/SDL_main.h	df94a54687748c48
+90	170	7283838173355126	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_main.h	df94a54687748c48
+93	174	7283838173385124	include/SDL2/SDL_messagebox.h	45825a2432c29d8f
+93	174	7283838173385124	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_messagebox.h	45825a2432c29d8f
+95	177	7283838173405132	include/SDL2/SDL_metal.h	dd9ab0874b27bece
+95	177	7283838173405132	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_metal.h	dd9ab0874b27bece
+98	181	7283838173435125	include/SDL2/SDL_misc.h	89694b3bce556620
+98	181	7283838173435125	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_misc.h	89694b3bce556620
+101	184	7283838173465123	include/SDL2/SDL_mouse.h	384fe4bd3f81b7d0
+101	184	7283838173465123	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_mouse.h	384fe4bd3f81b7d0
+105	188	7283838173495122	include/SDL2/SDL_mutex.h	fc3fb8cb6beb484f
+105	188	7283838173495122	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_mutex.h	fc3fb8cb6beb484f
+108	192	7283838173525122	include/SDL2/SDL_name.h	16ee71a97d772551
+108	192	7283838173525122	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_name.h	16ee71a97d772551
+110	195	7283838173555123	include/SDL2/SDL_opengl.h	700ae933c9e5a3fd
+110	195	7283838173555123	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_opengl.h	700ae933c9e5a3fd
+113	198	7283838173605121	include/SDL2/SDL_opengl_glext.h	f1620729f7069690
+113	198	7283838173605121	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_opengl_glext.h	f1620729f7069690
+116	201	7283838173615123	include/SDL2/SDL_opengles.h	abb8367db743f087
+116	201	7283838173615123	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_opengles.h	abb8367db743f087
+119	204	7283838173635131	include/SDL2/SDL_opengles2.h	fbaded3100d1e449
+119	204	7283838173635131	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_opengles2.h	fbaded3100d1e449
+121	208	7283838173675127	include/SDL2/SDL_opengles2_gl2.h	88ca826788af68d6
+121	208	7283838173675127	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_opengles2_gl2.h	88ca826788af68d6
+124	211	7283838173695124	include/SDL2/SDL_opengles2_gl2ext.h	f5f55b365f5e47b7
+124	211	7283838173695124	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_opengles2_gl2ext.h	f5f55b365f5e47b7
+127	215	7283838173715123	include/SDL2/SDL_opengles2_gl2platform.h	d31551673563338c
+127	215	7283838173715123	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_opengles2_gl2platform.h	d31551673563338c
+129	218	7283838173755122	include/SDL2/SDL_opengles2_khrplatform.h	187dbf0116f389b7
+129	218	7283838173755122	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_opengles2_khrplatform.h	187dbf0116f389b7
+132	221	7283838173775123	include/SDL2/SDL_pixels.h	751f3cdc0359759e
+132	221	7283838173775123	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_pixels.h	751f3cdc0359759e
+135	224	7283838173795126	include/SDL2/SDL_platform.h	8087338cdf840470
+135	224	7283838173795126	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_platform.h	8087338cdf840470
+137	227	7283838173835122	include/SDL2/SDL_power.h	6c15165ab155fe0a
+137	227	7283838173835122	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_power.h	6c15165ab155fe0a
+141	230	7283838173855124	include/SDL2/SDL_quit.h	2924a73f76434c0c
+141	230	7283838173855124	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_quit.h	2924a73f76434c0c
+143	233	7283838173885123	include/SDL2/SDL_rect.h	116aa615af6fc036
+143	233	7283838173885123	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_rect.h	116aa615af6fc036
+146	236	7283838173925123	include/SDL2/SDL_render.h	1c1055c59f98b28
+146	236	7283838173925123	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_render.h	1c1055c59f98b28
+149	239	7283838173945122	include/SDL2/SDL_rwops.h	c918e66243d53e28
+149	239	7283838173945122	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_rwops.h	c918e66243d53e28
+152	242	7283838173985127	include/SDL2/SDL_scancode.h	a73bbc154fecfbc4
+152	242	7283838173985127	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_scancode.h	a73bbc154fecfbc4
+156	242	7283838174005123	include/SDL2/SDL_sensor.h	ab9d5d4afd6ff1ca
+156	242	7283838174005123	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_sensor.h	ab9d5d4afd6ff1ca
+158	242	7283838174035127	include/SDL2/SDL_shape.h	97a9cf0f77c43cd5
+158	242	7283838174035127	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_shape.h	97a9cf0f77c43cd5
+160	242	7283838174075123	include/SDL2/SDL_stdinc.h	1c6898fc57dbed53
+160	242	7283838174075123	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_stdinc.h	1c6898fc57dbed53
+162	243	7283838174105124	include/SDL2/SDL_surface.h	109183e4d31d4aac
+162	243	7283838174105124	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_surface.h	109183e4d31d4aac
+165	243	7283838174125126	include/SDL2/SDL_system.h	bae0882a22a4b283
+165	243	7283838174125126	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_system.h	bae0882a22a4b283
+167	243	7283838174165127	include/SDL2/SDL_syswm.h	c6490903d4be88a
+167	243	7283838174165127	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_syswm.h	c6490903d4be88a
+170	243	7283838174195126	include/SDL2/SDL_test.h	ead2ff062fffb698
+170	243	7283838174195126	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_test.h	ead2ff062fffb698
+174	243	7283838174225128	include/SDL2/SDL_test_assert.h	bf64dbe7974b3dc0
+174	243	7283838174225128	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_test_assert.h	bf64dbe7974b3dc0
+177	243	7283838174265124	include/SDL2/SDL_test_common.h	b38978e2ca2e88c1
+177	243	7283838174265124	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_test_common.h	b38978e2ca2e88c1
+181	243	7283838174295126	include/SDL2/SDL_test_compare.h	43f18c8ed3b842af
+181	243	7283838174295126	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_test_compare.h	43f18c8ed3b842af
+184	243	7283838174325128	include/SDL2/SDL_test_crc32.h	6abf72b1a26fb088
+184	243	7283838174325128	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_test_crc32.h	6abf72b1a26fb088
+188	243	7283838174385130	include/SDL2/SDL_test_font.h	17ea99a0fa8f6b3b
+188	243	7283838174385130	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_test_font.h	17ea99a0fa8f6b3b
+192	243	7283838174395132	include/SDL2/SDL_test_fuzzer.h	a02547361b403d5d
+192	243	7283838174395132	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_test_fuzzer.h	a02547361b403d5d
+195	243	7283838174445130	include/SDL2/SDL_test_harness.h	5802fd638e04b68
+195	243	7283838174445130	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_test_harness.h	5802fd638e04b68
+198	244	7283838174465131	include/SDL2/SDL_test_images.h	8f1289c57901c2dd
+198	244	7283838174465131	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_test_images.h	8f1289c57901c2dd
+201	244	7283838174505124	include/SDL2/SDL_test_log.h	225f58258643f4b3
+201	244	7283838174505124	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_test_log.h	225f58258643f4b3
+204	244	7283838174535123	include/SDL2/SDL_test_md5.h	6873533086d55522
+204	244	7283838174535123	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_test_md5.h	6873533086d55522
+208	244	7283838174565127	include/SDL2/SDL_test_memory.h	4f67e8f51fafea76
+208	244	7283838174565127	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_test_memory.h	4f67e8f51fafea76
+212	244	7283838174605122	include/SDL2/SDL_test_random.h	9c73d0ef5b0465b1
+212	244	7283838174605122	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_test_random.h	9c73d0ef5b0465b1
+215	244	7283838174655122	include/SDL2/SDL_thread.h	94a3dbe81d19b28a
+215	244	7283838174655122	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_thread.h	94a3dbe81d19b28a
+218	244	7283838174655122	include/SDL2/SDL_timer.h	b9dde9201fedea37
+218	244	7283838174655122	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_timer.h	b9dde9201fedea37
+221	244	7283838174675124	include/SDL2/SDL_touch.h	8b6d74b10e9bd872
+221	244	7283838174675124	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_touch.h	8b6d74b10e9bd872
+224	248	7283838174715122	include/SDL2/SDL_types.h	2b2d36872fee8626
+224	248	7283838174715122	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_types.h	2b2d36872fee8626
+227	252	7283838174745126	include/SDL2/SDL_version.h	be8d985888bfda4c
+227	252	7283838174745126	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_version.h	be8d985888bfda4c
+230	254	7283838174765130	include/SDL2/SDL_video.h	347219ae5abdc08a
+230	254	7283838174765130	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_video.h	347219ae5abdc08a
+233	257	7283838174795125	include/SDL2/SDL_vulkan.h	6a3561358a38c03d
+233	257	7283838174795125	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/SDL_vulkan.h	6a3561358a38c03d
+236	260	7283838174835142	include/SDL2/begin_code.h	b2953ef6072b7665
+236	260	7283838174835142	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/begin_code.h	b2953ef6072b7665
+239	263	7283838174865123	include/SDL2/close_code.h	39e058d9dd1a53f9
+239	263	7283838174865123	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-rel/include/SDL2/close_code.h	39e058d9dd1a53f9
+303	549	7283838177245176	CMakeFiles/SDL2.dir/src/audio/SDL_audiodev.c.obj	d1c531b0afe57c89
+343	553	7283838177285178	CMakeFiles/SDL2.dir/src/events/SDL_keysym_to_scancode.c.obj	2fe9a05325bb5bf5
+288	556	7283838177728539	CMakeFiles/SDL2.dir/src/SDL_utils.c.obj	a8e1b3d1f3634a6c
+273	560	7283838177818541	CMakeFiles/SDL2.dir/src/SDL_error.c.obj	4fb648ae570d4f59
+276	564	7283838177858538	CMakeFiles/SDL2.dir/src/SDL_guid.c.obj	e32dce3906aff1cf
+305	567	7283838177858538	CMakeFiles/SDL2.dir/src/audio/SDL_audiotypecvt.c.obj	e78fc9a97f778f83
+348	669	7283838178808536	CMakeFiles/SDL2.dir/src/events/SDL_quit.c.obj	928bc81137d1642e
+291	718	7283838178928538	CMakeFiles/SDL2.dir/src/atomic/SDL_atomic.c.obj	991bf7d13116c0c1
+327	752	7283838178958537	CMakeFiles/SDL2.dir/src/events/SDL_displayevents.c.obj	e5ab18f6586cfca4
+269	756	7283838179298537	CMakeFiles/SDL2.dir/src/SDL_assert.c.obj	c70cb95aa981ee7e
+308	759	7283838179298537	CMakeFiles/SDL2.dir/src/audio/SDL_mixer.c.obj	974cbc017538bac1
+330	762	7283838179518539	CMakeFiles/SDL2.dir/src/events/SDL_dropevents.c.obj	23818f4ce229e7b8
+550	786	7283838179348537	CMakeFiles/SDL2.dir/src/events/SDL_scancode_tables.c.obj	6a4b6f43617dfb0
+279	789	7283838179668536	CMakeFiles/SDL2.dir/src/SDL_hints.c.obj	33b2a32efcca1c4b
+312	792	7283838179448539	CMakeFiles/SDL2.dir/src/audio/SDL_wave.c.obj	fd7f5d218c1d1efe
+294	832	7283838180078535	CMakeFiles/SDL2.dir/src/atomic/SDL_spinlock.c.obj	716f4f427ccd10fe
+560	835	7283838180048534	CMakeFiles/SDL2.dir/src/events/imKStoUCS.c.obj	b43bb1c896921cb4
+281	838	7283838179478537	CMakeFiles/SDL2.dir/src/SDL_list.c.obj	addd30a668ac2001
+324	841	7283838180188540	CMakeFiles/SDL2.dir/src/events/SDL_clipboardevents.c.obj	224db220dd6273af
+271	856	7283838180278534	CMakeFiles/SDL2.dir/src/SDL_dataqueue.c.obj	602a5ac20978c574
+284	860	7283838180208537	CMakeFiles/SDL2.dir/src/SDL_log.c.obj	e0f36042b2108162
+317	864	7283838179998534	CMakeFiles/SDL2.dir/src/cpuinfo/SDL_cpuinfo.c.obj	94406fb2449d6225
+338	867	7283838179848537	CMakeFiles/SDL2.dir/src/events/SDL_keyboard.c.obj	e4af2be0597439d
+567	870	7283838180608537	CMakeFiles/SDL2.dir/src/haptic/SDL_haptic.c.obj	1fd98e04300be358
+266	873	7283838180498535	CMakeFiles/SDL2.dir/src/SDL.c.obj	572e535573d69e2a
+335	877	7283838180658537	CMakeFiles/SDL2.dir/src/events/SDL_gesture.c.obj	9ac71290cf61372c
+300	880	7283838180778539	CMakeFiles/SDL2.dir/src/audio/SDL_audiocvt.c.obj	3895dd24bb4cb232
+557	883	7283838180728538	CMakeFiles/SDL2.dir/src/events/SDL_windowevents.c.obj	15799a043af29aca
+264	887	7283838180788538	CMakeFiles/SDL2main.dir/src/main/windows/SDL_windows_main.c.obj	b5402e7c5b00d444
+756	1098	7283838182858536	CMakeFiles/SDL2.dir/src/joystick/controller_type.c.obj	8d2bedd6a7389e85
+333	1110	7283838182898537	CMakeFiles/SDL2.dir/src/events/SDL_events.c.obj	e3cff661da6f94ab
+564	1114	7283838183098535	CMakeFiles/SDL2.dir/src/file/SDL_rwops.c.obj	8618b309152e288
+864	1136	7283838183298537	CMakeFiles/SDL2.dir/src/libm/k_tan.c.obj	ca1e86b74d4de2b2
+296	1140	7283838182838533	CMakeFiles/SDL2.dir/src/audio/SDL_audio.c.obj	68a1e14c1cae0b6c
+841	1163	7283838183418540	CMakeFiles/SDL2.dir/src/libm/k_cos.c.obj	7ab59a8794f499de
+870	1166	7283838183368541	CMakeFiles/SDL2.dir/src/libm/s_copysign.c.obj	aba4fcd54f285f37
+792	1170	7283838183348536	CMakeFiles/SDL2.dir/src/libm/e_log10.c.obj	943b00178aebfe29
+789	1173	7283838183358537	CMakeFiles/SDL2.dir/src/libm/e_log.c.obj	d3c0550001abc158
+759	1179	7283838183418540	CMakeFiles/SDL2.dir/src/libm/e_atan2.c.obj	404c52f3acd797ac
+838	1182	7283838183508534	CMakeFiles/SDL2.dir/src/libm/e_sqrt.c.obj	a4e3057f2e4717e8
+553	1185	7283838183598540	CMakeFiles/SDL2.dir/src/events/SDL_touch.c.obj	40e8ecbd4603f621
+762	1188	7283838183688539	CMakeFiles/SDL2.dir/src/libm/e_exp.c.obj	af338b133a89874c
+860	1192	7283838183668537	CMakeFiles/SDL2.dir/src/libm/k_sin.c.obj	e5dd84fdf9e6b54a
+786	1195	7283838183828532	CMakeFiles/SDL2.dir/src/libm/e_fmod.c.obj	500bf2380080f067
+883	1199	7283838183748536	CMakeFiles/SDL2.dir/src/libm/s_scalbn.c.obj	d8fa990fd7afe709
+867	1215	7283838183908538	CMakeFiles/SDL2.dir/src/libm/s_atan.c.obj	5c5559d63c843b6d
+832	1219	7283838184008547	CMakeFiles/SDL2.dir/src/libm/e_pow.c.obj	55fefe4bdf1995e8
+877	1228	7283838184198537	CMakeFiles/SDL2.dir/src/libm/s_fabs.c.obj	65b24cef49bd7b55
+835	1270	7283838184248536	CMakeFiles/SDL2.dir/src/libm/e_rem_pio2.c.obj	2b7973f9612cf5a2
+670	1274	7283838184228534	CMakeFiles/SDL2.dir/src/hidapi/SDL_hidapi.c.obj	2ba6022c9881f523
+874	1277	7283838184108534	CMakeFiles/SDL2.dir/src/libm/s_cos.c.obj	25e886a60e7677c4
+880	1280	7283838184488534	CMakeFiles/SDL2.dir/src/libm/s_floor.c.obj	dbe7b919b66a773b
+345	1284	7283838184508533	CMakeFiles/SDL2.dir/src/events/SDL_mouse.c.obj	b78904fa67cf60e8
+856	1287	7283838184918538	CMakeFiles/SDL2.dir/src/libm/k_rem_pio2.c.obj	db15511d64a2d307
+887	1290	7283838183658538	SDL2main.lib	2f964b367f8fc406
+718	1295	7283838184948538	CMakeFiles/SDL2.dir/src/joystick/SDL_gamecontroller.c.obj	d668fb67390f897b
+753	1422	7283838185968534	CMakeFiles/SDL2.dir/src/joystick/SDL_joystick.c.obj	6bcbb2f78874f020
+1274	1425	7283838186308536	CMakeFiles/SDL2.dir/src/render/psp/SDL_render_psp.c.obj	1d0fd061ed469811
+1098	1474	7283838186508536	CMakeFiles/SDL2.dir/src/libm/s_sin.c.obj	6fe39b7bcfa9c30a
+1136	1477	7283838186498537	CMakeFiles/SDL2.dir/src/misc/SDL_url.c.obj	3bfd0c324e1d8477
+1140	1480	7283838186568540	CMakeFiles/SDL2.dir/src/power/SDL_power.c.obj	ff5f26142b0a55d4
+1215	1483	7283838186938532	CMakeFiles/SDL2.dir/src/render/opengles/SDL_render_gles.c.obj	fda798fddcadd003
+1270	1486	7283838186968535	CMakeFiles/SDL2.dir/src/render/ps2/SDL_render_ps2.c.obj	4d685ce0a347e381
+1163	1527	7283838186928533	CMakeFiles/SDL2.dir/src/render/SDL_d3dmath.c.obj	ee9422fcd8ec8f17
+1114	1534	7283838187178539	CMakeFiles/SDL2.dir/src/locale/SDL_locale.c.obj	ca03b65e35f95cf4
+1110	1537	7283838187058535	CMakeFiles/SDL2.dir/src/libm/s_tan.c.obj	e24c717c691935ad
+1287	1645	7283838187438538	CMakeFiles/SDL2.dir/src/render/software/SDL_drawline.c.obj	50597232b3578f08
+1478	1732	7283838188598534	CMakeFiles/SDL2.dir/src/render/vitagxm/SDL_render_vita_gxm_memory.c.obj	e1713c317eb9f781
+1474	1804	7283838188608536	CMakeFiles/SDL2.dir/src/render/vitagxm/SDL_render_vita_gxm.c.obj	f242f9ad464317aa
+1229	1945	7283838190334015	CMakeFiles/SDL2.dir/src/render/opengles2/SDL_shaders_gles2.c.obj	1f08acff4dec956b
+1646	2024	7283838191764012	CMakeFiles/SDL2.dir/src/stdlib/SDL_malloc.c.obj	c493c62ab2c225a6
+1199	2079	7283838191804016	CMakeFiles/SDL2.dir/src/render/opengl/SDL_shaders_gl.c.obj	ddc25404bd4ead4b
+1192	2082	7283838191914015	CMakeFiles/SDL2.dir/src/render/direct3d12/SDL_shaders_d3d12.c.obj	10837ad2d64e6853
+1182	2086	7283838191994017	CMakeFiles/SDL2.dir/src/render/direct3d11/SDL_render_d3d11.c.obj	a94967608ebf6a
+1179	2089	7283838192044011	CMakeFiles/SDL2.dir/src/render/direct3d/SDL_shaders_d3d.c.obj	43b74a529c118881
+1486	2093	7283838192244013	CMakeFiles/SDL2.dir/src/stdlib/SDL_crc16.c.obj	5ee2459c090a5c1a
+1527	2096	7283838192244013	CMakeFiles/SDL2.dir/src/stdlib/SDL_crc32.c.obj	a61da7ae5510658a
+1170	2100	7283838191704014	CMakeFiles/SDL2.dir/src/render/SDL_yuv_sw.c.obj	3ab5dddfdff108a4
+1284	2103	7283838191054009	CMakeFiles/SDL2.dir/src/render/software/SDL_blendpoint.c.obj	ef62dd8e0fdf83db
+1480	2136	7283838191104014	CMakeFiles/SDL2.dir/src/render/vitagxm/SDL_render_vita_gxm_tools.c.obj	c42b99791fc2b28b
+1295	2139	7283838191524011	CMakeFiles/SDL2.dir/src/render/software/SDL_render_sw.c.obj	f5dca4370bada1c3
+1425	2142	7283838192699112	CMakeFiles/SDL2.dir/src/render/software/SDL_triangle.c.obj	7f7f104583f30a90
+1290	2152	7283838191694013	CMakeFiles/SDL2.dir/src/render/software/SDL_drawpoint.c.obj	69e9412e17d48565
+1483	2155	7283838192839109	CMakeFiles/SDL2.dir/src/sensor/SDL_sensor.c.obj	ce66b679af198d27
+1166	2159	7283838191884015	CMakeFiles/SDL2.dir/src/render/SDL_render.c.obj	382834ddd59ffd98
+320	2165	7283838191984013	CMakeFiles/SDL2.dir/src/dynapi/SDL_dynapi.c.obj	578952cd8e9ab5db
+1185	2168	7283838192999137	CMakeFiles/SDL2.dir/src/render/direct3d11/SDL_shaders_d3d11.c.obj	1a0e7fdb91b2fed
+1537	2171	7283838192919111	CMakeFiles/SDL2.dir/src/stdlib/SDL_iconv.c.obj	22fd16da78eb0073
+1732	2174	7283838193039111	CMakeFiles/SDL2.dir/src/stdlib/SDL_mslibc.c.obj	7b0b333f32217cde
+1534	2179	7283838193229111	CMakeFiles/SDL2.dir/src/stdlib/SDL_getenv.c.obj	5b0d468465f087aa
+1422	2182	7283838193309110	CMakeFiles/SDL2.dir/src/render/software/SDL_rotate.c.obj	28ddd9f3a47442d1
+1219	2186	7283838193249111	CMakeFiles/SDL2.dir/src/render/opengles2/SDL_render_gles2.c.obj	1d942724b62ec282
+1804	2190	7283838193639116	CMakeFiles/SDL2.dir/src/stdlib/SDL_qsort.c.obj	b52e67059ca48344
+1173	2195	7283838193639116	CMakeFiles/SDL2.dir/src/render/direct3d/SDL_render_d3d.c.obj	7218a1dd8f54bb41
+1195	2198	7283838193779114	CMakeFiles/SDL2.dir/src/render/opengl/SDL_render_gl.c.obj	3429d72c1ec47717
+1280	2202	7283838194029108	CMakeFiles/SDL2.dir/src/render/software/SDL_blendline.c.obj	bde762a3451546e5
+1188	2210	7283838194089112	CMakeFiles/SDL2.dir/src/render/direct3d12/SDL_render_d3d12.c.obj	2baca412ee553b45
+1277	2429	7283838195869992	CMakeFiles/SDL2.dir/src/render/software/SDL_blendfillrect.c.obj	94fa0bfa003f562b
+2159	2507	7283838196349993	CMakeFiles/SDL2.dir/src/video/SDL_clipboard.c.obj	4aae3a7824a669c4
+2079	2551	7283838197269994	CMakeFiles/SDL2.dir/src/stdlib/SDL_strtokr.c.obj	8e19f9a55bbeec39
+2195	2573	7283838196739993	CMakeFiles/SDL2.dir/src/video/SDL_vulkan_utils.c.obj	bc9b9ca73598de55
+2152	2668	7283838197619992	CMakeFiles/SDL2.dir/src/video/SDL_blit_slow.c.obj	fd11d853dd74d1a6
+2186	2672	7283838197609993	CMakeFiles/SDL2.dir/src/video/SDL_surface.c.obj	ce09acbb817e2efb
+2155	2676	7283838197919991	CMakeFiles/SDL2.dir/src/video/SDL_bmp.c.obj	5afdfc7104b95061
+2093	2699	7283838198169994	CMakeFiles/SDL2.dir/src/video/SDL_blit.c.obj	1ea0a43ccdd8337a
+1945	2702	7283838196529992	CMakeFiles/SDL2.dir/src/stdlib/SDL_stdlib.c.obj	41a2c810f04fe548
+2171	2797	7283838199379994	CMakeFiles/SDL2.dir/src/video/SDL_pixels.c.obj	b05c4c9e5ea8dab4
+2142	2921	7283838197059991	CMakeFiles/SDL2.dir/src/video/SDL_blit_copy.c.obj	92c3bdad6a91bdf6
+2175	2924	7283838198909996	CMakeFiles/SDL2.dir/src/video/SDL_rect.c.obj	7c23e7603101c5a6
+2139	2929	7283838199649990	CMakeFiles/SDL2.dir/src/video/SDL_blit_auto.c.obj	9f269a678281e8b
+2210	2932	7283838199919992	CMakeFiles/SDL2.dir/src/audio/dummy/SDL_dummyaudio.c.obj	e13da3135deae12
+2086	2936	7283838199969993	CMakeFiles/SDL2.dir/src/timer/SDL_timer.c.obj	78ff7a26b03e689d
+2168	2940	7283838200029992	CMakeFiles/SDL2.dir/src/video/SDL_fillrect.c.obj	262638eb7007a1ee
+2096	2948	7283838200249991	CMakeFiles/SDL2.dir/src/video/SDL_blit_0.c.obj	4c7ba5241d43cc7b
+2024	2952	7283838200429993	CMakeFiles/SDL2.dir/src/stdlib/SDL_string.c.obj	8bf938938c243064
+2183	2956	7283838199079991	CMakeFiles/SDL2.dir/src/video/SDL_stretch.c.obj	601b4decb7b0053f
+2082	2959	7283838200789995	CMakeFiles/SDL2.dir/src/thread/SDL_thread.c.obj	49d8082e39cb1c67
+2165	2962	7283838201069993	CMakeFiles/SDL2.dir/src/video/SDL_egl.c.obj	47dc77f9cddc4cc9
+2103	2972	7283838201389993	CMakeFiles/SDL2.dir/src/video/SDL_blit_A.c.obj	6fb1920e0418802a
+2089	2982	7283838201459994	CMakeFiles/SDL2.dir/src/video/SDL_RLEaccel.c.obj	33e2347b8924f942
+2100	2986	7283838201319989	CMakeFiles/SDL2.dir/src/video/SDL_blit_1.c.obj	ce3064a35a4fe9ed
+2179	2993	7283838201289992	CMakeFiles/SDL2.dir/src/video/SDL_shape.c.obj	7ef6a453c757cd38
+2508	3000	7283838201589991	CMakeFiles/SDL2.dir/src/joystick/virtual/SDL_virtualjoystick.c.obj	b54c595cbb218a9d
+2136	3372	7283838205329990	CMakeFiles/SDL2.dir/src/video/SDL_blit_N.c.obj	aed7801791025f8e
+2668	3376	7283838205399990	CMakeFiles/SDL2.dir/src/video/dummy/SDL_nullvideo.c.obj	62078317127e24c0
+2429	3379	7283838205449989	CMakeFiles/SDL2.dir/src/audio/disk/SDL_diskaudio.c.obj	e3ad53c2466fa67
+2936	3382	7283838205709991	CMakeFiles/SDL2.dir/src/misc/windows/SDL_sysurl.c.obj	97a751c968c72c88
+2699	3385	7283838205829990	CMakeFiles/SDL2.dir/src/video/offscreen/SDL_offscreenopengles.c.obj	873ca7d2bf6593df
+2573	3388	7283838204439989	CMakeFiles/SDL2.dir/src/video/dummy/SDL_nullframebuffer.c.obj	40e476188f997350
+2940	3391	7283838205969992	CMakeFiles/SDL2.dir/src/audio/winmm/SDL_winmm.c.obj	66f54b6d1d8b7db4
+2551	3500	7283838205999992	CMakeFiles/SDL2.dir/src/video/dummy/SDL_nullevents.c.obj	e747c2c6a66850c5
+2932	3509	7283838206079993	CMakeFiles/SDL2.dir/src/core/windows/SDL_xinput.c.obj	c05fdaae646e037a
+2676	3543	7283838206019989	CMakeFiles/SDL2.dir/src/video/offscreen/SDL_offscreenframebuffer.c.obj	504f67b47df353d8
+2929	3576	7283838207279990	CMakeFiles/SDL2.dir/src/core/windows/SDL_windows.c.obj	50805f74fa4fef27
+2982	3579	7283838207505267	CMakeFiles/SDL2.dir/src/video/windows/SDL_windowskeyboard.c.obj	a739d1d487b409a7
+2199	3586	7283838207159990	CMakeFiles/SDL2.dir/src/video/SDL_yuv.c.obj	816fc257932992e7
+2672	3589	7283838205969992	CMakeFiles/SDL2.dir/src/video/offscreen/SDL_offscreenevents.c.obj	a6c493034ea8e5a5
+2702	3592	7283838207785268	CMakeFiles/SDL2.dir/src/video/offscreen/SDL_offscreenvideo.c.obj	4db2fe0a244afff7
+2921	3598	7283838207795268	CMakeFiles/SDL2.dir/src/core/windows/SDL_hid.c.obj	3cdd1e754f112775
+2202	3601	7283838207985266	CMakeFiles/SDL2.dir/src/video/yuv2rgb/yuv_rgb.c.obj	5074e8cb2561f4e7
+2190	3604	7283838208135266	CMakeFiles/SDL2.dir/src/video/SDL_video.c.obj	e9a692680846e0ae
+2797	3608	7283838208145268	CMakeFiles/SDL2.dir/src/video/offscreen/SDL_offscreenwindow.c.obj	2b044dd35d4d3d8d
+2924	3612	7283838208225266	CMakeFiles/SDL2.dir/src/core/windows/SDL_immdevice.c.obj	a9ca397ea9cfd8d0
+2959	3620	7283838208235268	CMakeFiles/SDL2.dir/src/video/windows/SDL_windowsclipboard.c.obj	3dc14963bcee37a8
+2952	3624	7283838208255267	CMakeFiles/SDL2.dir/src/audio/wasapi/SDL_wasapi.c.obj	7e9b810f56e13924
+2948	3629	7283838208275268	CMakeFiles/SDL2.dir/src/audio/directsound/SDL_directsound.c.obj	df1381f418ee9dd1
+3385	3767	7283838209555266	CMakeFiles/SDL2.dir/src/video/windows/SDL_windowsvulkan.c.obj	18cfb9448ecc5f2b
+2986	3771	7283838209415262	CMakeFiles/SDL2.dir/src/video/windows/SDL_windowsmessagebox.c.obj	9cb9552a804be0d5
+2956	3782	7283838209825264	CMakeFiles/SDL2.dir/src/audio/wasapi/SDL_wasapi_win32.c.obj	ddeefa1276299759
+3391	3786	7283838210005266	CMakeFiles/SDL2.dir/src/thread/generic/SDL_syscond.c.obj	cb674bd4a71e6f12
+3000	3790	7283838210095264	CMakeFiles/SDL2.dir/src/video/windows/SDL_windowsmouse.c.obj	d27f515081913f18
+2962	3794	7283838210105266	CMakeFiles/SDL2.dir/src/video/windows/SDL_windowsevents.c.obj	fcf3498b45216f9
+2972	3798	7283838210145270	CMakeFiles/SDL2.dir/src/video/windows/SDL_windowsframebuffer.c.obj	70ad31f69e1ed8ef
+2993	3910	7283838210255270	CMakeFiles/SDL2.dir/src/video/windows/SDL_windowsmodes.c.obj	485c7b75ef08093a
+3629	4037	7283838212291522	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_ps4.c.obj	fac67e47cffb573c
+3608	4040	7283838212371522	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_combined.c.obj	18e72dda48de4847
+3620	4054	7283838212361523	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_luna.c.obj	85ed9f0b500ac379
+3624	4099	7283838212421521	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_ps3.c.obj	ff8ff884616da7c3
+3509	4102	7283838212701520	CMakeFiles/SDL2.dir/src/thread/windows/SDL_sysmutex.c.obj	6ac659c85ecfbbe9
+3586	4106	7283838212591524	CMakeFiles/SDL2.dir/src/sensor/windows/SDL_windowssensor.c.obj	cefa75dabe501e12
+3592	4110	7283838212781521	CMakeFiles/SDL2.dir/src/locale/windows/SDL_syslocale.c.obj	11d4406b86213481
+3500	4114	7283838212811520	CMakeFiles/SDL2.dir/src/thread/windows/SDL_syscond_cv.c.obj	8f8de3311006267d
+3605	4117	7283838212941744	CMakeFiles/SDL2.dir/src/loadso/windows/SDL_sysloadso.c.obj	4328257953b0d809
+3613	4120	7283838212951746	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_gamecube.c.obj	52b1d56151892105
+3601	4125	7283838213081741	CMakeFiles/SDL2.dir/src/timer/windows/SDL_systimer.c.obj	39bb852d3c2ccd93
+3767	4128	7283838213111743	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_ps5.c.obj	aa477c6d72fa9187
+3379	4134	7283838212911744	CMakeFiles/SDL2.dir/src/video/windows/SDL_windowsshape.c.obj	d224ab12d4fdb7fe
+3543	4134	7283838213211742	CMakeFiles/SDL2.dir/src/thread/windows/SDL_syssem.c.obj	9a55d63325376738
+3790	4135	7283838213381744	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_steam.c.obj	fe3d263fb1945ac7
+3794	4264	7283838214551786	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_switch.c.obj	49390440d0430534
+3798	4265	7283838213971785	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_wii.c.obj	fe8389cb2fc8b06e
+3579	4266	7283838214591784	CMakeFiles/SDL2.dir/src/thread/windows/SDL_systls.c.obj	d71c9a5be97d67fc
+3388	4267	7283838214521785	CMakeFiles/SDL2.dir/src/video/windows/SDL_windowswindow.c.obj	a612bf1847605177
+3598	4296	7283838214791784	CMakeFiles/SDL2.dir/src/filesystem/windows/SDL_sysfilesystem.c.obj	365e1d82206ac17f
+3576	4297	7283838214771787	CMakeFiles/SDL2.dir/src/thread/windows/SDL_systhread.c.obj	383d859b52ac35e8
+3589	4297	7283838215011786	CMakeFiles/SDL2.dir/src/power/windows/SDL_syspower.c.obj	b1580f23b662fcd8
+3376	4307	7283838214791784	CMakeFiles/SDL2.dir/src/video/windows/SDL_windowsopengles.c.obj	c0391db659782964
+3786	4307	7283838215161786	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_stadia.c.obj	ced0ae88e5b8c842
+3382	4308	7283838215201784	CMakeFiles/SDL2.dir/src/video/windows/SDL_windowsvideo.c.obj	e1cc8a589953a2a8
+3910	4309	7283838215241783	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_xbox360.c.obj	d784f647d4013f5e
+4037	4309	7283838215241783	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_xbox360w.c.obj	50bb874c3c4f6876
+3782	4330	7283838215473200	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_shield.c.obj	1f49a5d00d5d7254
+3372	4331	7283838215503201	CMakeFiles/SDL2.dir/src/video/windows/SDL_windowsopengl.c.obj	e4506ce77c993fd
+3771	4350	7283838215703198	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_rumble.c.obj	92372d8363ee955f
+4041	4368	7283838215893199	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_xboxone.c.obj	770d3cc7d3276fd2
+4128	4397	7283838216206627	CMakeFiles/SDL2.dir/src/main/windows/version.rc.res	cfb9471398e3758c
+4120	4469	7283838216886628	CMakeFiles/SDL2.dir/src/haptic/windows/SDL_windowshaptic.c.obj	5aaed9b4463e4658
+4114	4474	7283838216956625	CMakeFiles/SDL2.dir/src/joystick/windows/SDL_xinputjoystick.c.obj	6ab1d089847ee849
+4054	4491	7283838217073479	CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapijoystick.c.obj	5e213597c059afe0
+4125	4503	7283838217233478	CMakeFiles/SDL2.dir/src/haptic/windows/SDL_xinputhaptic.c.obj	23a42040b8d7e814
+4099	4504	7283838217243481	CMakeFiles/SDL2.dir/src/joystick/windows/SDL_dinputjoystick.c.obj	1e01a39395d9fee3
+4110	4512	7283838217333478	CMakeFiles/SDL2.dir/src/joystick/windows/SDL_windowsjoystick.c.obj	dac54e8c3b613818
+4117	4568	7283838217883484	CMakeFiles/SDL2.dir/src/haptic/windows/SDL_dinputhaptic.c.obj	976b07921e15c14d
+4102	4982	7283838221996109	CMakeFiles/SDL2.dir/src/joystick/windows/SDL_rawinputjoystick.c.obj	e529a6f13b53917e
+4106	5010	7283838222286107	CMakeFiles/SDL2.dir/src/joystick/windows/SDL_windows_gaming_input.c.obj	392113ac0a4abe0d
+5010	5771	7283838229666164	SDL2.dll	10cbdefb953073e9
+5010	5771	7283838229666164	SDL2.lib	10cbdefb953073e9
+5771	5946	0	CMakeFiles/install.util	492a2e7a031ae2b0

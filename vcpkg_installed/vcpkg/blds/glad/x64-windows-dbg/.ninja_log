@@ -1,0 +1,8 @@
+# ninja log v5
+5	804	7281223563503394	include/glad/glad.h	93b30134306b1074
+5	804	7281223563503394	src/glad.c	93b30134306b1074
+5	804	7281223563503394	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/glad/x64-windows-dbg/include/glad/glad.h	93b30134306b1074
+5	804	7281223563503394	E:/Github/Particle Simulator/vcpkg_installed/vcpkg/blds/glad/x64-windows-dbg/src/glad.c	93b30134306b1074
+816	1155	7281223567767822	CMakeFiles/glad.dir/src/glad.c.obj	43704238f76e3122
+1156	1194	7281223568157822	glad.lib	e5c23eac2fc7a72e
+1194	1256	0	CMakeFiles/install.util	ac7682c7c463e249
