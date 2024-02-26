@@ -29,4 +29,8 @@ Player::~Player()
 
 void Player::draw(SDL_Renderer* renderer) const
 {
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, sprite); // Create a texture from the surface
+	SDL_Rect rect = {position.x, position.y, 32, 32}; // Create a rectangle
+	SDL_RenderCopy(renderer, texture, NULL, &rect); // Draw the texture
+	SDL_DestroyTexture(texture); // Destroy the texture (cleanup)
 }
