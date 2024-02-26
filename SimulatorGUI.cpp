@@ -91,13 +91,15 @@ void SimulatorGUI::MainMenuGUI()
 void SimulatorGUI::TitleGUI()
 {
 	// Title
-	ImGui::Text("Particle Simulator");
+	ImGui::Text("Particle Simulator v2");
 	ImGui::Text("STDISCM S11");
 	ImGui::Spacing();
 
 	ImGui::Text("Authors:");
 	ImGui::Text("P1: Erik Tiongquico");
 	ImGui::Text("P2: Clyla Rafanan");
+	ImGui::Text("P3: Michael Mangoba");
+	ImGui::Text("P4: Aaron Palpallatoc");
 }
 
 void SimulatorGUI::InfoGUI()
