@@ -40,4 +40,7 @@ target_link_libraries(CMakeTarget PRIVATE
 find_package(imgui CONFIG REQUIRED)
 target_link_libraries(CMakeTarget PRIVATE imgui::imgui)
 
+find_package(SDL2_image CONFIG REQUIRED)
+target_link_libraries(CMakeTarget PRIVATE $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>)
+
 # TODO: Add tests and install targets if needed.
