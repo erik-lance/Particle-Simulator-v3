@@ -15,6 +15,6 @@ public:
 	void draw(SDL_Renderer* renderer) const;
 private:
 	Position position;
-	SDL_Texture* sprite;
+	SDL_Surface* sprite;
 
 };
