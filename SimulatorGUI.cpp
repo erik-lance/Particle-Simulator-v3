@@ -1,7 +1,7 @@
 #include "SimulatorGUI.h"
 #include <iostream>
 
-void SimulatorGUI::Init(SDL_Window* window, SDL_Renderer* renderer, double* delta, int* fps_ctr, bool* running, bool* drawGrid)
+void SimulatorGUI::Init(SDL_Window* window, SDL_Renderer* renderer, bool* drawGrid)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -13,13 +13,6 @@ void SimulatorGUI::Init(SDL_Window* window, SDL_Renderer* renderer, double* delt
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
-
-	// Set timers
-	delta_time = delta;
-	fps = fps_ctr;
-
-	// Set running
-	this->running = running;
 
 	// Set grid
 	this->m_grid_lines = drawGrid;
@@ -109,8 +102,8 @@ void SimulatorGUI::TitleGUI()
 
 void SimulatorGUI::InfoGUI()
 {
-	ImGui::Text("FPS: %d", *fps);
-	ImGui::Text("Delta Time: %.4f", *delta_time);
+	ImGui::Text("FPS: %d", fps);
+	ImGui::Text("Delta Time: %.4f", delta_time);
 	ImGui::Text("Total Time: %.4f", ImGui::GetTime());
 
 	ImGui::Separator();
@@ -506,7 +499,7 @@ void SimulatorGUI::PresetsAndMenuGUI()
 		std::cout << "Exit" << std::endl;
 
 		// Stop the program
-		*running = false;
+		isRunning = false;
 	}
 
 	ImGui::End();

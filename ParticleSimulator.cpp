@@ -23,15 +23,17 @@ const int EXPLORER_WIDTH = 33;
 const int EXPLORER_HEIGHT = 19;
 
 using namespace std;
-double delta_time = 0;
-int fps = 0;
+
 ObjectManager object_manager = ObjectManager(SIM_WIDTH, SIM_HEIGHT);
 
-bool isRunning = true;
+
 bool drawGrid = false;
 
 // Globals
+bool isRunning = true;
 bool explorer_mode = false;
+double delta_time = 0;
+int fps = 0;
 
 void draw_sim_borders(SDL_Renderer* renderer) {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -88,7 +90,7 @@ int main()
 	glViewport(0, 0, SIM_WIDTH, SIM_HEIGHT);
 
 	SimulatorGUI gui;
-	gui.Init(window, renderer, &delta_time, &fps, &isRunning, &drawGrid);
+	gui.Init(window, renderer, &drawGrid);
 	gui.setManager(&object_manager);
 
 	// Check for OpenGL errors

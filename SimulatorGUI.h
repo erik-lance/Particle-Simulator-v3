@@ -6,12 +6,13 @@
 #include <imgui_impl_sdlrenderer2.h>
 #include <imgui_impl_opengl3.h>
 #include "Objects/ObjectManager.h"
+#include "Globals.h"
 
 constexpr int MAX_VELOCITY = 1000;
 
 class SimulatorGUI {
 public:
-	void Init(SDL_Window* window, SDL_Renderer* renderer, double* delta, int* fps_ctr, bool* running, bool* drawGrid);
+	void Init(SDL_Window* window, SDL_Renderer* renderer, bool* drawGrid);
 	void setManager(ObjectManager* manager) { m_object_manager = manager; }
 	ObjectManager* getManager() { return m_object_manager; }
 	void NewFrame();
@@ -41,11 +42,6 @@ public:
 	void ResolveMethodThree();
 
 private:
-	bool* running = new bool(true);
-	double* delta_time = new double(0);
-	int* fps = new int(0);
-
-	bool explorer_mode = false;
 
 	// GUI Variables
 	float menu_size_x = 1260.0f;
