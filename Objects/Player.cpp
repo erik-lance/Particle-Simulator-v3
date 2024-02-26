@@ -25,6 +25,7 @@ Player::Player(Position pos)
 
 Player::~Player()
 {
+	SDL_FreeSurface(sprite);
 }
 
 void Player::draw(SDL_Renderer* renderer) const
