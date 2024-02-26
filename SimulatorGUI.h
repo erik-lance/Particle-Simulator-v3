@@ -25,6 +25,7 @@ public:
 	void InfoGUI();
 	void ParticlesGUI();
 	void ObstaclesGUI();
+	void ExplorerGUI();
 	void ParticlesBatchGUI();
 	void ParticlesBatchMethodOneGUI();
 	void ParticlesBatchMethodTwoGUI();
@@ -43,6 +44,9 @@ private:
 	bool* running = new bool(true);
 	double* delta_time = new double(0);
 	int* fps = new int(0);
+
+	bool explorer_mode = false;
+
 	// GUI Variables
 	float menu_size_x = 1260.0f;
 	float menu_size_y = 160.0f;
@@ -83,6 +87,9 @@ private:
 	int m_obstacle_end_x = 0;
 	int m_obstacle_start_y = 0;
 	int m_obstacle_end_y = 0;
+
+	int m_explorer_x = 0;
+	int m_explorer_y = 0;
 
 	// Batch Inputs
 	int m_batch_size = 0;

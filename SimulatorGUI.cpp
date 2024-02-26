@@ -73,9 +73,9 @@ void SimulatorGUI::MainMenuGUI()
 	// Create a two column for statistics
 	ImGui::BeginTable("Stats", 4);
 	ImGui::TableNextRow();
-	ImGui::TableNextColumn();
 
 	// Title
+	ImGui::TableNextColumn();
 	TitleGUI();
 
 	// Data
@@ -86,9 +86,9 @@ void SimulatorGUI::MainMenuGUI()
 	ImGui::TableNextColumn();
 	ParticlesGUI();
 
-	// Input Sections (Obstacle)
+	// Input Sections (Explorer)
 	ImGui::TableNextColumn();
-	ObstaclesGUI();
+	ExplorerGUI();
 
 	ImGui::EndTable();
 
@@ -195,6 +195,26 @@ void SimulatorGUI::ObstaclesGUI()
 		m_obstacle_id++;
 	}
 
+}
+
+void SimulatorGUI::ExplorerGUI()
+{
+	ImGui::Text("Explorer");
+
+	// Switch to Explorer Mode 
+	ImGui::InputInt("Explorer X", &m_explorer_x);
+	ImGui::InputInt("Explorer Y", &m_explorer_y);
+	// Clamp x and y to 0-1280 and 1-720
+	InputClamp(m_explorer_x, 0, 1280);
+	InputClamp(m_explorer_y, 0, 720);
+
+	ImGui::Spacing();
+
+	// Button to enter
+	if (ImGui::Button("Enter Explorer Mode")) {
+		std::cout << "Explorer Mode Entered" << std::endl;
+		explorer_mode = true;
+	}
 }
 
 void SimulatorGUI::ParticlesBatchGUI()
