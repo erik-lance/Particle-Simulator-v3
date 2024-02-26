@@ -1,2 +1,2 @@
 #pragma once
-extern bool explorer_mode = false;
+extern bool explorer_mode;

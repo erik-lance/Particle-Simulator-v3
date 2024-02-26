@@ -5,6 +5,7 @@
 
 #include "ParticleSimulator.h"
 #include "SimulatorGUI.h"
+#include "Globals.h"
 #include <glad/glad.h>
 #include <SDL.h>
 #include <iostream>
@@ -17,6 +18,10 @@ const int SCREEN_HEIGHT = 900;
 const int SIM_WIDTH = 1280;
 const int SIM_HEIGHT = 720;
 
+// Explorer Dimensions
+const int EXPLORER_WIDTH = 33;
+const int EXPLORER_HEIGHT = 19;
+
 using namespace std;
 double delta_time = 0;
 int fps = 0;
@@ -24,6 +29,9 @@ ObjectManager object_manager = ObjectManager(SIM_WIDTH, SIM_HEIGHT);
 
 bool isRunning = true;
 bool drawGrid = false;
+
+// Globals
+bool explorer_mode = false;
 
 void draw_sim_borders(SDL_Renderer* renderer) {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
