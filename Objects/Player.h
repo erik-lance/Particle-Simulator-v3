@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include "SDL_image.h"
 #include "../Structures.h"
 
 class Player
@@ -11,9 +12,9 @@ public:
 	Position getPosition() const { return position; }
 
 	void setPosition(Position pos) { position = pos; }
-	void updatePosition(double delta);
 	void draw(SDL_Renderer* renderer) const;
 private:
 	Position position;
+	SDL_Texture* sprite;
 
 };
