@@ -20,6 +20,9 @@ Player::Player(Position pos)
 		case 4:
 			sprite = IMG_Load("Assets/pikachu.png");
 			break;
+		default:
+			sprite = IMG_Load("Assets/bulbasaur.png");
+			break;
 	}
 }
 
