@@ -76,6 +76,28 @@ void SimulatorGUI::MainMenuGUI()
 	ImGui::TableNextColumn();
 
 	// Title
+	TitleGUI();
+
+	// Data
+	ImGui::TableNextColumn();
+	InfoGUI();
+
+	// Input Sections (Particle)
+	ImGui::TableNextColumn();
+	ParticlesGUI();
+
+	// Input Sections (Obstacle)
+	ImGui::TableNextColumn();
+	ObstaclesGUI();
+
+	ImGui::EndTable();
+
+	ImGui::End();
+}
+
+void SimulatorGUI::TitleGUI()
+{
+	// Title
 	ImGui::Text("Particle Simulator");
 	ImGui::Text("STDISCM S11");
 	ImGui::Spacing();
@@ -83,9 +105,10 @@ void SimulatorGUI::MainMenuGUI()
 	ImGui::Text("Authors:");
 	ImGui::Text("P1: Erik Tiongquico");
 	ImGui::Text("P2: Clyla Rafanan");
+}
 
-	// Data
-	ImGui::TableNextColumn();
+void SimulatorGUI::InfoGUI()
+{
 	ImGui::Text("FPS: %d", *fps);
 	ImGui::Text("Delta Time: %.4f", *delta_time);
 	ImGui::Text("Total Time: %.4f", ImGui::GetTime());
@@ -100,9 +123,10 @@ void SimulatorGUI::MainMenuGUI()
 	ImGui::Separator();
 	ImGui::Spacing();
 	ImGui::Checkbox("Grid", m_grid_lines);
+}
 
-	// Input Sections (Particle)
-	ImGui::TableNextColumn();
+void SimulatorGUI::ParticlesGUI()
+{
 	ImGui::Text("Particle");
 
 	// Clamp x and y to 0-1280 and 1-720
@@ -123,15 +147,16 @@ void SimulatorGUI::MainMenuGUI()
 
 	if (ImGui::Button("Add Particle")) {
 		std::cout << "Particle Added" << std::endl;
-		
+
 		m_object_manager->addParticle(m_particle_x, m_particle_y, m_particle_angle, m_particle_velocity);
 
 		// Increment particle id
 		m_particle_id++;
 	}
+}
 
-	// Input Sections (Obstacle)
-	ImGui::TableNextColumn();
+void SimulatorGUI::ObstaclesGUI()
+{
 	ImGui::Text("Obstacle");
 
 	// Clamp start_x and start_y to 0-1280 and 1-720
@@ -170,9 +195,6 @@ void SimulatorGUI::MainMenuGUI()
 		m_obstacle_id++;
 	}
 
-	ImGui::EndTable();
-
-	ImGui::End();
 }
 
 void SimulatorGUI::ParticlesBatchGUI()

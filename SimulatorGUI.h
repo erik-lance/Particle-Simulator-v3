@@ -21,6 +21,10 @@ public:
 
 	// GUI Functions
 	void MainMenuGUI();
+	void TitleGUI();
+	void InfoGUI();
+	void ParticlesGUI();
+	void ObstaclesGUI();
 	void ParticlesBatchGUI();
 	void ParticlesBatchMethodOneGUI();
 	void ParticlesBatchMethodTwoGUI();
