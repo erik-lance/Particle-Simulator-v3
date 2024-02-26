@@ -1,7 +1,7 @@
 #include "SimulatorGUI.h"
 #include <iostream>
 
-void SimulatorGUI::Init(SDL_Window* window, SDL_Renderer* renderer, bool* drawGrid)
+void SimulatorGUI::Init(SDL_Window* window, SDL_Renderer* renderer)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -13,9 +13,6 @@ void SimulatorGUI::Init(SDL_Window* window, SDL_Renderer* renderer, bool* drawGr
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
-
-	// Set grid
-	this->m_grid_lines = drawGrid;
 }
 
 void SimulatorGUI::NewFrame()
@@ -117,7 +114,7 @@ void SimulatorGUI::InfoGUI()
 	// Tick Box for Grid
 	ImGui::Separator();
 	ImGui::Spacing();
-	ImGui::Checkbox("Grid", m_grid_lines);
+	ImGui::Checkbox("Grid", &drawGrid);
 }
 
 void SimulatorGUI::ParticlesGUI()

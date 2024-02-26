@@ -12,7 +12,7 @@ constexpr int MAX_VELOCITY = 1000;
 
 class SimulatorGUI {
 public:
-	void Init(SDL_Window* window, SDL_Renderer* renderer, bool* drawGrid);
+	void Init(SDL_Window* window, SDL_Renderer* renderer);
 	void setManager(ObjectManager* manager) { m_object_manager = manager; }
 	ObjectManager* getManager() { return m_object_manager; }
 	void NewFrame();
@@ -71,7 +71,6 @@ private:
 
 	// Main Inputs
 	ObjectManager* m_object_manager;
-	bool* m_grid_lines = new bool(true);
 	int m_particle_id = 0;
 	int m_particle_x = 0;
 	int m_particle_y = 0;

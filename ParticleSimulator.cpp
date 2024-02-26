@@ -26,14 +26,13 @@ using namespace std;
 
 ObjectManager object_manager = ObjectManager(SIM_WIDTH, SIM_HEIGHT);
 
-
-bool drawGrid = false;
-
 // Globals
 bool isRunning = true;
 bool explorer_mode = false;
 double delta_time = 0;
 int fps = 0;
+
+bool drawGrid = false;
 
 void draw_sim_borders(SDL_Renderer* renderer) {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -90,7 +89,7 @@ int main()
 	glViewport(0, 0, SIM_WIDTH, SIM_HEIGHT);
 
 	SimulatorGUI gui;
-	gui.Init(window, renderer, &drawGrid);
+	gui.Init(window, renderer);
 	gui.setManager(&object_manager);
 
 	// Check for OpenGL errors
