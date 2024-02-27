@@ -20,6 +20,36 @@ Player::~Player()
 	SDL_DestroyTexture(sprite);
 }
 
+/**
+ * Moves the player, called in the game loop.
+ * @param dir The direction to move the player. 0 = up, 1 = down, 2 = left, 3 = right
+ * @param deltaTime The time since the last frame
+ */
+void Player::move(int dir, double deltaTime)
+{
+	switch (dir)
+	{
+		case 0:
+			position.y -= moveSpeed * deltaTime;
+			if (position.y < 0) { position.y = 0; }
+			break;
+		case 1:
+			position.y += moveSpeed * deltaTime;
+			if (position.y > 720) { position.y = 720; }
+			break;
+		case 2:
+			position.x -= moveSpeed * deltaTime;
+			if (position.x < 0) { position.x = 0; }
+			break;
+		case 3:
+			position.x += moveSpeed * deltaTime;
+			if (position.x > 1280) { position.x = 1280; }
+			break;
+		default:
+			break;
+	}
+}
+
 bool Player::loadSprite(SDL_Renderer* renderer)
 {
 	// Load Sprite randomly from 1-4
@@ -86,6 +116,6 @@ bool Player::loadSpecifiedSprite(SDL_Renderer* renderer, const char* path)
 
 void Player::draw(SDL_Renderer* renderer) const
 {
-	SDL_Rect destRect = { position.x, position.y, 50, 50 };
+	SDL_Rect destRect = { position.x, position.y, 32, 32 };
 	SDL_RenderCopy(renderer, sprite, NULL, &destRect);
 }
