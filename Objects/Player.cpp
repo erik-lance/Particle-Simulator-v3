@@ -28,27 +28,33 @@ bool Player::loadSprite(SDL_Renderer* renderer)
 	switch (num)
 	{
 		case 1:
-			strcpy(filePath, "../Assets/bulbasaur.png");
+			strcpy(filePath, "Assets/bulbasaur.png");
 			break;
 		case 2:
-			strcpy(filePath, "../Assets/charmander.png");
+			strcpy(filePath, "Assets/charmander.png");
 			break;
 		case 3:
-			strcpy(filePath, "../Assets/squirtle.png");
+			strcpy(filePath, "Assets/squirtle.png");
 			break;
 		case 4:
-			strcpy(filePath, "../Assets/pikachu.png");
+			strcpy(filePath, "Assets/pikachu.png");
 			break;
 		default:
-			strcpy(filePath, "../Assets/bulbasaur.png");
+			strcpy(filePath, "Assets/bulbasaur.png");
 			break;
 	}
 
 	SDL_Surface* surface_sprite = IMG_Load(filePath); // Load the image into a surface
+	if (surface_sprite == NULL)
+	{
+		std::cout << "Failed to load surface sprite! SDL Error: " << SDL_GetError() << std::endl;
+		return false;
+	}
+
 	sprite = SDL_CreateTextureFromSurface(renderer, surface_sprite); // Create a texture from the surface
 	if (sprite == NULL)
 	{
-		std::cout << "Failed to load sprite! SDL Error: " << SDL_GetError() << std::endl;
+		std::cout << "Failed to load texture sprite! SDL Error: " << SDL_GetError() << std::endl;
 		return false;
 	}
 	else
