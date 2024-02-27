@@ -110,8 +110,9 @@ int main()
 	// Set delta time of object manager
 	object_manager.setDeltaTime(&delta_time);
 
-	// Load player sprite
-	object_manager.getPlayer()->loadSprite(renderer);
+	// Set Player
+	Player player = Player(Position(640, 360));
+	player.loadSprite(renderer);
 
 	while (isRunning) {
 		// Calculate delta time
@@ -129,6 +130,8 @@ int main()
 				SDL_Quit();
 				return 0;
 			}
+
+
 		}
 
 		// Clear the renderer

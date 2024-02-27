@@ -41,8 +41,6 @@ public:
 	int getWallCount() const { return current_max_walls; }
 	CollisionManager getCollisionManager() { return *collision_manager; }
 
-	Player * getPlayer() { return &player; }
-
 	// Debug
 	void drawGridLines(SDL_Renderer* renderer);
 	void drawDebugCircles(SDL_Renderer* renderer);
@@ -66,7 +64,7 @@ private:
 	Particle* particles = new Particle[particle_capacity];
 	Wall* walls = new Wall[wall_capacity];
 
-	Player player = Player(Position(640, 360));
+	Player* player;
 	
 	DebugCircle debug_circles[10];
 };
