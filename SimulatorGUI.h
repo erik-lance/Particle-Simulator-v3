@@ -12,8 +12,7 @@ constexpr int MAX_VELOCITY = 1000;
 
 class SimulatorGUI {
 public:
-	void Init(SDL_Window* window, SDL_Renderer* renderer);
-	void setManager(ObjectManager* manager) { m_object_manager = manager; }
+	void Init(SDL_Window* window, SDL_Renderer* renderer, ObjectManager* manager);
 	ObjectManager* getManager() { return m_object_manager; }
 	void NewFrame();
 	virtual void Update();
