@@ -17,6 +17,7 @@ Player::Player(Position pos)
 
 Player::~Player()
 {
+	SDL_DestroyTexture(sprite);
 }
 
 bool Player::loadSprite(SDL_Renderer* renderer)
