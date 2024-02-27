@@ -110,6 +110,9 @@ int main()
 	// Set delta time of object manager
 	object_manager.setDeltaTime(&delta_time);
 
+	// Load player sprite
+	object_manager.getPlayer()->loadSprite(renderer);
+
 	while (isRunning) {
 		// Calculate delta time
 		last_time = current_time;
