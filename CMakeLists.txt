@@ -17,6 +17,9 @@ project ("Particle Simulator")
 # Add source to this project's executable.
 add_executable (CMakeTarget "ParticleSimulator.cpp" "ParticleSimulator.h" "SimulatorGUI.cpp" "SimulatorGUI.h" "Objects/Particle.cpp" "Objects/Particle.h" "Objects/Wall.h" "Objects/Wall.cpp"    "CollisionManager.h" "CollisionManager.cpp" "Objects/ObjectManager.h" "Objects/ObjectManager.cpp"   "Structures.h" "Objects/DebugCircle.cpp" "Objects/DebugCircle.h"   "Globals.h"  "Objects/Player.cpp" "Objects/Player.h")
 
+# Add assets to this project's executable.
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)
 endif()
