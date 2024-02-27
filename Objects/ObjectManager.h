@@ -3,6 +3,7 @@
 #include "../CollisionManager.h"
 #include "Particle.h"
 #include "Wall.h"
+#include "Player.h"
 #include "DebugCircle.h"
 
 constexpr int THREAD_COUNT = 4;
@@ -62,6 +63,8 @@ private:
 	int current_max_walls = 1;
 	Particle* particles = new Particle[particle_capacity];
 	Wall* walls = new Wall[wall_capacity];
+
+	Player player = Player(Position(0, 0));
 	
 	DebugCircle debug_circles[10];
 };
