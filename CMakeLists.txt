@@ -9,6 +9,9 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
+# Setup vcpkg for the project
+set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
+
 project ("Particle Simulator")
 
 # Add source to this project's executable.
@@ -17,15 +20,6 @@ add_executable (CMakeTarget "ParticleSimulator.cpp" "ParticleSimulator.h" "Simul
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)
 endif()
-
-# Copy DLLs to the output directory
-add_custom_command(TARGET CMakeTarget POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_if_different
-		"${CMAKE_CURRENT_SOURCE_DIR}/vcpkg_installed/vcpkg/blds/sdl2/x64-windows-dbg/SDL2d.dll"
-		$<TARGET_FILE_DIR:CMakeTarget>)
-
-# Add installation prefix of vcpkg to CMAKE_PREFIX_PATH
-list(APPEND CMAKE_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg_installed/x64-windows)
 
 # Packages
 find_package(glad CONFIG REQUIRED)
