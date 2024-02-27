@@ -50,6 +50,13 @@ int main()
 		return 1;
 	}
 
+	// Setup SDL Image
+	if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) {
+		cerr << "Error: " << IMG_GetError() << endl;
+		SDL_Quit();
+		return 1;
+	}
+
 	// Create window with graphics context
 	SDL_Window* window = SDL_CreateWindow("Particle Simulator", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
 		SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
