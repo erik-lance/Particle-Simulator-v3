@@ -1,7 +1,7 @@
 #include "SimulatorGUI.h"
 #include <iostream>
 
-void SimulatorGUI::Init(SDL_Window* window, SDL_Renderer* renderer, ObjectManager* manager)
+SimulatorGUI::SimulatorGUI(SDL_Window* window, SDL_Renderer* renderer, ObjectManager* manager)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -15,6 +15,11 @@ void SimulatorGUI::Init(SDL_Window* window, SDL_Renderer* renderer, ObjectManage
 	ImGui::StyleColorsDark();
 
 	this->m_object_manager = manager;
+}
+
+SimulatorGUI::~SimulatorGUI()
+{
+	Shutdown();
 }
 
 void SimulatorGUI::NewFrame()

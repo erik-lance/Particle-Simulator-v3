@@ -88,8 +88,7 @@ int main()
 	// Viewport for Simulation
 	glViewport(0, 0, SIM_WIDTH, SIM_HEIGHT);
 
-	SimulatorGUI gui;
-	gui.Init(window, renderer, &object_manager);
+	SimulatorGUI gui = SimulatorGUI(window, renderer, &object_manager);
 
 	// Check for OpenGL errors
 	GLenum error = glGetError();
