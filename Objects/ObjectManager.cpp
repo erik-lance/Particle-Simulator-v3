@@ -169,6 +169,9 @@ void ObjectManager::updateAndDrawParticlesMultiThreaded(double delta, SDL_Render
     {
 		particles[i].draw(renderer);
 	}
+
+    // Draw player
+    player.draw(renderer);
 }
 
 /**
