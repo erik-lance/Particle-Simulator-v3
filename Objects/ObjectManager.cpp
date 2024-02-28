@@ -167,7 +167,8 @@ void ObjectManager::updateAndDrawParticlesMultiThreaded(double delta, SDL_Render
     // Draw the particles
     for (int i = 0; i < current_max_particles-1; i++)
     {
-		particles[i].draw(renderer);
+        if (explorer_mode) particles[i].drawExplorer(renderer, player.getPosition());
+		else particles[i].draw(renderer);
 	}
 
     // Draw player
@@ -185,7 +186,7 @@ void ObjectManager::updateAndDrawParticlesIndices(int* indices, int count)
     for (int i = 0; i < count-1; i++)
 	{
         particles[indices[i]].updatePosition(*cur_delta);
-		collision_manager->checkParticleCollisionsInCells(&particles[indices[i]]);
+		// collision_manager->checkParticleCollisionsInCells(&particles[indices[i]]);
 		particles[indices[i]].handleScreenCollision();
 	}
 }
