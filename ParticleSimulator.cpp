@@ -35,7 +35,7 @@ int fps = 0;
 bool drawGrid = false;
 
 void draw_sim_borders(SDL_Renderer* renderer) {
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	SDL_SetRenderDrawColor(renderer, 42, 74, 115, 255);
 	SDL_RenderDrawLine(renderer, 0, 0, SIM_WIDTH, 0);
 	SDL_RenderDrawLine(renderer, 0, 0, 0, SIM_HEIGHT);
 	SDL_RenderDrawLine(renderer, SIM_WIDTH, 0, SIM_WIDTH, SIM_HEIGHT);

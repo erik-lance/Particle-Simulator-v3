@@ -119,9 +119,9 @@ void SimulatorGUI::InfoGUI()
 	ImGui::Text("Number of Obstacles: %d", m_obstacle_id);
 
 	// Tick Box for Grid
-	ImGui::Separator();
-	ImGui::Spacing();
-	ImGui::Checkbox("Grid", &drawGrid);
+	//ImGui::Separator();
+	//ImGui::Spacing();
+	//ImGui::Checkbox("Grid", &drawGrid);
 }
 
 void SimulatorGUI::ParticlesGUI()
