@@ -36,10 +36,10 @@ bool drawGrid = false;
 
 void draw_sim_borders(SDL_Renderer* renderer) {
 	SDL_SetRenderDrawColor(renderer, 42, 74, 115, 255);
-	SDL_RenderDrawLine(renderer, 0, 0, SIM_WIDTH, 0);
+	SDL_RenderDrawLine(renderer, 1, 1, SIM_WIDTH, 1);
 	SDL_RenderDrawLine(renderer, 0, 0, 0, SIM_HEIGHT);
-	SDL_RenderDrawLine(renderer, SIM_WIDTH, 0, SIM_WIDTH, SIM_HEIGHT);
-	SDL_RenderDrawLine(renderer, 0, SIM_HEIGHT, SIM_WIDTH, SIM_HEIGHT);
+	SDL_RenderDrawLine(renderer, SIM_WIDTH-1, 0, SIM_WIDTH-1, SIM_HEIGHT);
+	SDL_RenderDrawLine(renderer, 0, SIM_HEIGHT-1, SIM_WIDTH, SIM_HEIGHT-1);
 }
 
 int main()
@@ -93,7 +93,8 @@ int main()
 	}
 
 	// Viewport for Simulation
-	glViewport(0, 0, SIM_WIDTH, SIM_HEIGHT);
+	SDL_Rect sim_viewport = { 0, 0, SIM_WIDTH, SIM_HEIGHT };
+	SDL_RenderSetViewport(renderer, &sim_viewport);
 
 	SimulatorGUI gui = SimulatorGUI(window, renderer, &object_manager);
 
