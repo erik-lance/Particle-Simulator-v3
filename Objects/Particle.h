@@ -37,6 +37,7 @@ public:
 	bool handleLineCollision(Line line);
 
 	void draw(SDL_Renderer* renderer) const;
+	void drawExplorer(SDL_Renderer* renderer, Position player_pos) const;
 
 private:
 	int m_id;

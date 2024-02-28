@@ -114,6 +114,40 @@ void Particle::draw(SDL_Renderer* renderer) const
 	SDL_RenderFillRect(renderer, &rect);
 }
 
+/**
+ * Draw the particle if within 33x19 rectangle of the player
+ * @param renderer The SDL renderer to draw the particle
+ * @param player_pos The player's position
+ */
+void Particle::drawExplorer(SDL_Renderer* renderer, Position player_pos) const
+{
+	// Draw the particle if within 33x19 rectangle of the player
+	if (position.x >= player_pos.x - 16 && position.x <= player_pos.x + 16 && position.y >= player_pos.y - 9 && position.y <= player_pos.y + 9)
+	{
+		// Set color to white
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+		int round_x = (int)position.x;
+		int round_y = (int)position.y;
+
+		// Draw a Square but translate based on player's position (640, 360)
+		// because we changed view from 1280x720 to 33x19
+		// Assume each pixel is 38.7879x37.8947
+		int new_draw_pos_x = (int)(640 + (round_x - player_pos.x) * 38.7879);
+		int new_draw_pos_y = (int)(360 + (round_y - player_pos.y) * 37.8947);
+		int width = (int)(38.7879);
+		int height = (int)(37.8947);
+
+		SDL_Rect rect;
+		rect.x = new_draw_pos_x;
+		rect.y = new_draw_pos_y;
+		rect.w = width;
+		rect.h = height;
+
+		SDL_RenderFillRect(renderer, &rect);
+	}
+}
+
 Particle::Particle(int id, int x, int y) {
 	m_id = id;
 	position.x = x;
