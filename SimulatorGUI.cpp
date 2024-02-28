@@ -50,12 +50,6 @@ void SimulatorGUI::Render()
 	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
 }
 
-void SimulatorGUI::Shutdown()
-{
-	ImGui_ImplSDL2_Shutdown();
-	ImGui::DestroyContext();
-}
-
 void SimulatorGUI::MainMenuGUI()
 {
 	// Render GUI

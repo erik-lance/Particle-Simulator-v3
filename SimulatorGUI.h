@@ -18,7 +18,6 @@ public:
 	void NewFrame();
 	virtual void Update();
 	void Render();
-	void Shutdown();
 
 	// GUI Functions
 	void MainMenuGUI();
