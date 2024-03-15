@@ -19,7 +19,7 @@ SimulatorGUI::SimulatorGUI(SDL_Window* window, SDL_Renderer* renderer, ObjectMan
 
 SimulatorGUI::~SimulatorGUI()
 {
-	Shutdown();
+	
 }
 
 void SimulatorGUI::NewFrame()
