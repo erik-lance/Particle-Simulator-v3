@@ -49,9 +49,10 @@ void Player::move(int dir, double deltaTime)
 			break;
 	}
 
-	// Round
+	// Round the position
 	position.x = round(position.x);
 	position.y = round(position.y);
+
 
 	std::cout << "Player position: (" << position.x << ", " << position.y << ")" << std::endl;
 }
@@ -141,14 +142,15 @@ void Player::draw(SDL_Renderer* renderer) const
 	// off of player position, depending how close player is to the edge
 	// Color: 42, 74, 115
 	SDL_SetRenderDrawColor(renderer, 42, 74, 115, 255);
-	Position rounded_pos = { (int)position.x, (int)position.y };
+	Position rounded_pos = { (int)position.x, (int)position.y }; // Consider position is divisible by 4
+
 	if (rounded_pos.x < 16) {
 		// Draw left wall, width changes based on position
 		SDL_Rect leftWall = { 0, 0, 39*(16 - rounded_pos.x), 720 };
 		SDL_RenderFillRect(renderer, &leftWall);
 	} else if (rounded_pos.x > 1264) {
 		// Draw right wall, width changes based on position
-		SDL_Rect rightWall = { 1280- 39 * (rounded_pos.x - 1264), 0, 1280, 720 };
+		SDL_Rect rightWall = { 1280 - (39 * (rounded_pos.x - 1265)), 0, 1280, 720 };
 		SDL_RenderFillRect(renderer, &rightWall);
 	}
 	if (rounded_pos.y < 9) {
@@ -158,7 +160,7 @@ void Player::draw(SDL_Renderer* renderer) const
 	}
 	else if (rounded_pos.y > 711) {
 		// Draw bottom wall, height changes based on position
-		SDL_Rect bottomWall = { 0, 720 - 38 * (rounded_pos.y - 711), 1280, 720 };
+		SDL_Rect bottomWall = { 0, 720 - 38 * (rounded_pos.y - 712), 1280, 720 };
 		SDL_RenderFillRect(renderer, &bottomWall);
 	}
 }
