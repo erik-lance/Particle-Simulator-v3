@@ -120,6 +120,13 @@ bool Player::loadSpecifiedSprite(SDL_Renderer* renderer, const char* path)
 	}
 }
 
+/**
+ * Draws the player sprite to the screen. Follows the
+ * instruction of 33x19 where sprite must be center. Also
+ * draws the walls if the player is close to the edge.
+ * Note: The sprite will get squished because it is no longer 16:9
+ * @param renderer The renderer to draw to
+ */
 void Player::draw(SDL_Renderer* renderer) const
 {
 	// Player must be drawn at the center of the screen
