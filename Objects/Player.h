@@ -17,6 +17,7 @@ public:
 	bool loadSprite(SDL_Renderer* renderer);
 	bool loadSpecifiedSprite(SDL_Renderer* renderer, const char* path);
 	void draw(SDL_Renderer* renderer) const;
+	void place(Position pos) { position = pos; }
 private:
 	Position position;
 	SDL_Texture* sprite = NULL;
