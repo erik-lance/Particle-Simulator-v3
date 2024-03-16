@@ -13,6 +13,7 @@ public class Window {
     private long glfwWindow;
 
     private static Window window = null;
+    private GUI gui;
 
     private Window() {
         this.width = Utils.windowWidth;
@@ -69,6 +70,8 @@ public class Window {
         // This line is critical for LWJGL's interoperation with GLFW's
         // OpenGL context, or any context that is managed externally.
         GL.createCapabilities();
+
+        gui = new GUI(glfwWindow);
     }
 
     /**
@@ -80,7 +83,7 @@ public class Window {
         // the window or has pressed the ESCAPE key.
         while (!GLFW.glfwWindowShouldClose(glfwWindow)) {
             // Set clear color
-            glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+            glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
             GLFW.glfwSwapBuffers(glfwWindow);
@@ -88,6 +91,11 @@ public class Window {
             // Poll for window events. The key callback above will only be
             // invoked during this call.
             GLFW.glfwPollEvents();
+
+            // Update ImGui
+            gui.newFrame();
+            gui.update();
+            gui.render();
         }
     }
 

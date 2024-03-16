@@ -2,6 +2,7 @@ package com.particlesimulator;
 
 import imgui.*;
 import imgui.flag.ImGuiWindowFlags;
+import imgui.glfw.ImGuiImplGlfw;
 import imgui.type.ImBoolean;
 import imgui.type.ImInt;
 
@@ -23,19 +24,30 @@ public class GUI {
     private ImInt posY = new ImInt(0);
     private ImBoolean spawned = new ImBoolean(false);
 
-    public GUI() {
-        init();
+    // Mounts glfw window to imgui
+    public GUI(long glfwWindow) {
+        init(glfwWindow);
     }
 
-    private void init() {
+    private void init(long glfwWindow) {
         ImGui.createContext();
         ImGuiIO io = ImGui.getIO();
+        io.setDisplaySize(Utils.windowWidth, Utils.windowHeight);
+        io.setIniFilename(null); // Disable .ini file
+    
+        // Fonts
+        io.getFonts().addFontDefault();
+        io.getFonts().build();
+
+        // Mount glfw window to imgui
+        ImGuiImplGlfw imGLFW = new ImGuiImplGlfw();
+        imGLFW.init(glfwWindow, false);
         
         // Set dark mode
         ImGui.styleColorsDark();
-
-        ImGui.newFrame();
     }
+
+    public void newFrame() { ImGui.newFrame(); }
 
     public void update() {
         menuWindow();
