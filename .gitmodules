@@ -1,3 +1,6 @@
 [submodule "Server-Developer/vcpkg"]
 	path = Server-Developer/vcpkg
 	url = https://github.com/microsoft/vcpkg.git
+[submodule "Client-Explorer/lwjgl3"]
+	path = Client-Explorer/lwjgl3
+	url = https://github.com/LWJGL/lwjgl3.git
