@@ -12,6 +12,12 @@ public class GUI {
     private static final int menuWindowPosY = Utils.windowHeight - menuWindowHeight;
     private static final int menuWindowFlags = ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoCollapse;
 
+    private static final int playerWindowWidth = 200;
+    private static final int playerWindowHeight = 100;
+    private static final int playerWindowPosX = (Utils.windowWidth/2) - (playerWindowWidth/2);
+    private static final int playerWindowPosY = (Utils.windowHeight/2) - (playerWindowHeight/2);
+    private static final int playerWindowFlags = ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoCollapse;
+
     private ImInt fps = new ImInt(60);
     private ImInt posX = new ImInt(0);
     private ImInt posY = new ImInt(0);
@@ -34,7 +40,7 @@ public class GUI {
     public void update() {
         menuWindow();
 
-        if (!spawned.get()) { spawnSpriteWindow(); } 
+        if (!spawned.get()) { spawnPlayerWindow(); } 
         else { }
     }
 
@@ -50,10 +56,12 @@ public class GUI {
         ImGui.end();
     }
 
-    public void spawnSpriteWindow() {
-        ImGui.begin("Sprite");
-        ImGui.text("Sprite Window");
-        
+    public void spawnPlayerWindow() {
+        ImGui.begin("Player Spawn", spawned, playerWindowFlags);
+        ImGui.setWindowPos(playerWindowPosX, playerWindowPosY);
+        ImGui.setWindowSize(playerWindowWidth, playerWindowHeight);
+
+        ImGui.text("Spawn Coordinates");
         ImGui.inputInt("X", posX);
         ImGui.inputInt("Y", posY);
         clampWindowPos();
