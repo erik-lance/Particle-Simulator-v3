@@ -1,10 +1,17 @@
 package com.particlesimulator;
 
 import imgui.*;
+import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImBoolean;
 import imgui.type.ImInt;
 
 public class GUI {
+    private static final int menuWindowWidth = 200;
+    private static final int menuWindowHeight = 100;
+    private static final int menuWindowPosX = 0;
+    private static final int menuWindowPosY = Utils.windowHeight - menuWindowHeight;
+    private static final int menuWindowFlags = ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoCollapse;
+
     private ImInt fps = new ImInt(60);
     private ImInt posX = new ImInt(0);
     private ImInt posY = new ImInt(0);
@@ -25,11 +32,22 @@ public class GUI {
     }
 
     public void update() {
-        if (!spawned.get()) {
-            spawnSpriteWindow();
-        } else {
+        menuWindow();
 
-        }
+        if (!spawned.get()) { spawnSpriteWindow(); } 
+        else { }
+    }
+
+    public void menuWindow() {
+        ImGui.begin("Menu", new ImBoolean(true), menuWindowFlags);
+        ImGui.setWindowPos(menuWindowPosX, menuWindowPosY);
+        ImGui.setWindowSize(menuWindowWidth, menuWindowHeight);
+        
+        ImGui.text("Particle Simulator Client");
+        ImGui.text("FPS: " + fps.get());
+        ImGui.text("Total time: " + ImGui.getTime());
+
+        ImGui.end();
     }
 
     public void spawnSpriteWindow() {
