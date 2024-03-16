@@ -4,7 +4,10 @@ public class Utils {
     private Utils() {
         // Prevent instantiation
     }
-    
+
+    public static int windowWidth = 1280;
+    public static int windowHeight = 720;
+
     // Records
     public record Position(double x, double y) { 
         public boolean equals(Object o) {
