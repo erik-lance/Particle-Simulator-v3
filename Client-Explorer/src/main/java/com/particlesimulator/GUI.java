@@ -62,9 +62,6 @@ public class GUI {
     }
 
     public void update() {
-        ImGui.begin("Test");
-        ImGui.text("Hello, world!");
-        ImGui.end();
         menuWindow();
 
         if (!spawned.get()) { spawnPlayerWindow(); } 
