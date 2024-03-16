@@ -5,6 +5,7 @@ import imgui.flag.ImGuiWindowFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import imgui.type.ImBoolean;
+import imgui.type.ImFloat;
 import imgui.type.ImInt;
 
 public class GUI {
@@ -20,7 +21,7 @@ public class GUI {
     private static final int playerWindowPosY = (Utils.windowHeight/2) - (playerWindowHeight/2);
     private static final int playerWindowFlags = ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoCollapse;
 
-    private ImInt fps = new ImInt(60);
+    private float fps =  0.0f;
     private ImInt posX = new ImInt(0);
     private ImInt posY = new ImInt(0);
     private ImBoolean spawned = new ImBoolean(false);
@@ -74,7 +75,9 @@ public class GUI {
         ImGui.setWindowSize(menuWindowWidth, menuWindowHeight);
         
         ImGui.text("Particle Simulator Client");
-        ImGui.text("FPS: " + fps.get());
+        // Update FPS and round to 2 decimal places
+        fps = (float) Math.round(ImGui.getIO().getFramerate() * 100.0) / 100.0f;
+        ImGui.text("FPS: " + fps);
         ImGui.text("Total time: " + ImGui.getTime());
 
         ImGui.end();
@@ -117,4 +120,6 @@ public class GUI {
         if (y < 0) { posY.set(0); }
         else if (y > Utils.windowHeight) { posY.set(Utils.windowHeight); }
     }
+
+    public float getFPS() { return fps; }
 }
