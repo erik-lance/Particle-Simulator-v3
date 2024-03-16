@@ -2,6 +2,7 @@ package com.particlesimulator;
 
 import imgui.*;
 import imgui.flag.ImGuiWindowFlags;
+import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import imgui.type.ImBoolean;
 import imgui.type.ImInt;
@@ -24,6 +25,10 @@ public class GUI {
     private ImInt posY = new ImInt(0);
     private ImBoolean spawned = new ImBoolean(false);
 
+    // Implementations
+    private ImGuiImplGlfw imGLFW;
+    private ImGuiImplGl3 imGL3;
+
     // Mounts glfw window to imgui
     public GUI(long glfwWindow) {
         init(glfwWindow);
@@ -39,17 +44,27 @@ public class GUI {
         io.getFonts().addFontDefault();
         io.getFonts().build();
 
-        // Mount glfw window to imgui
-        ImGuiImplGlfw imGLFW = new ImGuiImplGlfw();
+        // Setup platform/renderer bindings
+        imGLFW = new ImGuiImplGlfw();
         imGLFW.init(glfwWindow, false);
+
+        imGL3 = new ImGuiImplGl3();
+        imGL3.init("#version 330");
         
         // Set dark mode
         ImGui.styleColorsDark();
     }
 
-    public void newFrame() { ImGui.newFrame(); }
+    public void newFrame() { 
+        //  GLFW Frame
+        imGLFW.newFrame();
+        ImGui.newFrame();
+    }
 
     public void update() {
+        ImGui.begin("Test");
+        ImGui.text("Hello, world!");
+        ImGui.end();
         menuWindow();
 
         if (!spawned.get()) { spawnPlayerWindow(); } 
@@ -85,7 +100,10 @@ public class GUI {
         ImGui.end();
     }
 
-    public void render() { ImGui.render(); }
+    public void render() { 
+        ImGui.render(); 
+        imGL3.renderDrawData(ImGui.getDrawData());
+    }
     public void shutdown() { ImGui.destroyContext(); }
 
     /**

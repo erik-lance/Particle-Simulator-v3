@@ -82,20 +82,20 @@ public class Window {
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
         while (!GLFW.glfwWindowShouldClose(glfwWindow)) {
-            // Set clear color
-            glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            GLFW.glfwSwapBuffers(glfwWindow);
-
             // Poll for window events. The key callback above will only be
             // invoked during this call.
             GLFW.glfwPollEvents();
+
+            // Set clear color
+            glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
 
             // Update ImGui
             gui.newFrame();
             gui.update();
             gui.render();
+
+            GLFW.glfwSwapBuffers(glfwWindow);
         }
     }
 
