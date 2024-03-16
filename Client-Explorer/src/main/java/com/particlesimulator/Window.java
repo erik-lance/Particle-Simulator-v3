@@ -15,7 +15,7 @@ public class Window {
     private static Window window = null;
 
     private Window() {
-        this.width = 1289;
+        this.width = 1280;
         this.height = 720;
         this.title = "Particle Simulator - Client";
     }
