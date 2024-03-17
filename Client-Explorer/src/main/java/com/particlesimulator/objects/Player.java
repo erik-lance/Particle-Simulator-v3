@@ -1,37 +1,40 @@
 package com.particlesimulator.objects;
 
 import com.particlesimulator.Utils.Position;
-import org.lwjgl.glfw.*;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.glfw.GLFW.*;
 
-public class Player {
-    private Position position = new Position(0, 0);
-    private int textureId = -1;
+public class Player extends Entity {
     private int playerId = 0;
 
-
-    public Player() {
+    public Player(int playerId, boolean isUser) {
+        super(new Position(0, 0), isUser);
+        this.playerId = playerId;
+    }
+    
+    public Player(int playerId) {
+        super(new Position(0, 0));
+        this.playerId = playerId;
     }
 
     /**
-     * Sets the texture id of the player based
-     * on openGL's texture handling
+     * Get's player input and updates the player's position
      */
-    public void setTexture(int textureId) {
-        this.textureId = textureId;
-    }
-    /**
-     * Draws the player at the center of the screen
-     */
-    private void drawCenter() {
-        // Uses openGL to draw the player
-        glColor3f(1.0f, 1.0f, 1.0f); // White color
+    public void input(long window, double deltaTime) {
+        Position direction = new Position(0, 0);
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+            direction = direction.add(new Position(0, 1));
+        }
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+            direction = direction.add(new Position(0, -1));
+        }
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+            direction = direction.add(new Position(-1, 0));
+        }
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+            direction = direction.add(new Position(1, 0));
+        }
 
-        // Load the texture
-        // Bind the texture
-        // Draw the texture
+        move(direction,deltaTime);
     }
-
-    public void setPosition(Position position) { this.position = position; }
 }
