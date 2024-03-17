@@ -35,4 +35,15 @@ public class ObjectManager {
 
     public void setTextureID(int index, int id) { textureIDs[index] = id; }
     public int getTextureID(int index) { return textureIDs[index]; }
+
+    /**
+     * Executes necessary object updates and rendering.
+     */
+    public void mainLoop(long window, double deltaTime) {
+        // Player
+        if (player != null) player.input(window, deltaTime);
+
+        // Particles
+        // TODO: Update particles
+    }
 }
