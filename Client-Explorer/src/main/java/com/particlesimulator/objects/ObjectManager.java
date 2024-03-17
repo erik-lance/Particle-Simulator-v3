@@ -7,6 +7,8 @@ import com.particlesimulator.Utils.Position;
  */
 public class ObjectManager {
     private int[] textureIDs = new int[4];
+    private Player player;
+    private Player[] npcs = new Player[3];
 
     public ObjectManager() {
     }
@@ -17,9 +19,18 @@ public class ObjectManager {
      * @return The player object
      */
     public Player spawnPlayer(Position position) {
-        Player player = new Player();
-        player.setPosition(position);
+        player = new Player(0, position, true);
         return player;
+    }
+
+    /***
+     * Spawns a npc at the given position.
+     * @param position The position to spawn the npc at
+     */
+    public void addNPC(Position position) {
+        int npcNum = npcs.length;
+        Player player = new Player(npcNum, position);
+        npcs[npcNum] = player;
     }
 
     public void setTextureID(int index, int id) { textureIDs[index] = id; }
