@@ -27,6 +27,9 @@ public class Utils {
         public Position add(Position pos) {
             return new Position(x + pos.x, y + pos.y);
         }
+
+        public int getX() { return (int)x; }
+        public int getY() { return (int)y; }
     }
 
     /**
