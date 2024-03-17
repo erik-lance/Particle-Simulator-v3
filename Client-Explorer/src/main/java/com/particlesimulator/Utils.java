@@ -1,15 +1,11 @@
 package com.particlesimulator;
 
-import static org.lwjgl.opengl.ARBTextureRectangle.GL_TEXTURE_RECTANGLE_ARB;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
-
-import org.lwjgl.BufferUtils;
+import org.lwjgl.stb.STBImage;
 
 public class Utils {
     private Utils() {
@@ -35,42 +31,51 @@ public class Utils {
 
     /**
      * Load a texture from a file
-     * @param path The path to the file
+     * @param filename The path to the file
      * @return The texture ID
      */
-    public static int glLoadTexture(String path) {
-        int texture = glGenTextures();
-        glBindTexture(GL_TEXTURE_RECTANGLE_ARB, texture);
+    public static int glLoadTexture(String filename) {
+        int[] width = new int[1];
+        int[] height = new int[1];
+        int[] channels = new int[1];
 
-        // Get the texture from the file
-        InputStream in = null;
-        try {
-            in = new FileInputStream(path);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        ByteBuffer imageBuffer;
+        
+        String filepath = Utils.class.getResource("/sprites/"+filename).getFile();
+        System.out.println(filepath);
+
+        // Remove the leading slash
+        if (filepath.startsWith("/")) {
+            filepath = filepath.substring(1);
         }
 
-        int width = 39;
-        int height = 38;
-
-        // Load the texture data
-        ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * 4);
-        byte[] data = new byte[width * height * 4];
         try {
-            in.read(data);
+            // Load image data using STBImage
+            
+            imageBuffer = STBImage.stbi_load(filepath, width, height, channels, 4);
+            if (imageBuffer == null) {
+                throw new IOException("Failed to load image: " + filename);
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            return -1;
         }
-        buffer.put(data);
-        buffer.flip();
 
-        // Set the parameters
-        glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        
-        // Upload the texture data
-        glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
-        return texture;
+        int textureId = glGenTextures();
+        glBindTexture(GL_TEXTURE_2D, textureId);
+
+        // Set texture parameters
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        // Upload texture data
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width[0], height[0], 0, GL_RGBA, GL_UNSIGNED_BYTE, imageBuffer);
+
+        // Free image data
+        STBImage.stbi_image_free(imageBuffer);
+
+        return textureId;
     }
-
 }
