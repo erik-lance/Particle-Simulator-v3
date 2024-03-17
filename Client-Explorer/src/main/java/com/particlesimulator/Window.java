@@ -4,6 +4,8 @@ import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
+import com.particlesimulator.objects.ObjectManager;
+
 import static org.lwjgl.opengl.GL11.*;
 
 
@@ -15,10 +17,14 @@ public class Window {
     private static Window window = null;
     private GUI gui;
 
+    private ObjectManager objectManager;
+
     private Window() {
         this.width = Utils.windowWidth;
         this.height = Utils.windowHeight;
         this.title = "Particle Simulator - Client";
+
+        objectManager = new ObjectManager();
     }
 
     public static Window get() {
@@ -71,6 +77,9 @@ public class Window {
         // OpenGL context, or any context that is managed externally.
         GL.createCapabilities();
 
+        // Prepares the window for 2D rendering
+        glEnable2D();
+
         gui = new GUI(glfwWindow);
     }
 
@@ -81,22 +90,70 @@ public class Window {
     public void loop() {
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
-        while (!GLFW.glfwWindowShouldClose(glfwWindow)) {
-            // Poll for window events. The key callback above will only be
-            // invoked during this call.
-            GLFW.glfwPollEvents();
 
-            // Set clear color
-            glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
+        double deltaTime = 0.0;
+
+        while (!GLFW.glfwWindowShouldClose(glfwWindow)) {
+            double time = GLFW.glfwGetTime();
+            deltaTime = time - deltaTime;
+            deltaTime = deltaTime > 0.1 ? 0.1 : deltaTime;
+
+            // Clear the screen
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            // Update the object manager
+            objectManager.mainLoop(glfwWindow, deltaTime);
 
             // Update ImGui
             gui.newFrame();
             gui.update();
             gui.render();
 
+            // Swap buffers and poll events
             GLFW.glfwSwapBuffers(glfwWindow);
+            GLFW.glfwPollEvents();
         }
+    }
+
+    /**
+     * Enable 2D primitive rendering by setting up appropriate
+     * orthographic projection and matrices 
+     */
+    private void glEnable2D() {
+        // Set viewport
+        glViewport(0, 0, width, height);
+
+        // Save a copy of the projection matrix so that we can restore it
+        glMatrixMode(GL_PROJECTION);
+        glPushMatrix();
+        glLoadIdentity();
+
+        // Set up orthographic projection
+        glOrtho(0, width, height, 0, -1, 1);
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+        glLoadIdentity();
+
+        // Disable depth testing
+        glPushAttrib( GL_DEPTH_BUFFER_BIT | GL_LIGHTING_BIT );
+        glDisable(GL_DEPTH_TEST);
+        glDisable(GL_LIGHTING);
+
+        // Disable dithering
+        glDisable(GL_DITHER);
+
+        // Disable blending
+        glDisable(GL_BLEND);
+
+        // Prepare textures
+        int[] sprites = new int[4];
+        sprites[0] = Utils.glLoadTexture("1.png");
+        sprites[1] = Utils.glLoadTexture("2.png");
+        sprites[2] = Utils.glLoadTexture("3.png");
+        sprites[3] = Utils.glLoadTexture("4.png");
+        
+        // Add textures to the object manager
+        for (int i = 0; i < 4; i++) { objectManager.setTextureID(i, sprites[i]); }
     }
 
     /**
