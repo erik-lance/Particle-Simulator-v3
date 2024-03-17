@@ -27,6 +27,10 @@ public class Utils {
             Position position = (Position) o;
             return Double.compare(position.x, x) == 0 && Double.compare(position.y, y) == 0;
         }
+
+        public Position add(Position pos) {
+            return new Position(x + pos.x, y + pos.y);
+        }
     }
 
     /**
