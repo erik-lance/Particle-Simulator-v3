@@ -7,13 +7,13 @@ import static org.lwjgl.glfw.GLFW.*;
 public class Player extends Entity {
     private int playerId = 0;
 
-    public Player(int playerId, boolean isUser) {
-        super(new Position(0, 0), isUser);
+    public Player(int playerId, Position pos, boolean isUser) {
+        super(pos, isUser);
         this.playerId = playerId;
     }
     
-    public Player(int playerId) {
-        super(new Position(0, 0));
+    public Player(int playerId, Position pos) {
+        super(pos);
         this.playerId = playerId;
     }
 
