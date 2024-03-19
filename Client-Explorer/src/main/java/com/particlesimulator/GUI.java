@@ -4,11 +4,14 @@ import com.particlesimulator.Utils.Position;
 import com.particlesimulator.objects.ObjectManager;
 
 import imgui.*;
+import imgui.flag.ImGuiConfigFlags;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import imgui.type.ImBoolean;
 import imgui.type.ImInt;
+
+import org.lwjgl.glfw.GLFWKeyCallback;
 
 public class GUI {
     private static final int menuWindowWidth = 200;
@@ -32,6 +35,7 @@ public class GUI {
     // Implementations
     private ImGuiImplGlfw imGLFW;
     private ImGuiImplGl3 imGL3;
+    private GLFWKeyCallback keyCallback;
 
     // Objects
     private ObjectManager objectManager;
@@ -47,18 +51,21 @@ public class GUI {
         ImGuiIO io = ImGui.getIO();
         io.setDisplaySize(Utils.windowWidth, Utils.windowHeight);
         io.setIniFilename(null); // Disable .ini file
-    
+
+        // Set key mappings
+        io.setConfigFlags(ImGuiConfigFlags.NavEnableKeyboard); // Enable keyboard controls
+
         // Fonts
         io.getFonts().addFontDefault();
         io.getFonts().build();
 
         // Setup platform/renderer bindings
         imGLFW = new ImGuiImplGlfw();
-        imGLFW.init(glfwWindow, false);
+        imGLFW.init(glfwWindow, true);
 
         imGL3 = new ImGuiImplGl3();
         imGL3.init("#version 330");
-        
+
         // Set dark mode
         ImGui.styleColorsDark();
     }
