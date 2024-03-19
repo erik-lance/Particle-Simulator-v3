@@ -2,15 +2,22 @@ package com.particlesimulator;
 
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWKeyCallback;
+import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
 import com.particlesimulator.objects.ObjectManager;
-import com.particlesimulator.render.Texture;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
+import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
 
 public class Window {
+    private GLFWKeyCallback keyCallback;
+
     private int width, height;
     private String title;
     private long glfwWindow;
@@ -58,7 +65,7 @@ public class Window {
         // Configure GLFW
         GLFW.glfwDefaultWindowHints(); // optional, the current window hints are already the default
         GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE); // the window will stay hidden after creation
-        GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE); // the window will be resizable
+        GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_FALSE); // the window will NOT be resizable
 
         // Create the window
         glfwWindow = GLFW.glfwCreateWindow(width, height, title, 0, 0);
@@ -66,8 +73,23 @@ public class Window {
             throw new IllegalStateException("Failed to create window");
         }
 
+        // Set the key callback
+        glfwSetKeyCallback(glfwWindow, keyCallback = new GLFWKeyCallback() {
+            @Override
+            public void invoke(long window, int key, int scancode, int action, int mods) {
+                if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
+                    GLFW.glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
+                }
+            }  
+        });
+
+        // Center the window
+        GLFWVidMode vidMode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
+        glfwSetWindowPos(glfwWindow, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2);
+
         // Make the OpenGL context current
         GLFW.glfwMakeContextCurrent(glfwWindow);
+
         // Enable v-sync
         GLFW.glfwSwapInterval(1);
 
