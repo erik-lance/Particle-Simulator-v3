@@ -14,11 +14,12 @@ import imgui.type.ImInt;
 import org.lwjgl.glfw.GLFWKeyCallback;
 
 public class GUI {
-    private static final int menuWindowWidth = 200;
+    private static int menuWindowWidth = 200;
     private static final int menuWindowHeight = 100;
     private static final int menuWindowPosX = 0;
     private static final int menuWindowPosY = Utils.windowHeight - menuWindowHeight;
-    private static final int menuWindowFlags = ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoCollapse;
+    private static final int menuWindowPosYClosed = Utils.windowHeight;
+    private static final int menuWindowFlags = ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove;
 
     private static final int playerWindowWidth = 200;
     private static final int playerWindowHeight = 200;
@@ -85,7 +86,11 @@ public class GUI {
 
     public void menuWindow() {
         ImGui.begin("Menu", new ImBoolean(true), menuWindowFlags);
-        ImGui.setWindowPos(menuWindowPosX, menuWindowPosY);
+        
+        // Set window position based on whether the window is open or closed
+        if (ImGui.isWindowCollapsed()) { ImGui.setWindowPos(menuWindowPosX, menuWindowPosYClosed); }
+        else { ImGui.setWindowPos(menuWindowPosX, menuWindowPosY); }
+
         ImGui.setWindowSize(menuWindowWidth, menuWindowHeight);
         
         ImGui.text("Particle Simulator Client");
