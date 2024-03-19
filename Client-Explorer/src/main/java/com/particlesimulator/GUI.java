@@ -101,8 +101,18 @@ public class GUI {
 
         if (Utils.DEBUG_MODE) {
             ImGui.text("DEBUG Mode");
+            ImGui.sameLine();
+            if (ImGui.button("Particle")) {
+                Position particlePos = new Position(Utils.windowWidth/2, Utils.windowHeight/2);
+                objectManager.addParticle(particlePos, 30.0, 10.0);
+            }
         } else {
             ImGui.text("RELEASE");
+            ImGui.sameLine();
+            if (ImGui.button("Particle")) {
+                Position particlePos = new Position(Utils.windowWidth/2, Utils.windowHeight/2);
+                objectManager.addParticle(particlePos, 0.0, 1.0);
+            }
         }
 
         ImGui.end();

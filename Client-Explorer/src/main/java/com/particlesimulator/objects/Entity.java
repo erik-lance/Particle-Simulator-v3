@@ -37,11 +37,11 @@ public abstract class Entity {
         double newX = position.getX() + (direction.getX() * deltaTime * speed);
         double newY = position.getY() + (direction.getY() * deltaTime * speed);
 
-        if (newX < 0) { newX = 0; }
-        else if (newX > windowWidth - entityWidth) { newX = windowWidth - entityWidth; }
+        if (newX < (entityWidth/2)) { newX = (entityWidth/2); }
+        else if (newX > windowWidth - (entityWidth/2)) { newX = windowWidth - (entityWidth/2); }
 
-        if (newY < 0) { newY = 0; } 
-        else if (newY > windowHeight - entityHeight) { newY = windowHeight - entityHeight; }
+        if (newY < (entityHeight/2)) { newY = (entityHeight/2); } 
+        else if (newY > windowHeight - (entityHeight/2)) { newY = windowHeight - (entityHeight/2); }
 
         position = new Position(newX, newY);
 
@@ -89,17 +89,17 @@ public abstract class Entity {
 
             glBegin(GL_QUADS);
 
-            glTexCoord2f(0, 0);
-            glVertex2f(x, y);
+            glTexCoord2f(0, 0); // Top-left
+            glVertex2f(x - width / 2, y - height / 2);
 
             glTexCoord2f(1, 0);
-            glVertex2f(x + width, y);
+            glVertex2f(x + width / 2, y - height / 2);
 
             glTexCoord2f(1, 1);
-            glVertex2f(x + width, y + height);
+            glVertex2f(x + width / 2, y + height / 2);
 
             glTexCoord2f(0, 1);
-            glVertex2f(x, y + height);
+            glVertex2f(x - width / 2, y + height / 2);
 
             glEnd();
         } else if (!isUser) {
@@ -107,7 +107,28 @@ public abstract class Entity {
              *  if within the 33 x 19 grid requirement.
             */
         } else if (isUser) {
+            // Draw the user at center of screen
+            float width = texture.getWidth();
+            float height = texture.getHeight();
+
+            float x = (float) windowWidth / 2 - width / 2;
+            float y = (float) windowHeight / 2 - height / 2;
+
+            glBegin(GL_QUADS);
             
+            glTexCoord2f(0, 0);
+            glVertex2f(x - width / 2, y - height / 2);
+
+            glTexCoord2f(1, 0);
+            glVertex2f(x + width / 2, y - height / 2);
+
+            glTexCoord2f(1, 1);
+            glVertex2f(x + width / 2, y + height / 2);
+
+            glTexCoord2f(0, 1);
+            glVertex2f(x - width / 2, y + height / 2);
+
+            glEnd();
         }
 
         glEnd();

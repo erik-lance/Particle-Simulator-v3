@@ -89,9 +89,13 @@ public class Particle {
             int roundX = (int) Math.round(curPosition.getX());
             int roundY = (int) Math.round(curPosition.getY());
 
-            // Translate relative to player
-            double newDrawPosX = (windowWidth / 2) + (roundX - curPosition.getX()) * 38.7879;
-            double newDrawPosY = (windowHeight / 2) + (roundY - curPosition.getY()) * 37.8947;
+            // Center of screen
+            double centerX = windowWidth / 2;
+            double centerY = windowHeight / 2;
+
+            // Translate relative to player (each screen pixel is 39x38)
+            int newDrawPosX = (int) (centerX + (roundX - playerPosition.getX()) * 39);
+            int newDrawPosY = (int) (centerY + (roundY - playerPosition.getY()) * 38);
 
             int height = 39;
             int width = 38;
