@@ -18,7 +18,7 @@ public abstract class Entity {
     private Position position;
     private Texture texture;
     private boolean isUser;
-    private float speed = 5.0f;
+    private float speed = 10.0f;
     
     public Entity(Position pos, boolean isUser) {
         this.position = pos;
@@ -31,8 +31,8 @@ public abstract class Entity {
     }
 
     public void move(Position direction, double deltaTime) { 
-        double newX = position.getX() + direction.getX() * deltaTime * speed;
-        double newY = position.getY() + direction.getY() * deltaTime * speed;
+        double newX = position.getX() + (direction.getX() * deltaTime * speed);
+        double newY = position.getY() + (direction.getY() * deltaTime * speed);
 
         if (newX < 0) { newX = 0; }
         else if (newX > windowWidth) { newX = windowWidth; }
@@ -71,8 +71,8 @@ public abstract class Entity {
             float width = texture.getWidth();
             float height = texture.getHeight();
 
-            float x = (float) position.getX() - (width / 2);
-            float y = (float) position.getY() - (height / 2);
+            float x = (float) position.getX();
+            float y = (float) position.getY();
 
             glBegin(GL_QUADS);
 
