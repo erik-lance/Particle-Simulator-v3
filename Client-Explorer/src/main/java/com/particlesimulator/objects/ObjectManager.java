@@ -1,12 +1,13 @@
 package com.particlesimulator.objects;
 
 import com.particlesimulator.Utils.Position;
+import com.particlesimulator.render.Texture;
 
 /**
  * Handles all objects in the simulation.
  */
 public class ObjectManager {
-    private int[] textureIDs = new int[4];
+    private Texture[] textures = new Texture[4];
     private Player player;
     private Player[] npcs = new Player[3];
 
@@ -20,6 +21,10 @@ public class ObjectManager {
      */
     public Player spawnPlayer(Position position) {
         player = new Player(0, position, true);
+
+        // Set texture
+        player.setTexture(textures[0]);
+
         return player;
     }
 
@@ -32,16 +37,23 @@ public class ObjectManager {
         Player player = new Player(npcNum, position);
         npcs[npcNum] = player;
     }
-
-    public void setTextureID(int index, int id) { textureIDs[index] = id; }
-    public int getTextureID(int index) { return textureIDs[index]; }
+    
+    public void loadTextures() {
+        textures[0] = new Texture("1.png");
+        textures[1] = new Texture("2.png");
+        textures[2] = new Texture("3.png");
+        textures[3] = new Texture("4.png");
+    }
 
     /**
      * Executes necessary object updates and rendering.
      */
     public void mainLoop(long window, double deltaTime) {
         // Player
-        if (player != null) player.input(window, deltaTime);
+        if (player != null) {
+            player.input(window, deltaTime);
+            player.draw();
+        }
 
         // Particles
         // TODO: Update particles

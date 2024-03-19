@@ -5,6 +5,7 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
 import com.particlesimulator.objects.ObjectManager;
+import com.particlesimulator.render.Texture;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -80,7 +81,7 @@ public class Window {
         // Prepares the window for 2D rendering
         glEnable2D();
 
-        gui = new GUI(glfwWindow);
+        gui = new GUI(glfwWindow, objectManager);
     }
 
     /**
@@ -146,14 +147,7 @@ public class Window {
         glDisable(GL_BLEND);
 
         // Prepare textures
-        int[] sprites = new int[4];
-        sprites[0] = Utils.glLoadTexture("1.png");
-        sprites[1] = Utils.glLoadTexture("2.png");
-        sprites[2] = Utils.glLoadTexture("3.png");
-        sprites[3] = Utils.glLoadTexture("4.png");
-        
-        // Add textures to the object manager
-        for (int i = 0; i < 4; i++) { objectManager.setTextureID(i, sprites[i]); }
+        objectManager.loadTextures();
     }
 
     /**
