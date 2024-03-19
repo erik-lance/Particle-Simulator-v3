@@ -72,5 +72,8 @@ public class Particle {
             // Move y by the distance
             newY = oldPosition.getY() + Math.sin(angle) * distance;
         }
+
+        oldPosition = curPosition;
+        curPosition = new Position(newX, newY);
     }
 }
