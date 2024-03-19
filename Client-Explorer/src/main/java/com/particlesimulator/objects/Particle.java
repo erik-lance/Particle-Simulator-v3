@@ -92,15 +92,18 @@ public class Particle {
             // Translate relative to player
             double newDrawPosX = (windowWidth / 2) + (roundX - curPosition.getX()) * 38.7879;
             double newDrawPosY = (windowHeight / 2) + (roundY - curPosition.getY()) * 37.8947;
+
+            int height = 39;
+            int width = 38;
             
             // Draw
             glColor3f(1.0f, 1.0f, 1.0f); // White
             glBegin(GL_QUADS);
-
-            glVertex2d(newDrawPosX - radius, newDrawPosY + radius); // Bottom-left
-            glVertex2d(newDrawPosX + radius, newDrawPosY + radius); // Bottom-right
-            glVertex2d(newDrawPosX + radius, newDrawPosY - radius); // Top-right
-            glVertex2d(newDrawPosX - radius, newDrawPosY - radius); // Top-left
+            
+            glVertex2d(newDrawPosX - (width/2), newDrawPosY + (height/2)); // Bottom-left
+            glVertex2d(newDrawPosX + (width/2), newDrawPosY + (height/2)); // Bottom-right
+            glVertex2d(newDrawPosX + (width/2), newDrawPosY - (height/2)); // Top-right
+            glVertex2d(newDrawPosX - (width/2), newDrawPosY - (height/2)); // Top-left
 
             glEnd();
         }
