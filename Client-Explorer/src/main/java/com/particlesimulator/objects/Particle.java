@@ -86,17 +86,37 @@ public class Particle {
         // If within 33x19 box around the player
         if ((curPosition.getX() >= playerPosition.getX() - 16 && curPosition.getX() <= playerPosition.getX() + 16) 
         && (curPosition.getY() >= playerPosition.getY() - 9 && curPosition.getY() <= playerPosition.getY() + 9)) {
-            // Draw the particle
+            int roundX = (int) Math.round(curPosition.getX());
+            int roundY = (int) Math.round(curPosition.getY());
+
+            // Translate relative to player
+            double newDrawPosX = (windowWidth / 2) + (roundX - curPosition.getX()) * 38.7879;
+            double newDrawPosY = (windowHeight / 2) + (roundY - curPosition.getY()) * 37.8947;
+            
+            // Draw
             glColor3f(1.0f, 1.0f, 1.0f); // White
             glBegin(GL_QUADS);
 
-            glVertex2d(curPosition.getX() - radius, curPosition.getY() + radius); // Bottom-left
-            glVertex2d(curPosition.getX() + radius, curPosition.getY() + radius); // Bottom-right
-            glVertex2d(curPosition.getX() + radius, curPosition.getY() - radius); // Top-right
-            glVertex2d(curPosition.getX() - radius, curPosition.getY() - radius); // Top-left
+            glVertex2d(newDrawPosX - radius, newDrawPosY + radius); // Bottom-left
+            glVertex2d(newDrawPosX + radius, newDrawPosY + radius); // Bottom-right
+            glVertex2d(newDrawPosX + radius, newDrawPosY - radius); // Top-right
+            glVertex2d(newDrawPosX - radius, newDrawPosY - radius); // Top-left
 
             glEnd();
         }
+    }
+
+    public void drawDefault() {
+        // Draw the particle
+        glColor3f(1.0f, 1.0f, 1.0f); // White
+        glBegin(GL_QUADS);
+
+        glVertex2d(curPosition.getX() - radius, curPosition.getY() + radius); // Bottom-left
+        glVertex2d(curPosition.getX() + radius, curPosition.getY() + radius); // Bottom-right
+        glVertex2d(curPosition.getX() + radius, curPosition.getY() - radius); // Top-right
+        glVertex2d(curPosition.getX() - radius, curPosition.getY() - radius); // Top-left
+
+        glEnd();
     }
 
     public Position getPosition() { return curPosition; }
