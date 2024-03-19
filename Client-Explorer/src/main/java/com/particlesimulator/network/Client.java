@@ -87,6 +87,21 @@ public class Client {
         sendLock.unlock();
     }
 
+    /**
+     * Parses the data received from the server
+     * @param data particle data request
+     */
+    public void parseParticleData(String data) {
+        // Requests we receive from server are literally
+        // the same actions the developer took to spawn
+        // particles,  e.g.: batch particle method 1, 2, 3, or add particle
+
+        // Data format to expect (add particle, batch 1, 2, 3 in order)
+        // <p>x,y,angle,veloctiy</p>
+        // <b>1,startX,endX,startY,endY,angle,velocity</b>
+        // <b>2,startAngle,endAngle,startX,startY,velocity</b>
+        // <b>3,startX,startY,angle,startVelocity,endVelocity</b>
+    }
 
     public void receiver() {
         while (true) {
@@ -95,7 +110,11 @@ public class Client {
                 String data = reader.readLine();
                 while (data != null) {
                     // Process data
-                    
+                    if (data.startsWith("<p>") || data.startsWith("<b>")) {
+                        parseParticleData(data);
+                    } else {
+                        System.out.println(data);
+                    }
 
                     data = reader.readLine(); // Read next line
                 }
