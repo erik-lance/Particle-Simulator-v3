@@ -19,6 +19,8 @@ public abstract class Entity {
     private Texture texture;
     private boolean isUser;
     private float speed = 10.0f;
+    private int entityWidth = 39;
+    private int entityHeight = 38;
     
     public Entity(Position pos, boolean isUser) {
         this.position = pos;
@@ -35,12 +37,13 @@ public abstract class Entity {
         double newY = position.getY() + (direction.getY() * deltaTime * speed);
 
         if (newX < 0) { newX = 0; }
-        else if (newX > windowWidth) { newX = windowWidth; }
+        else if (newX > windowWidth - entityWidth) { newX = windowWidth - entityWidth; }
 
         if (newY < 0) { newY = 0; } 
-        else if (newY > windowHeight) { newY = windowHeight; }
+        else if (newY > windowHeight - entityHeight) { newY = windowHeight - entityHeight; }
 
         position = new Position(newX, newY);
+
     }
 
     public Position getPosition() { return this.position; }
@@ -53,10 +56,19 @@ public abstract class Entity {
             throw new IllegalStateException("Texture not set for entity");
         }
 
+        glEnable(GL_TEXTURE_2D);
+
         // Bind the texture
         glBindTexture(GL_TEXTURE_2D, texture.getId());
 
+        // Remove the white background
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
         prepareQuad();
+
+        glDisable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
     }
 
     /**
