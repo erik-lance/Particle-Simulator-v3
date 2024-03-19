@@ -18,11 +18,12 @@ public class GUI {
     private static final int menuWindowFlags = ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoCollapse;
 
     private static final int playerWindowWidth = 200;
-    private static final int playerWindowHeight = 100;
+    private static final int playerWindowHeight = 200;
     private static final int playerWindowPosX = (Utils.windowWidth/2) - (playerWindowWidth/2);
     private static final int playerWindowPosY = (Utils.windowHeight/2) - (playerWindowHeight/2);
     private static final int playerWindowFlags = ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoCollapse;
 
+    // ImGui variables
     private float fps =  0.0f;
     private ImInt posX = new ImInt(0);
     private ImInt posY = new ImInt(0);
@@ -84,7 +85,7 @@ public class GUI {
         // Update FPS and round to 2 decimal places
         fps = (float) Math.round(ImGui.getIO().getFramerate() * 100.0) / 100.0f;
         ImGui.text("FPS: " + fps);
-        ImGui.text("Total time: " + ImGui.getTime());
+        ImGui.text("Total time: " + (float) Math.round(ImGui.getTime() * 100.0) / 100.0f);
 
         ImGui.end();
     }
