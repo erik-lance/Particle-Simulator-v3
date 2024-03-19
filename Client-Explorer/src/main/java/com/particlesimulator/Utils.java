@@ -81,4 +81,13 @@ public class Utils {
 
         return textureId;
     }
+
+    /**
+     * Normalize an angle to be between 0 and 2pi
+     * @param angle
+     * @return
+     */
+    public static double normalizeAngle(double angle) {
+        return angle % (2 * Math.PI);
+    }
 }
