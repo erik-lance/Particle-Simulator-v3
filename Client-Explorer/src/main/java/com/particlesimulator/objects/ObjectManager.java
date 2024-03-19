@@ -11,6 +11,10 @@ public class ObjectManager {
     private Player player;
     private Player[] npcs = new Player[3];
 
+    private int numParticles = 0;
+    private int particlesCapacity = 1024;
+    private Particle[] particles = new Particle[particlesCapacity];
+
     public ObjectManager() {
     }
 
@@ -57,5 +61,31 @@ public class ObjectManager {
 
         // Particles
         // TODO: Update particles
+    }
+
+    /**
+     * Adds a particle to the simulation.
+     * @param position The position to spawn the particle at
+     * @param angle The angle of the particle
+     * @param velocity The velocity of the particle
+     */
+    public void addParticle(Position position, double angle, double velocity) {
+        if (numParticles >= particlesCapacity) {
+            updateParticlesCapacity();
+        }
+
+        particles[numParticles] = new Particle(numParticles, position, angle, velocity);
+        numParticles++;
+    }
+
+    /**
+     * Dynamic array resizing for particles.
+     * (Needed because we're not allowed to use libraries like ArrayList or Vector)
+     */
+    private void updateParticlesCapacity() {
+        particlesCapacity *= 2;
+        Particle[] newParticles = new Particle[particlesCapacity];
+        System.arraycopy(particles, 0, newParticles, 0, numParticles); // Copy old array to new array
+        particles = newParticles;
     }
 }
