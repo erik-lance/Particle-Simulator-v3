@@ -28,8 +28,8 @@ public class Utils {
             return new Position(x + pos.x, y + pos.y);
         }
 
-        public int getX() { return (int)x; }
-        public int getY() { return (int)y; }
+        public double getX() { return x; }
+        public double getY() { return y; }
     }
 
     /**
