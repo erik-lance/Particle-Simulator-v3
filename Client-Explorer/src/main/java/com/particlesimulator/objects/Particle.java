@@ -3,6 +3,7 @@ package com.particlesimulator.objects;
 import static com.particlesimulator.Utils.windowHeight;
 import static com.particlesimulator.Utils.windowWidth;
 import static com.particlesimulator.Utils.normalizeAngle;
+import static org.lwjgl.opengl.GL11.*;
 
 import com.particlesimulator.Utils.Position;
 
@@ -76,4 +77,31 @@ public class Particle {
         oldPosition = curPosition;
         curPosition = new Position(newX, newY);
     }
+
+    /**
+     * Draws based on distance from player.
+     * @param playerPosition
+     */
+    public void drawParticle(Position playerPosition) {
+        // If within 33x19 box around the player
+        if ((curPosition.getX() >= playerPosition.getX() - 16 && curPosition.getX() <= playerPosition.getX() + 16) 
+        && (curPosition.getY() >= playerPosition.getY() - 9 && curPosition.getY() <= playerPosition.getY() + 9)) {
+            // Draw the particle
+            glColor3f(1.0f, 1.0f, 1.0f); // White
+            glBegin(GL_QUADS);
+
+            glVertex2d(curPosition.getX() - radius, curPosition.getY() + radius); // Bottom-left
+            glVertex2d(curPosition.getX() + radius, curPosition.getY() + radius); // Bottom-right
+            glVertex2d(curPosition.getX() + radius, curPosition.getY() - radius); // Top-right
+            glVertex2d(curPosition.getX() - radius, curPosition.getY() - radius); // Top-left
+
+            glEnd();
+        }
+    }
+
+    public Position getPosition() { return curPosition; }
+    public int getId() { return m_id; }
+    public int getRadius() { return radius; }
+    public double getAngle() { return angle; }
+    public double getVelocity() { return velocity; }
 }
