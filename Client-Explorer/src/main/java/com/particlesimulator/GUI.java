@@ -99,6 +99,12 @@ public class GUI {
         ImGui.text("FPS: " + fps);
         ImGui.text("Total time: " + (float) Math.round(ImGui.getTime() * 100.0) / 100.0f);
 
+        if (Utils.DEBUG_MODE) {
+            ImGui.text("DEBUG Mode");
+        } else {
+            ImGui.text("RELEASE");
+        }
+
         ImGui.end();
     }
 

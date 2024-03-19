@@ -1,5 +1,6 @@
 package com.particlesimulator.objects;
 
+import static com.particlesimulator.Utils.DEBUG_MODE;
 import static com.particlesimulator.Utils.windowHeight;
 import static com.particlesimulator.Utils.windowWidth;
 
@@ -79,7 +80,7 @@ public abstract class Entity {
         glBegin(GL_QUADS);
         
         // Draw quad at the center
-        if (isUser) {
+        if (DEBUG_MODE) {
             float width = texture.getWidth();
             float height = texture.getHeight();
 
@@ -101,10 +102,12 @@ public abstract class Entity {
             glVertex2f(x, y + height);
 
             glEnd();
-        } else {
+        } else if (!isUser) {
             /** TODO: Conditional drawing based on player position
              *  if within the 33 x 19 grid requirement.
             */
+        } else if (isUser) {
+            
         }
 
         glEnd();

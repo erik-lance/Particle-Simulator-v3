@@ -14,6 +14,7 @@ public class Utils {
 
     public static int windowWidth = 1280;
     public static int windowHeight = 720;
+    public static boolean DEBUG_MODE = true;
 
     // Records
     public record Position(double x, double y) { 

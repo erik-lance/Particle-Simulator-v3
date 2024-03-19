@@ -1,5 +1,7 @@
 package com.particlesimulator.objects;
 
+import static com.particlesimulator.Utils.DEBUG_MODE;
+
 import com.particlesimulator.Utils.Position;
 import com.particlesimulator.render.Texture;
 
@@ -60,7 +62,11 @@ public class ObjectManager {
         }
 
         // Particles
-        // TODO: Update particles
+        for (int i = 0; i < numParticles; i++) {
+            particles[i].update(deltaTime);
+            if (DEBUG_MODE) { particles[i].drawDefault(); }
+            else { particles[i].drawParticle(player.getPosition()); }
+        }
     }
 
     /**
