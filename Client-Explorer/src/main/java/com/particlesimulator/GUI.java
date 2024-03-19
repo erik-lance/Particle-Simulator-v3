@@ -1,11 +1,13 @@
 package com.particlesimulator;
 
+import com.particlesimulator.Utils.Position;
+import com.particlesimulator.objects.ObjectManager;
+
 import imgui.*;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import imgui.type.ImBoolean;
-import imgui.type.ImFloat;
 import imgui.type.ImInt;
 
 public class GUI {
@@ -30,9 +32,13 @@ public class GUI {
     private ImGuiImplGlfw imGLFW;
     private ImGuiImplGl3 imGL3;
 
+    // Objects
+    private ObjectManager objectManager;
+
     // Mounts glfw window to imgui
-    public GUI(long glfwWindow) {
+    public GUI(long glfwWindow, ObjectManager objectManager) {
         init(glfwWindow);
+        this.objectManager = objectManager;
     }
 
     private void init(long glfwWindow) {
@@ -94,6 +100,8 @@ public class GUI {
         clampWindowPos();
 
         if (ImGui.button("Spawn")) {
+            Position pos = new Position(posX.get(), posY.get());
+            objectManager.spawnPlayer(pos);
             spawned.set(true);
         }
 
