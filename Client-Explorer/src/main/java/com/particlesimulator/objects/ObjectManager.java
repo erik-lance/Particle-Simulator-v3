@@ -85,6 +85,45 @@ public class ObjectManager {
     }
 
     /**
+     * Adds particles to the simulation using batch method one. This places
+     * particles between two points in a uniform distribution.
+     * @param num
+     * @param start
+     * @param end
+     * @param angle
+     * @param velocity
+     */
+    public void batchParticleMethodOne(int num, Position start, Position end, double angle, double velocity) {
+
+    }
+
+    /**
+     * Adds particles to the simulation using batch method two. This places
+     * particles in a uniform distribution between two angles.
+     * @param num
+     * @param startAngle
+     * @param endAngle
+     * @param start
+     * @param velocity
+     */
+    public void batchParticleMethodTwo(int num, double startAngle, double endAngle, Position start, double velocity) {
+
+    }
+
+    /**
+     * Adds particles to the simulation using batch method three. This places
+     * particles in a uniform distribution between two velocities.
+     * @param num
+     * @param start
+     * @param angle
+     * @param startVelocity
+     * @param endVelocity
+     */
+    public void batchParticleMethodThree(int num, Position start, double angle, double startVelocity, double endVelocity) {
+
+    }
+
+    /**
      * Dynamic array resizing for particles.
      * (Needed because we're not allowed to use libraries like ArrayList or Vector)
      */
