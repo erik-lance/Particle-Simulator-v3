@@ -15,7 +15,7 @@ set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/
 project ("Particle Simulator")
 
 # Add source to this project's executable.
-add_executable (CMakeTarget "ParticleSimulator.cpp" "ParticleSimulator.h" "SimulatorGUI.cpp" "SimulatorGUI.h" "Objects/Particle.cpp" "Objects/Particle.h" "Objects/ObjectManager.h" "Objects/ObjectManager.cpp" "Structures.h" "Globals.h"  "Objects/Player.cpp" "Objects/Player.h" "Network/Server.cpp" "Network/Server.h")
+add_executable (CMakeTarget "ParticleSimulator.cpp" "ParticleSimulator.h" "SimulatorGUI.cpp" "SimulatorGUI.h" "Objects/Particle.cpp" "Objects/Particle.h" "Objects/ObjectManager.h" "Objects/ObjectManager.cpp" "Structures.h" "Globals.h"  "Objects/Player.cpp" "Objects/Player.h" "Network/Server.cpp" "Network/Server.h" "Network/MessageParser.h" "Network/MessageParser.cpp")
 
 # Add assets to this project's executable.
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
