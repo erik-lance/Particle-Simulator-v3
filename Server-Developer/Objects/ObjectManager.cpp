@@ -61,33 +61,6 @@ void ObjectManager::distributeParticleToThread(int index)
 	thread_data[thread_index].count++;
 }
 
-/**
- * Adds wall to the wall array. If the array is full, it will double the capacity
- * @param line The line to add to the wall array
- */
-void ObjectManager::addWall(Line line)
-{
-	// If the array is full, double the capacity
-    if (current_max_walls >= wall_capacity)
-    {
-		wall_capacity *= 2;
-		Wall* new_walls = new Wall[wall_capacity];
-        for (int i = 0; i < current_max_walls; i++)
-        {
-			new_walls[i] = walls[i];
-		}
-		delete[] walls;
-		walls = new_walls;
-	}
-
-	// Add the wall to the array
-	walls[current_max_walls-1] = Wall(line);
-    current_max_walls++; // Increment the counter after adding the wall
-
-    // Add to the collision manager
-    collision_manager->addWall(walls[current_max_walls-2]);
-}
-
 void ObjectManager::setupThreads()
 {
     // Initialize thread particle data
@@ -140,7 +113,6 @@ void ObjectManager::updateAndDrawParticles(double delta, SDL_Renderer* renderer)
     for (int i = 0; i < current_max_particles; i++)
     {
         particles[i].updatePosition(delta);
-		collision_manager->checkParticleCollisionsInCells(&particles[i]);
 		particles[i].handleScreenCollision();
         particles[i].draw(renderer);
     }
@@ -167,12 +139,9 @@ void ObjectManager::updateAndDrawParticlesMultiThreaded(double delta, SDL_Render
     // Draw the particles
     for (int i = 0; i < current_max_particles-1; i++)
     {
-        if (explorer_mode) particles[i].drawExplorer(renderer, player.getPosition());
-		else particles[i].draw(renderer);
+        particles[i].draw(renderer);
 	}
 
-    // Draw player
-    if (explorer_mode) player.draw(renderer);
 }
 
 /**
@@ -186,17 +155,7 @@ void ObjectManager::updateAndDrawParticlesIndices(int* indices, int count)
     for (int i = 0; i < count-1; i++)
 	{
         particles[indices[i]].updatePosition(*cur_delta);
-		// collision_manager->checkParticleCollisionsInCells(&particles[indices[i]]);
 		particles[indices[i]].handleScreenCollision();
-	}
-}
-
-
-void ObjectManager::drawWalls(SDL_Renderer* renderer)
-{
-    for (int i = 0; i < current_max_walls; i++)
-    {
-		walls[i].draw(renderer);
 	}
 }
 
@@ -207,10 +166,11 @@ void ObjectManager::drawWalls(SDL_Renderer* renderer)
  */
 void ObjectManager::drawGridLines(SDL_Renderer* renderer)
 {
-    int cell_width = collision_manager->getGridCellWidth();
-    int cell_height = collision_manager->getGridCellHeight();
-    int column_count = collision_manager->getGridColumns();
-    int row_count = collision_manager->getGridRows();
+    int column_count = 10;
+    int row_count = 10;
+    int cell_width = screen_width / column_count;
+    int cell_height = screen_height / row_count;
+    
 
     // Set the color to gray
     SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
@@ -228,33 +188,12 @@ void ObjectManager::drawGridLines(SDL_Renderer* renderer)
 	}
 }
 
-void ObjectManager::drawDebugCircles(SDL_Renderer* renderer)
-{
-    for (int i = 0; i < 10; i++) { debug_circles[i].draw(renderer); }
-}
-
-void ObjectManager::addDebugCircle(Position pos, int r)
-{
-    DebugCircle new_circle = DebugCircle(pos, r);
-    for (int i = 0; i < 10; i++)
-    {
-        Position slot = debug_circles[i].getPosition();
-        if (slot.x == -1 && slot.y == -1)
-        {
-			debug_circles[i] = new_circle;
-			break;
-		}
-	}
-}
-
-ObjectManager::ObjectManager() { screen_width = 1280; screen_height = 720; collision_manager = new CollisionManager(screen_width, screen_height); setupThreads(); }
+ObjectManager::ObjectManager() { screen_width = 1280; screen_height = 720; setupThreads(); }
 
 ObjectManager::ObjectManager(int width, int height)
 {
     screen_width = width;
 	screen_height = height;
-    collision_manager = new CollisionManager(width, height);
-
     setupThreads();
 }
 
@@ -265,7 +204,6 @@ ObjectManager::~ObjectManager()
 {
     // Destruct the particles and walls
     delete[] particles;
-    delete[] walls;
 
     running = false; // Stop the threads
     for (int i = 0; i < THREAD_COUNT; i++) { object_threads[i].join(); }

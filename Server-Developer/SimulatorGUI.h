@@ -24,8 +24,6 @@ public:
 	void TitleGUI();
 	void InfoGUI();
 	void ParticlesGUI();
-	void ObstaclesGUI();
-	void ExplorerGUI();
 	void ParticlesBatchGUI();
 	void ParticlesBatchMethodOneGUI();
 	void ParticlesBatchMethodTwoGUI();

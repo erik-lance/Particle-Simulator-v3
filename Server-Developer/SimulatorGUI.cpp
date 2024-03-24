@@ -77,9 +77,8 @@ void SimulatorGUI::MainMenuGUI()
 	ImGui::TableNextColumn();
 	ParticlesGUI();
 
-	// Input Sections (Explorer)
+	// Input Sections (Command History)
 	ImGui::TableNextColumn();
-	ExplorerGUI();
 
 	ImGui::EndTable();
 
@@ -89,7 +88,7 @@ void SimulatorGUI::MainMenuGUI()
 void SimulatorGUI::TitleGUI()
 {
 	// Title
-	ImGui::Text("Particle Simulator v2");
+	ImGui::Text("Particle Simulator v3");
 	ImGui::Text("STDISCM S11");
 	ImGui::Spacing();
 
@@ -145,103 +144,6 @@ void SimulatorGUI::ParticlesGUI()
 
 		// Increment particle id
 		m_particle_id++;
-	}
-}
-
-void SimulatorGUI::ObstaclesGUI()
-{
-	ImGui::Text("Obstacle");
-
-	// Clamp start_x and start_y to 0-1280 and 1-720
-	ImGui::InputInt("Start X", &m_obstacle_start_x);
-	ImGui::InputInt("Start Y", &m_obstacle_start_y);
-	InputClamp(m_obstacle_start_x, 0, 1280);
-	InputClamp(m_obstacle_start_y, 0, 720);
-
-	// Clamp end_x and end_y to 0-1280 and 1-720
-	ImGui::InputInt("End X", &m_obstacle_end_x);
-	ImGui::InputInt("End Y", &m_obstacle_end_y);
-	InputClamp(m_obstacle_end_x, 0, 1280);
-	InputClamp(m_obstacle_end_y, 0, 720);
-
-	if (ImGui::Button("Add Wall")) {
-		std::cout << "Wall Added" << std::endl;
-		Line line = Line();
-		line.start.x = m_obstacle_start_x;
-		line.start.y = m_obstacle_start_y;
-		line.end.x = m_obstacle_end_x;
-		line.end.y = m_obstacle_end_y;
-
-		// Calculate angle of the line in radians
-		double dx = line.end.x - line.start.x;
-		double dy = line.end.y - line.start.y;
-		line.angle = atan2(dy, dx);
-
-		// Normalize the angle
-		line.angle = normalizeAngle(line.angle);
-
-		std::cout << "Wall: " << line.start.x << " " << line.start.y << " " << line.end.x << " " << line.end.y << std::endl;
-		std::cout << "Wall Angle: " << line.angle << std::endl;
-		m_object_manager->addWall(line);
-
-		// Increment obstacle id
-		m_obstacle_id++;
-	}
-
-}
-
-void SimulatorGUI::ExplorerGUI()
-{
-	ImGui::Text("Explorer");
-
-	// Switch to Explorer Mode 
-	ImGui::InputInt("Explorer X", &m_explorer_x);
-	ImGui::InputInt("Explorer Y", &m_explorer_y);
-	// Clamp x and y to 0-1280 and 1-720
-	InputClamp(m_explorer_x, 0, 1280);
-	InputClamp(m_explorer_y, 0, 720);
-
-	ImGui::Spacing();
-
-	// Button to enter
-	if (ImGui::Button("Enter Explorer Mode")) {
-		std::cout << "Explorer Mode Entered" << std::endl;
-		explorer_mode = true;
-	}
-
-	// Debug buttons (uncomment to enable)
-	if (ImGui::Button("Top left explorer")) {
-		std::cout << "Explorer Mode Entered (Top Left)" << std::endl;
-		m_explorer_x = 0;
-		m_explorer_y = 0;
-		m_object_manager->getPlayer()->place(Position(m_explorer_x, m_explorer_y));
-		explorer_mode = true;
-	}
-
-	ImGui::SameLine();
-	if (ImGui::Button("Top right explorer")) {
-		std::cout << "Explorer Mode Entered (Top Right)" << std::endl;
-		m_explorer_x = 1280;
-		m_explorer_y = 0;
-		m_object_manager->getPlayer()->place(Position(m_explorer_x, m_explorer_y));
-		explorer_mode = true;
-	}
-
-	if (ImGui::Button("Bottom left explorer")) {
-		std::cout << "Explorer Mode Entered (Bottom Left)" << std::endl;
-		m_explorer_x = 0;
-		m_explorer_y = 720;
-		m_object_manager->getPlayer()->place(Position(m_explorer_x, m_explorer_y));
-		explorer_mode = true;
-	}
-
-	ImGui::SameLine();
-	if (ImGui::Button("Bottom right explorer")) {
-		std::cout << "Explorer Mode Entered (Bottom Right)" << std::endl;
-		m_explorer_x = 1280;
-		m_explorer_y = 720;
-		m_object_manager->getPlayer()->place(Position(m_explorer_x, m_explorer_y));
-		explorer_mode = true;
 	}
 }
 

@@ -28,7 +28,6 @@ ObjectManager object_manager = ObjectManager(SIM_WIDTH, SIM_HEIGHT);
 
 // Globals
 bool isRunning = true;
-bool explorer_mode = false;
 double delta_time = 0;
 int fps = 0;
 
@@ -131,28 +130,6 @@ int main()
 				return 0;
 			}
 
-			// Player movement (update player position) WASD/Arrows
-			if (explorer_mode && event.type == SDL_KEYDOWN) {
-				switch (event.key.keysym.sym) {
-					case SDLK_w:
-					case SDLK_UP:
-						object_manager.getPlayer()->move(0, delta_time);
-						break;
-					case SDLK_s:
-					case SDLK_DOWN:
-						object_manager.getPlayer()->move(1, delta_time);
-						break;
-					case SDLK_a:
-					case SDLK_LEFT:
-						object_manager.getPlayer()->move(2, delta_time);
-						break;
-					case SDLK_d:
-					case SDLK_RIGHT:
-						object_manager.getPlayer()->move(3, delta_time);
-						break;
-				}
-			}
-
 		}
 
 		// Clear the renderer
@@ -165,7 +142,6 @@ int main()
 		// Move the particles
 		// object_manager.updateAndDrawParticles(delta_time, renderer);
 		object_manager.updateAndDrawParticlesMultiThreaded(delta_time, renderer);
-		object_manager.drawWalls(renderer);
 
 		// Update FPS every 0.5 seconds
 		static double time = 0;
