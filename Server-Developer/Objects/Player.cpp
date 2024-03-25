@@ -1,7 +1,8 @@
 #include "Player.h"
 
-Player::Player(Position pos)
+Player::Player(std::string ID, Position pos)
 {
+	UUID = ID;
 	position = pos;
 
 	// Initialize SDL Image
