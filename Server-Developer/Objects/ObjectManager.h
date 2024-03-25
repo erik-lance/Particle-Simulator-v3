@@ -3,6 +3,8 @@
 #include "Particle.h"
 #include "Player.h"
 #include "../Globals.h"
+#include <vector>
+#include <string>
 
 constexpr int THREAD_COUNT = 4;
 
@@ -36,7 +38,9 @@ public:
 
 	int getParticleCount() const { return current_max_particles; }
 
-	Player* getPlayer() { return &player; }
+	std::vector<Player> getPlayers() const { return players; }
+	Player getPlayer(int index) const { return players[index]; }
+	void addPlayer(Player player) { players.push_back(player); }
 
 private:
 	int screen_width, screen_height;
@@ -52,5 +56,5 @@ private:
 	int current_max_particles = 1;
 	Particle* particles = new Particle[particle_capacity];
 
-	Player player = Player(Position(640, 360));
+	std::vector<Player> players = std::vector<Player>();
 };
