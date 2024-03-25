@@ -25,34 +25,18 @@ Player::~Player()
  * @param dir The direction to move the player. 0 = up, 1 = down, 2 = left, 3 = right
  * @param deltaTime The time since the last frame
  */
-void Player::move(int dir, double deltaTime)
+void Player::move(Position dir, double deltaTime)
 {
-	switch (dir)
-	{
-		case 0:
-			position.y -= moveSpeed * deltaTime;
-			if (position.y < 0) { position.y = 0; }
-			break;
-		case 1:
-			position.y += moveSpeed * deltaTime;
-			if (position.y > 720) { position.y = 720; }
-			break;
-		case 2:
-			position.x -= moveSpeed * deltaTime;
-			if (position.x < 0) { position.x = 0; }
-			break;
-		case 3:
-			position.x += moveSpeed * deltaTime;
-			if (position.x > 1280) { position.x = 1280; }
-			break;
-		default:
-			break;
-	}
+	double newX = position.x + (dir.x * moveSpeed * deltaTime);
+	double newY = position.y + (dir.y * moveSpeed * deltaTime);
 
-	// Round the position
-	position.x = round(position.x);
-	position.y = round(position.y);
+	// Clamp
+	if (newX < (spriteWidth/2)) newX = spriteWidth/2;
+	if (newX > (1280 - spriteWidth/2)) newX = 1280 - spriteWidth/2;
+	if (newY < (spriteHeight/2)) newY = spriteHeight/2;
+	if (newY > (720 - spriteHeight/2)) newY = 720 - spriteHeight/2;
 
+	position = { newX, newY };
 
 	std::cout << "Player position: (" << position.x << ", " << position.y << ")" << std::endl;
 }
@@ -97,6 +81,10 @@ bool Player::loadSprite(SDL_Renderer* renderer)
 	}
 	else
 	{
+		// Set sprite dimensions
+		spriteWidth = surface_sprite->w;
+		spriteHeight = surface_sprite->h;
+
 		std::cout << "Sprite loaded successfully!" << std::endl;
 		delete[] filePath;
 		SDL_FreeSurface(surface_sprite);
