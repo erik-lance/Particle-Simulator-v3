@@ -105,7 +105,7 @@ void Server::receiver()
  */
 void Server::processor()
 {
-	// If <c>DATETIME</c>; it is a new player connection
+	// If <c>x,y</c>; it is a new player connection
 	// If <m>x,y</m>; it is a player movement direction
 	while (running) {
 		if (messages.size() > 0)
@@ -123,10 +123,27 @@ void Server::processor()
 
 			if (type == "<c>") {
 				// New player connection
-				// Add address to the clients list
-				clients.push_back(response.address);
+				// Generate UUID by hashing the address
+				std::hash<std::string> hash_fn;
+				std::string UUID = std::to_string(hash_fn(response.address));
+
+				// Generate position based on message
+				Position position;
+				std::string message = response.message.substr(3);
+				message = message.substr(0, message.size() - 4); // Remove the last 4 character (</c>)
+				position.x = std::stoi(message.substr(0, message.find(',')));
+				position.y = std::stoi(message.substr(message.find(',') + 1));
+
+				// Generate player
+				User user;
+				user.address = response.address;
+				user.UUID = UUID;
+				user.player = object_manager->generatePlayer(UUID, position);
 
 				// TODO: Send to client all previous particles by batch
+
+				// Finally add to list of clients once caught up
+				clients.push_back(user);
 			}
 			else if (type == "<m>") {
 				// Player movement update
@@ -145,5 +162,12 @@ void Server::processor()
 				std::cout << "Message: " << response.message << std::endl;
 			}
 		}
+	}
+}
+
+void Server::sender()
+{
+	while (running) {
+
 	}
 }

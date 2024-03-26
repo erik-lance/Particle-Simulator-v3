@@ -25,6 +25,12 @@ struct Response {
 	std::string message;
 };
 
+struct User {
+	std::string address;
+	std::string UUID;
+	Player* player;
+};
+
 class Server {
 public:
 	Server(std::string host, int port, ObjectManager* object_manager);
@@ -33,6 +39,7 @@ public:
 	void start();
 	void receiver();
 	void processor();
+	void sender();
 private:
 	std::string host;
 	int port;
@@ -43,7 +50,7 @@ private:
 	struct sockaddr_in server_address;
 
 	// Connections
-	std::vector<std::string> clients; // Contains host:port
+	std::vector<User> clients; // Contains UUID,host:port,player
 
 	// Queue
 	std::queue<std::string> messages; // to send
@@ -53,4 +60,5 @@ private:
 	bool running = true;
 	std::thread receiver_thread;
 	std::thread processor_thread;
+	std::thread sender_thread;
 };
