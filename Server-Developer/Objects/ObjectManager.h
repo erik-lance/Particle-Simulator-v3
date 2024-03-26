@@ -40,7 +40,7 @@ public:
 
 	std::vector<Player> getPlayers() const { return players; }
 	Player getPlayer(int index) const { return players[index]; }
-	void addPlayer(Player player) { players.push_back(player); }
+	Player* generatePlayer(std::string UUID, Position pos) { return &Player(UUID, pos); }
 
 private:
 	int screen_width, screen_height;
