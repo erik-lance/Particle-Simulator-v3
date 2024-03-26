@@ -46,6 +46,9 @@ public:
 	void receiver();
 	void processor();
 	void sender();
+
+	void sendToOtherClients(std::string msg, std::string address);
+	void sendToAllClients(std::string msg);
 private:
 	std::string host;
 	int port;

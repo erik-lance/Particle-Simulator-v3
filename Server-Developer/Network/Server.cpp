@@ -147,6 +147,9 @@ void Server::processor()
 
 				// Finally add to list of clients once caught up
 				clients.push_back(user);
+
+				// Send the message to all clients
+				sendToOtherClients(response.message, response.address);
 			}
 			else if (type == "<m>") {
 				// Player movement update
@@ -159,6 +162,8 @@ void Server::processor()
 				// X and Y are the direction of the player
 				Position direction { x, y };
 
+				// Distribute message to all clients that are not the sender
+				sendToOtherClients(response.message, response.address);
 			}
 			else {
 				std::cout << "Unknown message type: " << type << std::endl;
@@ -212,5 +217,40 @@ void Server::sender()
 			}
 		}
 
+	}
+}
+
+void Server::sendToOtherClients(std::string msg, std::string address)
+{
+	for (User user : clients)
+	{
+		if (user.address != address)
+		{
+			// Send the message to the sender
+			Message message;
+			message.dest_address = user.address;
+			message.message = msg;
+
+			// Add the message to the queue
+			mtx.lock();
+			messages.push(message);
+			mtx.unlock();
+		}
+	}
+}
+
+void Server::sendToAllClients(std::string msg)
+{
+	for (User user : clients)
+	{
+		// Send the message to the sender
+		Message message;
+		message.dest_address = user.address;
+		message.message = msg;
+
+		// Add the message to the queue
+		mtx.lock();
+		messages.push(message);
+		mtx.unlock();
 	}
 }
