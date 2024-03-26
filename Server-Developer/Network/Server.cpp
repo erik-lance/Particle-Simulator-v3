@@ -81,9 +81,23 @@ void Server::receiver()
 	}
 }
 
+/**
+ * Processes player movement and other messages
+ */
 void Server::processor()
 {
 	while (running) {
+		if (messages.size() > 0)
+		{
+			mtx.lock();
+			std::string message = messages.front();
+			messages.pop();
+			mtx.unlock();
 
+			// Process the message
+			std::cout << "MSG: " << message << std::endl;
+
+
+		}
 	}
 }
