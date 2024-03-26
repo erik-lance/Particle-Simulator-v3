@@ -6,6 +6,7 @@
 #include <string>
 #include <thread>
 #include <mutex>
+#include <condition_variable>
 #include <errno.h>
 
 #ifdef _WIN32
@@ -19,6 +20,11 @@
 #include <unistd.h>
 #include <fcntl.h>
 #endif
+
+struct Message {
+	std::string dest_address;
+	std::string message;
+};
 
 struct Response {
 	std::string address;
@@ -44,6 +50,7 @@ private:
 	std::string host;
 	int port;
 	std::mutex mtx; // to lock the messages queue
+	std::condition_variable cv;
 
 	ObjectManager* object_manager;
 	SOCKET m_socket;
@@ -53,12 +60,12 @@ private:
 	std::vector<User> clients; // Contains UUID,host:port,player
 
 	// Queue
-	std::queue<std::string> messages; // to send
+	std::queue<Message> messages; // to send
 	std::queue <Response> responses; // received
 
 	// Threads
 	bool running = true;
 	std::thread receiver_thread;
 	std::thread processor_thread;
-	std::thread sender_thread;
+	std::vector<std::thread> sender_threads;
 };

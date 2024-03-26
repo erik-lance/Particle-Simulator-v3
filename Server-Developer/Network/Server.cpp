@@ -59,6 +59,9 @@ void Server::start()
 	// Start threads
 	receiver_thread = std::thread(&Server::receiver, this);
 	processor_thread = std::thread(&Server::processor, this);
+
+	// Generate sender threads
+	for (int i = 0; i < 3; i++) { sender_threads.push_back(std::thread(&Server::sender, this)); }
 }
 
 void Server::receiver()
@@ -168,6 +171,46 @@ void Server::processor()
 void Server::sender()
 {
 	while (running) {
+		// Use condition variable to wait for messages
+		std::unique_lock<std::mutex> lock(mtx);
+		while (messages.empty()) { cv.wait(lock); }
+
+		// Send the message
+		Message message = messages.front();
+		messages.pop();
+
+		// Update the cv
+		cv.notify_all();
+
+		// Obtain host and port from dest_address of message
+		std::string host = message.dest_address.substr(0, message.dest_address.find(':'));
+		std::string port = message.dest_address.substr(message.dest_address.find(':') + 1);
+
+		struct sockaddr_in client_address;
+		client_address.sin_family = AF_INET;
+		client_address.sin_port = htons(std::stoi(port));
+		InetPtonA(AF_INET, host.c_str(), &client_address.sin_addr);
+
+		// Send the message
+		int bytes_sent = sendto(m_socket, message.message.c_str(), message.message.size(), 0, (struct sockaddr*)&client_address, sizeof(client_address));
+
+		if (bytes_sent < 0)
+		{
+			// Print full error details
+			char error[1024];
+			strerror_s(error, sizeof(error), errno);
+			std::cerr << "Error sending message: " << error << std::endl;
+
+			// Disconnect the client by removing from the list
+			for (int i = 0; i < clients.size(); i++)
+			{
+				if (clients[i].address == message.dest_address)
+				{
+					clients.erase(clients.begin() + i);
+					break;
+				}
+			}
+		}
 
 	}
 }
