@@ -20,6 +20,11 @@
 #include <fcntl.h>
 #endif
 
+struct Response {
+	std::string address;
+	std::string message;
+};
+
 class Server {
 public:
 	Server(std::string host, int port, ObjectManager* object_manager);
@@ -38,11 +43,11 @@ private:
 	struct sockaddr_in server_address;
 
 	// Connections
-	std::vector<SOCKET> clients;
+	std::vector<std::string> clients; // Contains host:port
 
 	// Queue
 	std::queue<std::string> messages; // to send
-	std::queue <std::string> responses; // received
+	std::queue <Response> responses; // received
 
 	// Threads
 	bool running = true;

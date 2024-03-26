@@ -29,8 +29,8 @@ Server::~Server()
  * */
 void Server::init()
 {
-	// Create a socket
-	this->m_socket = socket(AF_INET, SOCK_STREAM, 0);
+	// Create a socket (UDP)
+	this->m_socket = socket(AF_INET, SOCK_DGRAM, 0);
 	if (m_socket < 0)
 	{
 		std::cerr << "Error creating socket" << std::endl;
@@ -42,19 +42,6 @@ void Server::init()
 	server_address.sin_family = AF_INET;
 	server_address.sin_port = htons(port);
 	InetPtonA(AF_INET, host.c_str(), &server_address.sin_addr); // Convert the host address to a usable format
-
-	// Set socket to reuse address
-	int opt = 1;
-	if (setsockopt(m_socket, SOL_SOCKET, SO_REUSEADDR, (char*)&opt, sizeof(opt)) != 0)
-	{
-		// Print full error details
-		char error[1024];
-		strerror_s(error, sizeof(error), errno);
-		std::cerr << "Error setting socket options: " << error << std::endl;
-		exit(1);
-	}
-
-	// Set socket to non-blocking
 
 	// Bind the socket to the server address
 	if (bind(m_socket, (struct sockaddr*)&server_address, sizeof(server_address)) != 0)
@@ -77,7 +64,39 @@ void Server::start()
 void Server::receiver()
 {
 	while (running) {
+		// Receive a message
+		char buffer[1024];
+		struct sockaddr_in client_address;
+		socklen_t client_address_length = sizeof(client_address);
 
+		int bytes_received = recvfrom(m_socket, buffer, sizeof(buffer), 0, (struct sockaddr*)&client_address, &client_address_length);
+
+		if (bytes_received > 0)
+		{
+			// Get string of the client address host:port
+			char client_host[NI_MAXHOST];
+			char client_service[NI_MAXSERV];
+			getnameinfo((struct sockaddr*)&client_address, client_address_length, client_host, NI_MAXHOST, client_service, NI_MAXSERV, 0);
+
+			// Add the message to the responses queue
+			mtx.lock();
+
+			Response response;
+			response.address = std::string(client_host) + ":" + std::string(client_service);
+			response.message = std::string(buffer, bytes_received);
+
+			// Add the message to the queue
+			responses.push(response);
+
+			mtx.unlock();
+		}
+		else
+		{
+			// Print full error details
+			char error[1024];
+			strerror_s(error, sizeof(error), errno);
+			std::cerr << "Error receiving message: " << error << std::endl;
+		}
 	}
 }
 
@@ -86,18 +105,45 @@ void Server::receiver()
  */
 void Server::processor()
 {
+	// If <c>DATETIME</c>; it is a new player connection
+	// If <m>x,y</m>; it is a player movement direction
 	while (running) {
 		if (messages.size() > 0)
 		{
 			mtx.lock();
-			std::string message = messages.front();
-			messages.pop();
+			Response response = responses.front();
+			responses.pop();
 			mtx.unlock();
 
 			// Process the message
-			std::cout << "MSG: " << message << std::endl;
+			std::cout << "MSG: " << response.message << std::endl;
 
+			// Check message type by first three (3) characters
+			std::string type = response.message.substr(0, 3);
 
+			if (type == "<c>") {
+				// New player connection
+				// Add address to the clients list
+				clients.push_back(response.address);
+
+				// TODO: Send to client all previous particles by batch
+			}
+			else if (type == "<m>") {
+				// Player movement update
+				std::string message = response.message.substr(3);
+				message = message.substr(0, message.size() - 4); // Remove the last 4 character (</m>)
+
+				int x = std::stoi(message.substr(0, message.find(',')));
+				int y = std::stoi(message.substr(message.find(',') + 1));
+
+				// X and Y are the direction of the player
+				Position direction { x, y };
+
+			}
+			else {
+				std::cout << "Unknown message type: " << type << std::endl;
+				std::cout << "Message: " << response.message << std::endl;
+			}
 		}
 	}
 }
