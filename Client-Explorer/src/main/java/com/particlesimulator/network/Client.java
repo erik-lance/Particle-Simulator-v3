@@ -30,7 +30,6 @@ public class Client {
     private BufferedReader reader;
     private BufferedWriter writer;
     private ReentrantLock sendLock;
-    
 
     public Client(ObjectManager objectManager) {
         this.objectManager = objectManager;
@@ -103,6 +102,29 @@ public class Client {
         // <b>3,startX,startY,angle,startVelocity,endVelocity</b>
     }
 
+    /**
+     * Loads current particles in server because client joined mid-game.
+     * @param record - contains ticks and particle command (e.g.:<r>23<p>particle_data</p></r>)
+     */
+    public void loadClient(String record) {
+        // Get ticks after <r> and before next '<'
+        int ticks = Integer.parseInt(record.substring(3, record.indexOf("<", 3)));
+
+        // Get particle command. Note: Can be <p> or <b>
+        String particle_command = record.substring(record.indexOf("<", 3));
+        
+        // Keep only the particle data
+        String particle_data = particle_command.substring(3, particle_command.length() - 8);
+
+        // Process the particle data
+        parseParticleData(particle_data);
+
+        // Update all particles in the object manager by the number of ticks
+        for (int i = 0; i < ticks; i++) {
+            objectManager.updateParticles();
+        }
+    }
+
     public void receiver() {
         while (true) {
             // Receive data from the server
@@ -112,6 +134,17 @@ public class Client {
                     // Process data
                     if (data.startsWith("<p>") || data.startsWith("<b>")) {
                         parseParticleData(data);
+                    } else if (data.startsWith("<r>") || data.startsWith("<d>")) {
+                        // This is for loading client data
+                        // <r> is for receiving the player's position
+                        // <d> means done loading
+                        if (data.startsWith("<r>")) {
+                            loadClient(data);
+                        } else {
+                            // TODO: Update particles by X ticks since loading
+                            System.out.println("Done loading client data");
+                            objectManager.clientLoaded = true;
+                        }
                     } else {
                         System.out.println(data);
                     }
