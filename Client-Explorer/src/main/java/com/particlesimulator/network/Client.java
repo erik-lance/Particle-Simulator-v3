@@ -67,7 +67,7 @@ public class Client {
      */
     public void addPlayerToServer(Position pos) {
         // Send data to the server
-        String data = "<n>" + userID + ":" + pos.getX() + "," + pos.getY() + "</n>";
+        String data = "<u>" + userID + ":" + pos.getX() + "," + pos.getY() + "</u>";
 
         sendLock.lock();
         sendDataQueue.add(data);
@@ -80,7 +80,7 @@ public class Client {
      */
     public void updatePlayer(Position pos) {
         // Send data to the server
-        String data = "<u>" + userID + ":" + pos.getX() + "," + pos.getY() + "</u>";
+        String data = "<m>" + pos.getX() + "," + pos.getY() + "</m>";
 
         sendLock.lock();
         sendDataQueue.add(data);
