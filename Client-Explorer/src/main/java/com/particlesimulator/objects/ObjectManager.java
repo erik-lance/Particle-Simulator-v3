@@ -18,6 +18,7 @@ public class ObjectManager {
     private int numParticles = 0;
     private int particlesCapacity = 1024;
     private Particle[] particles = new Particle[particlesCapacity];
+    public boolean clientLoaded = false;
 
     public ObjectManager() {
         this.client = new Client(this);
@@ -59,17 +60,19 @@ public class ObjectManager {
      * Executes necessary object updates and rendering.
      */
     public void mainLoop(long window, double deltaTime) {
-        // Player
-        if (player != null) {
-            player.input(window, deltaTime);
-            player.draw();
-        }
+        if (clientLoaded) {
+            // Player
+            if (player != null) {
+                player.input(window, deltaTime);
+                player.draw();
+            }
 
-        // Particles
-        for (int i = 0; i < numParticles; i++) {
-            particles[i].update(deltaTime);
-            if (DEBUG_MODE) { particles[i].drawDefault(); }
-            else { particles[i].drawParticle(player.getPosition()); }
+            // Particles
+            for (int i = 0; i < numParticles; i++) {
+                particles[i].update(deltaTime);
+                if (DEBUG_MODE) { particles[i].drawDefault(); }
+                else { particles[i].drawParticle(player.getPosition()); }
+            }
         }
     }
 
