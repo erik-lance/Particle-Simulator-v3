@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 // PI Constant
 constexpr auto PI = 3.14159265358979323846;
@@ -6,6 +7,12 @@ constexpr auto PI = 3.14159265358979323846;
 struct Position { double x; double y; };
 struct Line { Position start; Position end; double angle; };
 struct Screen { int width = 1280; int height = 720; };
+
+struct ParticleHistoryRecord
+{
+    int ticks;
+    std::string command;
+};
 
 static inline bool operator==(const Position& lhs, const Position& rhs)
 {

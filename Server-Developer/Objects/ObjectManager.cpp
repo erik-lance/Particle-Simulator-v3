@@ -159,6 +159,33 @@ void ObjectManager::updateAndDrawParticlesIndices(int* indices, int count)
 	}
 }
 
+void ObjectManager::logParticleRecord(std::string command)
+{
+	// Log the particle record
+	ParticleHistoryRecord record;
+	record.ticks = 0;
+	record.command = command;
+
+    // If no logs yet, ticks = 0 and start the timer
+    if (particle_history.size() == 0)
+    {
+		start_time = std::chrono::system_clock::now();
+	}
+    else
+    {
+		// Calculate the ticks since the last log
+		auto end_time = std::chrono::system_clock::now();
+		std::chrono::duration<double> elapsed_seconds = end_time - start_time;
+		record.ticks = elapsed_seconds.count();
+
+        // Reset the timer to count ticks since the last log
+		start_time = std::chrono::system_clock::now();
+	}
+
+    // Add the record to the history
+    particle_history.push_back(record);
+}
+
 /**
  * Draws the grid lines based on the collision manager's grid
  * width and height and column and row count

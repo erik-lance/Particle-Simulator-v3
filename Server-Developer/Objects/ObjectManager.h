@@ -3,8 +3,9 @@
 #include "Particle.h"
 #include "Player.h"
 #include "../Globals.h"
+#include "../Structures.h"
 #include <vector>
-#include <string>
+#include <chrono>
 
 constexpr int THREAD_COUNT = 4;
 
@@ -42,6 +43,9 @@ public:
 	Player getPlayer(int index) const { return players[index]; }
 	Player* generatePlayer(std::string UUID, Position pos) { return &Player(UUID, pos); }
 
+	void logParticleRecord(std::string command);
+	std::vector<ParticleHistoryRecord> getParticleHistory() const { return particle_history; }
+
 private:
 	int screen_width, screen_height;
 	
@@ -57,4 +61,8 @@ private:
 	Particle* particles = new Particle[particle_capacity];
 
 	std::vector<Player> players = std::vector<Player>();
+
+	// Particle History
+	std::vector<ParticleHistoryRecord> particle_history = std::vector<ParticleHistoryRecord>();
+	std::chrono::time_point<std::chrono::system_clock> start_time;
 };
