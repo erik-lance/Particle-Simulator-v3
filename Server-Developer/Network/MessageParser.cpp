@@ -27,6 +27,12 @@ void MessageParser::addParticleMessage(Position position, double angle, double v
 {
 	char* message = new char[128];
 	sprintf(message, "<p>%f,%f,%f,%f</p>", position.x, position.y, angle, velocity);
+
+	// Send to all clients
+	server->sendToAllClients(message);
+
+	// Send log to ObjectManager
+	object_manager->logParticleRecord(message);
 }
 
 /**
@@ -41,6 +47,12 @@ void MessageParser::addParticleBatchMessageOne(int num, Position start, Position
 {
 	char* message = new char[128];
 	sprintf(message, "<b>1,%d,%f,%f,%f,%f,%f,%f</b>", num, start.x, end.x, start.y, end.y, angle, velocity);
+
+	// Send to all clients
+	server->sendToAllClients(message);
+
+	// Send log to ObjectManager
+	object_manager->logParticleRecord(message);
 }
 
 /**
@@ -55,6 +67,12 @@ void MessageParser::addParticleBatchMessageTwo(int num, double start_angle, doub
 {
 	char* message = new char[128];
 	sprintf(message, "<b>2,%d,%f,%f,%f,%f,%f</b>", num, start_angle, end_angle, start.x, start.y, velocity);
+
+	// Send to all clients
+	server->sendToAllClients(message);
+
+	// Send log to ObjectManager
+	object_manager->logParticleRecord(message);
 }
 
 /**
@@ -69,4 +87,10 @@ void MessageParser::addParticleBatchMessageThree(int num, Position start, double
 {
 	char* message = new char[128];
 	sprintf(message, "<b>3,%d,%f,%f,%f,%f,%f</b>", num, start.x, start.y, angle, start_velocity, end_velocity);
+
+	// Send to all clients
+	server->sendToAllClients(message);
+
+	// Send log to ObjectManager
+	object_manager->logParticleRecord(message);
 }
