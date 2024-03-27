@@ -143,13 +143,9 @@ void Server::processor()
 				user.UUID = UUID;
 				user.player = object_manager->generatePlayer(UUID, position);
 
-				// TODO: Send to client all previous particles by batch
-
-				// Finally add to list of clients once caught up
-				clients.push_back(user);
-
-				// Send the message to all clients
-				sendToOtherClients(response.message, response.address);
+				// Start loading client
+				// Send to client all previous particles by batch
+				client_loader_threads.push_back(std::thread(&Server::clientLoader, this, user, response.message, &object_manager->getParticleHistory()));
 			}
 			else if (type == "<m>") {
 				// Player movement update
@@ -218,6 +214,50 @@ void Server::sender()
 		}
 
 	}
+}
+
+/**
+ * This is called when a new client connects to the server. A thread is used to perform this function
+ * and send the client all the particle records that have been generated so far. This comes with ticks
+ * since last particle added for each record.
+ * @param u The user object containing the client's address, UUID, and player object
+ * @param spawn The spawn message that contains position of the player
+ * @param history The particle history to send to the client
+ */
+void Server::clientLoader(User u, std::string spawn, std::vector<ParticleHistoryRecord>* history)
+{
+	// Generate the message to send to the client
+	std::string address = u.address;
+	std::string response = spawn;
+	
+	// Add all the particles to the message
+	for (ParticleHistoryRecord record : *history)
+	{
+		std::string message = "<r>";
+
+		// Convert record to string
+		std::string ticks = std::to_string(record.ticks);
+		message += ticks + record.command;
+
+		// Add the end tag
+		message += "</r>";
+
+		// Send the message to the client
+		Message msg;
+		msg.dest_address = address;
+		msg.message = message;
+
+		// Add the message to the queue
+		mtx.lock();
+		messages.push(msg);
+		mtx.unlock();
+	}
+
+	// Finally add to list of clients once caught up
+	clients.push_back(u);
+
+	// Send the message to all clients
+	sendToOtherClients(response, address);
 }
 
 void Server::sendToOtherClients(std::string msg, std::string address)

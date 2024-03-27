@@ -1,9 +1,9 @@
 #pragma once
 #include "../Objects/ObjectManager.h"
+#include "../Structures.h"
 #include <vector>
 #include <queue>
 #include <iostream>
-#include <string>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -47,6 +47,7 @@ public:
 	void processor();
 	void sender();
 
+	void clientLoader(User u, std::string spawn, std::vector<ParticleHistoryRecord>* history);
 	void sendToOtherClients(std::string msg, std::string address);
 	void sendToAllClients(std::string msg);
 private:
@@ -71,4 +72,7 @@ private:
 	std::thread receiver_thread;
 	std::thread processor_thread;
 	std::vector<std::thread> sender_threads;
+
+	bool loadingClient = false;
+	std::vector<std::thread> client_loader_threads;
 };
