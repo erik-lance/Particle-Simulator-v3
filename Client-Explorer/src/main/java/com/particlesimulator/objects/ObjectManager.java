@@ -3,12 +3,14 @@ package com.particlesimulator.objects;
 import static com.particlesimulator.Utils.DEBUG_MODE;
 
 import com.particlesimulator.Utils.Position;
+import com.particlesimulator.network.Client;
 import com.particlesimulator.render.Texture;
 
 /**
  * Handles all objects in the simulation.
  */
 public class ObjectManager {
+    private Client client;
     private Texture[] textures = new Texture[4];
     private Player player;
     private Player[] npcs = new Player[3];
@@ -18,6 +20,7 @@ public class ObjectManager {
     private Particle[] particles = new Particle[particlesCapacity];
 
     public ObjectManager() {
+        this.client = new Client(this);
     }
 
     /**
@@ -30,6 +33,7 @@ public class ObjectManager {
 
         // Set texture
         player.setTexture(textures[0]);
+        client.addPlayerToServer(position);
 
         return player;
     }
@@ -121,6 +125,12 @@ public class ObjectManager {
      */
     public void batchParticleMethodThree(int num, Position start, double angle, double startVelocity, double endVelocity) {
 
+    }
+
+    public void updateParticles() {
+        for (int i = 0; i < numParticles; i++) {
+            particles[i].update(0.10);
+        }
     }
 
     /**
