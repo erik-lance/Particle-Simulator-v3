@@ -125,15 +125,17 @@ void Server::processor()
 			std::string type = response.message.substr(0, 3);
 
 			if (type == "<c>") {
-				// New player connection
-				// Generate UUID by hashing the address
-				std::hash<std::string> hash_fn;
-				std::string UUID = std::to_string(hash_fn(response.address));
+				// New player connection "<c>UUID:x,y</c>"
+				// Get UUID from inner message before ':' character
+				std::string UUID = response.message.substr(3);
+				UUID = UUID.substr(0, UUID.find(':'));
 
 				// Generate position based on message
 				Position position;
 				std::string message = response.message.substr(3);
+				message = message.substr(message.find(':') + 1);
 				message = message.substr(0, message.size() - 4); // Remove the last 4 character (</c>)
+
 				position.x = std::stoi(message.substr(0, message.find(',')));
 				position.y = std::stoi(message.substr(message.find(',') + 1));
 
@@ -229,7 +231,7 @@ void Server::clientLoader(User u, std::string spawn, std::vector<ParticleHistory
 	// Generate the message to send to the client
 	std::string address = u.address;
 	std::string response = spawn;
-	
+
 	// Add all the particles to the message
 	for (ParticleHistoryRecord record : *history)
 	{
@@ -252,6 +254,14 @@ void Server::clientLoader(User u, std::string spawn, std::vector<ParticleHistory
 		messages.push(msg);
 		mtx.unlock();
 	}
+
+	// Send "DONE" message to client
+	Message done = { address, "<d></d>" };
+
+	// Add the message to the queue
+	mtx.lock();
+	messages.push(done);
+	mtx.unlock();
 
 	// Finally add to list of clients once caught up
 	clients.push_back(u);
