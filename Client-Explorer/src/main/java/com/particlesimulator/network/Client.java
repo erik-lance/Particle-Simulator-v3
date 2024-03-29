@@ -97,9 +97,33 @@ public class Client {
 
         // Data format to expect (add particle, batch 1, 2, 3 in order)
         // <p>x,y,angle,veloctiy</p>
-        // <b>1,startX,endX,startY,endY,angle,velocity</b>
-        // <b>2,startAngle,endAngle,startX,startY,velocity</b>
-        // <b>3,startX,startY,angle,startVelocity,endVelocity</b>
+        // <b>1,num,startX,endX,startY,endY,angle,velocity</b>
+        // <b>2,num,startAngle,endAngle,startX,startY,velocity</b>
+        // <b>3,num,startX,startY,angle,startVelocity,endVelocity</b>
+        char type = data.charAt(1); // Get the type of data
+        String[] values = data.substring(3, data.length() - 4).split(","); // Get the values
+
+        if (type == 'p') {
+            // Add particle
+            Position pos = new Position(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
+            objectManager.addParticle(pos, Double.parseDouble(values[2]), Double.parseDouble(values[3]));
+        } else if (type == 'b') {
+            // Batch particles
+            if (values[0] == "1") {
+                // Batch method 1
+                Position start = new Position(Float.parseFloat(values[1]), Float.parseFloat(values[2]));
+                Position end = new Position(Float.parseFloat(values[3]), Float.parseFloat(values[4]));
+                objectManager.batchParticleMethodOne(Integer.parseInt(values[1]), start, end, Double.parseDouble(values[6]), Double.parseDouble(values[7]));
+            } else if (values[0] == "2") {
+                // Batch method 2
+                Position start = new Position(Float.parseFloat(values[3]), Float.parseFloat(values[4]));
+                objectManager.batchParticleMethodTwo(Integer.parseInt(values[1]), Double.parseDouble(values[2]), Double.parseDouble(values[3]), start, Double.parseDouble(values[5]));
+            } else if (values[0] == "3") {
+                // Batch method 3
+                Position start = new Position(Float.parseFloat(values[1]), Float.parseFloat(values[2]));
+                objectManager.batchParticleMethodThree(Integer.parseInt(values[1]), start, Double.parseDouble(values[3]), Double.parseDouble(values[4]), Double.parseDouble(values[5]));
+            }
+        }
     }
 
     /**
