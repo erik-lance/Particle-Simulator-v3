@@ -29,64 +29,6 @@ void ObjectManager::addParticle(int x, int y, double angle, double velocity)
     particles[current_max_particles-1].setScreenSize(screen_width, screen_height);
 
     current_max_particles++; // Increment the counter after adding the particle
-
-    // Distribute the particle to a thread
-    distributeParticleToThread(current_max_particles-2);
-}
-
-/**
- * Adds particle to the thread's particle array. If the array is full, it will double the capacity
- * @param index The index of the particle in the particle array
- */
-void ObjectManager::distributeParticleToThread(int index)
-{
-    // Distribute the particle to a thread
-	int thread_index = index % THREAD_COUNT;
-    
-    // Check if thread data capacity is full
-    if (thread_data[thread_index].count >= thread_data[thread_index].capacity)
-	{
-        thread_data[thread_index].capacity *= 2;
-		int* new_indices = new int[thread_data[thread_index].capacity];
-		for (int i = 0; i < thread_data[thread_index].count; i++)
-		{
-			new_indices[i] = thread_data[thread_index].indices[i];
-		}
-		delete[] thread_data[thread_index].indices;
-		thread_data[thread_index].indices = new_indices;
-	}
-
-	// Add the particle index to the thread's particle array
-	thread_data[thread_index].indices[thread_data[thread_index].count-1] = index;
-	thread_data[thread_index].count++;
-}
-
-void ObjectManager::setupThreads()
-{
-    // Initialize thread particle data
-    for (int i = 0; i < THREAD_COUNT; i++)
-	{
-        thread_data[i] = ParticleThreadData();
-	}
-
-    // Start threads
-    for (int i = 0; i < THREAD_COUNT; i++)
-    {
-		object_threads[i] = std::thread(&ObjectManager::threadLoop, this, i);
-	}
-}
-
-void ObjectManager::threadLoop(int index)
-{
-    while (running)
-    {
-        // Only update and draw particles if there are jobs (called from updateAndDrawParticlesMultiThreaded)
-        if (thread_data[index].jobs > 0)
-        {
-            updateAndDrawParticlesIndices(thread_data[index].indices, thread_data[index].count);
-			thread_data[index].jobs--;
-        }
-    }
 }
 
 /**
@@ -105,9 +47,8 @@ void ObjectManager::updateParticles(double delta)
 /**
  * Updates the particle positions and draws them
  * @param delta The time elapsed since the last update
- * @param renderer The SDL renderer to draw the particles
  */
-void ObjectManager::updateAndDrawParticles(double delta, SDL_Renderer* renderer)
+void ObjectManager::updateAndDrawParticles(double delta)
 {
     // Temporary non multi-threaded update
     for (int i = 0; i < current_max_particles; i++)
@@ -117,33 +58,12 @@ void ObjectManager::updateAndDrawParticles(double delta, SDL_Renderer* renderer)
         particles[i].draw(renderer);
     }
 
-    // Draw debug circles
-    // drawDebugCircles(renderer);
-}
-
-/**
- * Updates and draws the particles in the particle array using threading
- * @param delta The time elapsed since the last update
- * @param renderer The SDL renderer to draw the particles
- */
-void ObjectManager::updateAndDrawParticlesMultiThreaded(double delta, SDL_Renderer* renderer)
-{
-    // Start threads with individual particle data
-    // using the updateAndDrawParticlesIndices function
-    for (int i = 0; i < THREAD_COUNT; i++)
+    // Draw player objects
+    for (int i = 0; i < players.size(); i++)
     {
-        // Add a job to all threads
-        thread_data[i].jobs += 1;
+        players[i].draw();
     }
-
-    // Draw the particles
-    for (int i = 0; i < current_max_particles-1; i++)
-    {
-        particles[i].draw(renderer);
-	}
-
 }
-
 /**
  * Updates and draws the particles in the given indices array
  * @param indices The array of indices to update and draw
@@ -164,7 +84,13 @@ void ObjectManager::updateAndDrawParticlesIndices(int* indices, int count)
  */
 Player* ObjectManager::generatePlayer(std::string UUID, Position pos)
 {
-    Player player = Player(UUID, pos);
+    Player player = Player(UUID, pos, renderer);
+
+    // Set player texture based on last character of UUID
+    char last_char = UUID.back();
+    int num = last_char - '0';
+    player.loadSpriteFromNumber(num);
+
 	players.push_back(player);
 	return &players[players.size()-1];
 }
@@ -201,7 +127,7 @@ void ObjectManager::logParticleRecord(std::string command)
  * width and height and column and row count
  * @param renderer The SDL renderer to draw the grid lines
  */
-void ObjectManager::drawGridLines(SDL_Renderer* renderer)
+void ObjectManager::drawGridLines()
 {
     int column_count = 10;
     int row_count = 10;
@@ -225,13 +151,12 @@ void ObjectManager::drawGridLines(SDL_Renderer* renderer)
 	}
 }
 
-ObjectManager::ObjectManager() { screen_width = 1280; screen_height = 720; setupThreads(); }
+ObjectManager::ObjectManager() { screen_width = 1280; screen_height = 720; }
 
 ObjectManager::ObjectManager(int width, int height)
 {
     screen_width = width;
 	screen_height = height;
-    setupThreads();
 }
 
 /**
@@ -241,7 +166,4 @@ ObjectManager::~ObjectManager()
 {
     // Destruct the particles and walls
     delete[] particles;
-
-    running = false; // Stop the threads
-    for (int i = 0; i < THREAD_COUNT; i++) { object_threads[i].join(); }
 }

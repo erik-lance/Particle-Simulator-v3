@@ -1,9 +1,10 @@
 #include "Player.h"
 
-Player::Player(std::string ID, Position pos)
+Player::Player(std::string ID, Position pos, SDL_Renderer* renderer)
 {
 	UUID = ID;
 	position = pos;
+	this->renderer = renderer;
 
 	// Initialize SDL Image
 	if (IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) // Initialize SDL_image
@@ -42,7 +43,7 @@ void Player::move(Position dir, double deltaTime)
 	std::cout << "Player position: (" << position.x << ", " << position.y << ")" << std::endl;
 }
 
-bool Player::loadSprite(SDL_Renderer* renderer)
+bool Player::loadSprite()
 {
 	// Load Sprite randomly from 1-4
 	int num = rand() % 4 + 1;
@@ -93,7 +94,7 @@ bool Player::loadSprite(SDL_Renderer* renderer)
 	}
 }
 
-bool Player::loadSpecifiedSprite(SDL_Renderer* renderer, const char* path)
+bool Player::loadSpecifiedSprite(const char* path)
 {
 	SDL_Surface* surface_sprite = IMG_Load(path); // Load the image into a surface
 	sprite = SDL_CreateTextureFromSurface(renderer, surface_sprite); // Create a texture from the surface
@@ -110,6 +111,47 @@ bool Player::loadSpecifiedSprite(SDL_Renderer* renderer, const char* path)
 	}
 }
 
+void Player::loadSpriteFromNumber(int num)
+{
+	char* filePath = new char[100];
+
+	switch (num)
+	{
+		case 0:
+			strcpy(filePath, "Assets/bulbasaur.png");
+			break;
+		case 1:
+			strcpy(filePath, "Assets/charmander.png");
+			break;
+		case 2:
+			strcpy(filePath, "Assets/squirtle.png");
+			break;
+		case 3:
+			strcpy(filePath, "Assets/pikachu.png");
+			break;
+		default:
+			strcpy(filePath, "Assets/bulbasaur.png");
+			break;
+	}
+
+	SDL_Surface* surface_sprite = IMG_Load(filePath); // Load the image into a surface
+	sprite = SDL_CreateTextureFromSurface(renderer, surface_sprite); // Create a texture from the surface
+	if (sprite == NULL)
+	{
+		std::cout << "Failed to load sprite! SDL Error: " << SDL_GetError() << std::endl;
+	}
+	else
+	{
+		// Set sprite dimensions
+		spriteWidth = surface_sprite->w;
+		spriteHeight = surface_sprite->h;
+
+		std::cout << "Player " << UUID << " sprite loaded successfully!" << std::endl;
+		delete[] filePath;
+		SDL_FreeSurface(surface_sprite);
+	}
+}
+
 /**
  * Draws the player sprite to the screen. Follows the
  * instruction of 33x19 where sprite must be center. Also
@@ -117,7 +159,7 @@ bool Player::loadSpecifiedSprite(SDL_Renderer* renderer, const char* path)
  * Note: The sprite will get squished because it is no longer 16:9
  * @param renderer The renderer to draw to
  */
-void Player::draw(SDL_Renderer* renderer) const
+void Player::draw() const
 {
 	// Player must be drawn at the center of the screen
 	// Since the dimensions are 33 x 19, size of sprite

@@ -113,6 +113,7 @@ int main()
 
 	// Set delta time of object manager
 	object_manager.setDeltaTime(&delta_time);
+	object_manager.setRenderer(renderer);
 
 	server.start();
 
@@ -140,11 +141,10 @@ int main()
 		SDL_RenderClear(renderer);
 
 		draw_sim_borders(renderer);
-		if (drawGrid) object_manager.drawGridLines(renderer);
+		// if (drawGrid) object_manager.drawGridLines();
 
 		// Move the particles
-		// object_manager.updateAndDrawParticles(delta_time, renderer);
-		object_manager.updateAndDrawParticlesMultiThreaded(delta_time, renderer);
+		object_manager.updateAndDrawParticles(delta_time);
 
 		// Update FPS every 0.5 seconds
 		static double time = 0;
