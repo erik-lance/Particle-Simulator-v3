@@ -17,7 +17,7 @@ public class Utils {
     public static boolean DEBUG_MODE = true;
 
     public static final String SERVER_IP = "127.0.0.1";
-    public static final int SERVER_PORT = 5555;
+    public static final int SERVER_PORT = 8888;
 
     // Records
     public record Position(double x, double y) { 

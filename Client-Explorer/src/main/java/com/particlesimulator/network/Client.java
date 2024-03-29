@@ -1,5 +1,6 @@
 package com.particlesimulator.network;
 
+import com.particlesimulator.Utils;
 import com.particlesimulator.Utils.Position;
 import com.particlesimulator.objects.ObjectManager;
 
@@ -36,8 +37,8 @@ public class Client {
 
         // Connect to the server
         try {
-            address = InetAddress.getByName("127.0.0.1");
-            port = 5555;
+            address = InetAddress.getByName(Utils.SERVER_IP);
+            port = Utils.SERVER_PORT;
 
             socket = new DatagramSocket();
             System.out.println("Connected to the server - " + address + ":" + port);
@@ -61,6 +62,7 @@ public class Client {
      * @param pos - Position of the player
      */
     public void addPlayerToServer(Position pos) {
+        System.out.println("Sending server player data");
         // Send data to the server
         String data = "<u>" + userID + ":" + pos.getX() + "," + pos.getY() + "</u>";
 

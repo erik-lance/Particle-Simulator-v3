@@ -108,6 +108,7 @@ void Server::receiver()
 
 		if (bytes_received > 0)
 		{
+			std::cout << "Received message: " << buffer << std::endl;
 			// Get string of the client address host:port
 			char client_host[NI_MAXHOST];
 			char client_service[NI_MAXSERV];
