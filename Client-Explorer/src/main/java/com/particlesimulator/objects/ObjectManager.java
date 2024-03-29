@@ -30,6 +30,7 @@ public class ObjectManager {
      * @return The player object
      */
     public Player spawnPlayer(Position position) {
+        System.out.println("Adding you to game at position: " + position.getX() + ", " + position.getY());
         player = new Player(0, position, true);
 
         // Set texture
@@ -61,6 +62,19 @@ public class ObjectManager {
      */
     public void mainLoop(long window, double deltaTime) {
         if (clientLoaded) {
+            // Player
+            if (player != null) {
+                player.input(window, deltaTime);
+                player.draw();
+            }
+
+            // Particles
+            for (int i = 0; i < numParticles; i++) {
+                particles[i].update(deltaTime);
+                if (DEBUG_MODE) { particles[i].drawDefault(); }
+                else { particles[i].drawParticle(player.getPosition()); }
+            }
+        } else if (DEBUG_MODE) {
             // Player
             if (player != null) {
                 player.input(window, deltaTime);

@@ -16,6 +16,9 @@ public class Utils {
     public static int windowHeight = 720;
     public static boolean DEBUG_MODE = true;
 
+    public static final String SERVER_IP = "127.0.0.1";
+    public static final int SERVER_PORT = 5555;
+
     // Records
     public record Position(double x, double y) { 
         public boolean equals(Object o) {

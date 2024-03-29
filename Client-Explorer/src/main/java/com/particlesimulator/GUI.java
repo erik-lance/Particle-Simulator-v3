@@ -81,6 +81,7 @@ public class GUI {
         menuWindow();
 
         if (!spawned.get()) { spawnPlayerWindow(); } 
+        else if (spawned.get() && !objectManager.clientLoaded) { loadingWindow(); }
         else { }
     }
 
@@ -137,6 +138,15 @@ public class GUI {
             spawned.set(true);
         }
 
+        ImGui.end();
+    }
+
+    public void loadingWindow() {
+        ImGui.begin("Loading", new ImBoolean(true), ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoCollapse);
+        ImGui.setWindowSize(200, 100);
+        ImGui.setWindowPos((Utils.windowWidth/2) - 100, (Utils.windowHeight/2) - 50);
+        ImGui.text("Connecting to");
+        ImGui.text(Utils.SERVER_IP + ":" + Utils.SERVER_PORT);
         ImGui.end();
     }
 
