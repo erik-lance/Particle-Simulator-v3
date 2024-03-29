@@ -7,21 +7,41 @@ Server::Server(std::string host, int port, ObjectManager* object_manager)
 	this->object_manager = object_manager;
 
 	// If windows, initialize winsock
-	#ifdef _WIN32
-		WSADATA wsa_data;
-		if (WSAStartup(MAKEWORD(2, 2), &wsa_data) != 0)
-		{
-			std::cerr << "Error initializing Winsock" << std::endl;
-			exit(1);
-		}
-	#endif
+#ifdef _WIN32
+	WSADATA wsa_data;
+	if (WSAStartup(MAKEWORD(2, 2), &wsa_data) != 0)
+	{
+		std::cerr << "Error initializing Winsock" << std::endl;
+		exit(1);
+	}
+#endif
 
 	init();
 }
 
 Server::~Server()
 {
+	std::cout << "Shutting down server..." << std::endl;
 	this->running = false;
+
+	// Join threads
+	receiver_thread.join();
+	processor_thread.join();
+
+	std::cout << "Shutting down sender threads..." << std::endl;
+
+	// Update sender threads
+	cv.notify_all();
+
+	for (std::thread& t : sender_threads) { t.join(); }
+
+	// Close the socket
+#ifdef _WIN32
+	closesocket(m_socket);
+	WSACleanup();
+#else
+	close(m_socket);
+#endif
 }
 
 /**
@@ -29,6 +49,8 @@ Server::~Server()
  * */
 void Server::init()
 {
+	std::cout << "Initializing server..." << std::endl;
+
 	// Create a socket (UDP)
 	this->m_socket = socket(AF_INET, SOCK_DGRAM, 0);
 	if (m_socket < 0)
@@ -43,6 +65,14 @@ void Server::init()
 	server_address.sin_port = htons(port);
 	InetPtonA(AF_INET, host.c_str(), &server_address.sin_addr); // Convert the host address to a usable format
 
+	// Set to non-blocking
+#ifdef _WIN32
+	u_long mode = 1;
+	ioctlsocket(m_socket, FIONBIO, &mode);
+#else
+	fcntl(m_socket, F_SETFL, O_NONBLOCK);
+#endif
+
 	// Bind the socket to the server address
 	if (bind(m_socket, (struct sockaddr*)&server_address, sizeof(server_address)) != 0)
 	{
@@ -52,6 +82,8 @@ void Server::init()
 		std::cerr << "Error binding socket: " << error << std::endl;
 		exit(1);
 	}
+
+	std::cout << "Server initialized at " << host << ":" << port << std::endl;
 }
 
 void Server::start()
@@ -95,10 +127,10 @@ void Server::receiver()
 		}
 		else
 		{
-			// Print full error details
-			char error[1024];
+			// Print full error details if not empty
+			/*char error[1024];
 			strerror_s(error, sizeof(error), errno);
-			std::cerr << "Error receiving message: " << error << std::endl;
+			std::cerr << "Error receiving message: " << error << std::endl;*/
 		}
 	}
 }
@@ -147,7 +179,11 @@ void Server::processor()
 
 				// Start loading client
 				// Send to client all previous particles by batch
-				client_loader_threads.push_back(std::thread(&Server::clientLoader, this, user, response.message, &object_manager->getParticleHistory()));
+
+				// We take a pointer to the history of the particles because the history is updated in real-time
+				// To avoid '&' requires I-value error, we use a pointer to the history
+				std::vector<ParticleHistoryRecord> history = object_manager->getParticleHistory();
+				client_loader_threads.push_back(std::thread(&Server::clientLoader, this, user, response.message, &history));
 			}
 			else if (type == "<m>") {
 				// Player movement update
@@ -158,7 +194,7 @@ void Server::processor()
 				int y = std::stoi(message.substr(message.find(',') + 1));
 
 				// X and Y are the direction of the player
-				Position direction { x, y };
+				Position direction{ x, y };
 
 				// Distribute message to all clients that are not the sender
 				sendToOtherClients(response.message, response.address);
@@ -176,7 +212,9 @@ void Server::sender()
 	while (running) {
 		// Use condition variable to wait for messages
 		std::unique_lock<std::mutex> lock(mtx);
-		while (messages.empty()) { cv.wait(lock); }
+		while (messages.empty() && running) { cv.wait(lock); }
+
+		if (!running) { return; }
 
 		// Send the message
 		Message message = messages.front();

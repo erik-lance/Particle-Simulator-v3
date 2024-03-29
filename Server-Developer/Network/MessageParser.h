@@ -6,6 +6,8 @@
 class MessageParser {
 public:
 	MessageParser(Server* server, ObjectManager* object_manager) : server(server), object_manager(object_manager) {}
+	MessageParser() {}
+	~MessageParser() {}
 
 	void parseMessage(char* message);
 

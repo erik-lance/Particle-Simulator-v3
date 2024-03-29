@@ -95,7 +95,11 @@ int main()
 	SDL_Rect sim_viewport = { 0, 0, SIM_WIDTH, SIM_HEIGHT };
 	SDL_RenderSetViewport(renderer, &sim_viewport);
 
-	SimulatorGUI gui = SimulatorGUI(window, renderer, &object_manager);
+	// Prepare server
+	Server server = Server("127.0.0.1", 8888, &object_manager);
+	MessageParser message_parser = MessageParser(&server, &object_manager);
+
+	SimulatorGUI gui = SimulatorGUI(window, renderer, &object_manager, &message_parser);
 
 	// Check for OpenGL errors
 	GLenum error = glGetError();
@@ -110,8 +114,7 @@ int main()
 	// Set delta time of object manager
 	object_manager.setDeltaTime(&delta_time);
 
-	// Set Player
-	object_manager.getPlayer()->loadSprite(renderer);
+	server.start();
 
 	while (isRunning) {
 		// Calculate delta time

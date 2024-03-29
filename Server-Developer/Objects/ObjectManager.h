@@ -41,7 +41,7 @@ public:
 
 	std::vector<Player> getPlayers() const { return players; }
 	Player getPlayer(int index) const { return players[index]; }
-	Player* generatePlayer(std::string UUID, Position pos) { return &Player(UUID, pos); }
+	Player* generatePlayer(std::string UUID, Position pos);
 
 	void logParticleRecord(std::string command);
 	std::vector<ParticleHistoryRecord> getParticleHistory() const { return particle_history; }

@@ -159,6 +159,16 @@ void ObjectManager::updateAndDrawParticlesIndices(int* indices, int count)
 	}
 }
 
+/**
+ * Generates a player object and adds it to the players vector
+ */
+Player* ObjectManager::generatePlayer(std::string UUID, Position pos)
+{
+    Player player = Player(UUID, pos);
+	players.push_back(player);
+	return &players[players.size()-1];
+}
+
 void ObjectManager::logParticleRecord(std::string command)
 {
 	// Log the particle record

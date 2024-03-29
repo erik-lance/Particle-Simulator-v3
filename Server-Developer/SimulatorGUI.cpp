@@ -1,7 +1,7 @@
 #include "SimulatorGUI.h"
 #include <iostream>
 
-SimulatorGUI::SimulatorGUI(SDL_Window* window, SDL_Renderer* renderer, ObjectManager* manager)
+SimulatorGUI::SimulatorGUI(SDL_Window* window, SDL_Renderer* renderer, ObjectManager* manager, MessageParser* mp)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -15,6 +15,7 @@ SimulatorGUI::SimulatorGUI(SDL_Window* window, SDL_Renderer* renderer, ObjectMan
 	ImGui::StyleColorsDark();
 
 	this->m_object_manager = manager;
+	this->message_parser = mp;
 }
 
 SimulatorGUI::~SimulatorGUI()
