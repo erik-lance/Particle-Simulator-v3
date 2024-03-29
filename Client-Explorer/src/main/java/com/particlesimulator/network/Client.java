@@ -70,6 +70,10 @@ public class Client {
         sendLock.lock();
         sendDataQueue.add(data);
         sendLock.unlock();
+
+        // Set player texture
+        int lastDigit = Integer.parseInt(userID.substring(userID.length() - 1));
+        objectManager.setPlayerTexutre(lastDigit);
     }
 
     /**
@@ -154,7 +158,7 @@ public class Client {
             try {
                 DatagramPacket packet = new DatagramPacket(new byte[1024], 1024);
                 socket.receive(packet);
-                
+
                 String data = new String(packet.getData(), 0, packet.getLength());
                 // Process data
                 if (data.startsWith("<p>") || data.startsWith("<b>")) {

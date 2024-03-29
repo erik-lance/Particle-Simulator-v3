@@ -160,4 +160,14 @@ public class ObjectManager {
         System.arraycopy(particles, 0, newParticles, 0, numParticles); // Copy old array to new array
         particles = newParticles;
     }
+
+    /**
+     * Sets the player texture based on the given number. Taken from
+     * first digit of the player's unique ID.
+     * @param textNum
+     */
+    public void setPlayerTexutre(int textNum) {
+        int num = textNum % 4;
+        player.setTexture(textures[num]);
+    }
 }
