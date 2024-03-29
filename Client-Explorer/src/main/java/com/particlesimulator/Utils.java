@@ -14,7 +14,7 @@ public class Utils {
 
     public static int windowWidth = 1280;
     public static int windowHeight = 720;
-    public static boolean DEBUG_MODE = true;
+    public static boolean DEBUG_MODE = false;
 
     public static final String SERVER_IP = "127.0.0.1";
     public static final int SERVER_PORT = 8888;
