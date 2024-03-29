@@ -98,12 +98,13 @@ void Server::start()
 
 void Server::receiver()
 {
+	// Receive a message
+	char buffer[1024];
+	struct sockaddr_in client_address;
+	socklen_t client_address_length = sizeof(client_address);
+
 	while (running) {
 		// Receive a message
-		char buffer[1024];
-		struct sockaddr_in client_address;
-		socklen_t client_address_length = sizeof(client_address);
-
 		int bytes_received = recvfrom(m_socket, buffer, sizeof(buffer), 0, (struct sockaddr*)&client_address, &client_address_length);
 
 		if (bytes_received > 0)
@@ -112,7 +113,12 @@ void Server::receiver()
 			// Get string of the client address host:port
 			char client_host[NI_MAXHOST];
 			char client_service[NI_MAXSERV];
+
+			// Get client address
 			getnameinfo((struct sockaddr*)&client_address, client_address_length, client_host, NI_MAXHOST, client_service, NI_MAXSERV, 0);
+
+			// Transform address to string
+			inet_ntop(AF_INET, &client_address.sin_addr, client_host, NI_MAXHOST);
 
 			// Add the message to the responses queue
 			mtx.lock();
@@ -123,6 +129,8 @@ void Server::receiver()
 
 			// Add the message to the queue
 			responses.push(response);
+
+			// std::cout << "["+ response.address +"] Added: " << response.message << " to queue" << std::endl;
 
 			mtx.unlock();
 		}
@@ -144,7 +152,7 @@ void Server::processor()
 	// If <c>x,y</c>; it is a new player connection
 	// If <m>x,y</m>; it is a player movement direction
 	while (running) {
-		if (messages.size() > 0)
+		if (responses.size() > 0)
 		{
 			mtx.lock();
 			Response response = responses.front();
@@ -152,12 +160,13 @@ void Server::processor()
 			mtx.unlock();
 
 			// Process the message
-			std::cout << "MSG: " << response.message << std::endl;
+			// std::cout << "MSG: " << response.message << std::endl;
 
 			// Check message type by first three (3) characters
 			std::string type = response.message.substr(0, 3);
 
 			if (type == "<c>") {
+				std::cout << "["+ response.address +"] New player connection: " << response.message << std::endl;
 				// New player connection "<c>UUID:x,y</c>"
 				// Get UUID from inner message before ':' character
 				std::string UUID = response.message.substr(3);
@@ -228,6 +237,8 @@ void Server::sender()
 		std::string host = message.dest_address.substr(0, message.dest_address.find(':'));
 		std::string port = message.dest_address.substr(message.dest_address.find(':') + 1);
 
+		std::cout << "Sending message to " << host << ":" << port << std::endl;
+
 		struct sockaddr_in client_address;
 		client_address.sin_family = AF_INET;
 		client_address.sin_port = htons(std::stoi(port));
@@ -238,10 +249,8 @@ void Server::sender()
 
 		if (bytes_sent < 0)
 		{
-			// Print full error details
-			char error[1024];
-			strerror_s(error, sizeof(error), errno);
-			std::cerr << "Error sending message: " << error << std::endl;
+			int error_code = WSAGetLastError();
+			std::cout << "Error sending message: " << error_code << std::endl;
 
 			// Disconnect the client by removing from the list
 			for (int i = 0; i < clients.size(); i++)
@@ -267,6 +276,9 @@ void Server::sender()
  */
 void Server::clientLoader(User u, std::string spawn, std::vector<ParticleHistoryRecord>* history)
 {
+	std::cout << "["+  u.address + "] Loading in player: " + u.UUID << std::endl;
+	std::cout << "Current history size: " << history->size() << std::endl;
+
 	// Generate the message to send to the client
 	std::string address = u.address;
 	std::string response = spawn;
@@ -291,6 +303,7 @@ void Server::clientLoader(User u, std::string spawn, std::vector<ParticleHistory
 		// Add the message to the queue
 		mtx.lock();
 		messages.push(msg);
+		cv.notify_one();
 		mtx.unlock();
 	}
 
@@ -300,13 +313,16 @@ void Server::clientLoader(User u, std::string spawn, std::vector<ParticleHistory
 	// Add the message to the queue
 	mtx.lock();
 	messages.push(done);
+	cv.notify_one();
 	mtx.unlock();
+
+	// Send the message to all clients
+	sendToOtherClients(response, address);
 
 	// Finally add to list of clients once caught up
 	clients.push_back(u);
 
-	// Send the message to all clients
-	sendToOtherClients(response, address);
+	std::cout << "[" + u.address + "] Player loaded: " + u.UUID << std::endl;
 }
 
 void Server::sendToOtherClients(std::string msg, std::string address)
@@ -323,6 +339,7 @@ void Server::sendToOtherClients(std::string msg, std::string address)
 			// Add the message to the queue
 			mtx.lock();
 			messages.push(message);
+			cv.notify_one();
 			mtx.unlock();
 		}
 	}
@@ -340,6 +357,7 @@ void Server::sendToAllClients(std::string msg)
 		// Add the message to the queue
 		mtx.lock();
 		messages.push(message);
+		cv.notify_one();
 		mtx.unlock();
 	}
 }

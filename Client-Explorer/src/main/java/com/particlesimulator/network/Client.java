@@ -31,8 +31,6 @@ public class Client {
 
     public Client(ObjectManager objectManager) {
         this.objectManager = objectManager;
-        listenerThread = new Thread(this::receiver);
-        senderThread = new Thread(this::sender);
         sendLock = new ReentrantLock();
 
         // Connect to the server
@@ -49,12 +47,15 @@ public class Client {
             // Set socket to blocking
             socket.setSoTimeout(0);
 
-            listenerThread.start();
-            senderThread.start();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        listenerThread = new Thread(this::receiver);
+        senderThread = new Thread(this::sender);
+
+        listenerThread.start();
+        senderThread.start();
     }
 
     /**
@@ -64,7 +65,7 @@ public class Client {
     public void addPlayerToServer(Position pos) {
         System.out.println("Sending server player data");
         // Send data to the server
-        String data = "<u>" + userID + ":" + pos.getX() + "," + pos.getY() + "</u>";
+        String data = "<c>" + userID + ":" + pos.getX() + "," + pos.getY() + "</c>";
 
         sendLock.lock();
         sendDataQueue.add(data);
@@ -151,7 +152,9 @@ public class Client {
         while (true) {
             // Receive data from the server
             try {
-                DatagramPacket packet = new DatagramPacket(new byte[1024], 1024, address, port);
+                DatagramPacket packet = new DatagramPacket(new byte[1024], 1024);
+                socket.receive(packet);
+                
                 String data = new String(packet.getData(), 0, packet.getLength());
                 // Process data
                 if (data.startsWith("<p>") || data.startsWith("<b>")) {
@@ -168,7 +171,10 @@ public class Client {
                         objectManager.clientLoaded = true;
                     }
                 } else {
-
+                    // Print if data starts with a "<"
+                    if (data.startsWith("<")) {
+                        System.out.println(data);
+                    }
                 }
 
             } catch (Exception e) {
