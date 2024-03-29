@@ -3,15 +3,13 @@ package com.particlesimulator.network;
 import com.particlesimulator.Utils.Position;
 import com.particlesimulator.objects.ObjectManager;
 
-// TCP Socket
-import java.net.Socket;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+// UDP Socket
 import java.util.LinkedList;
 import java.util.Queue;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -20,15 +18,14 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Client {
     private String userID;
     private ObjectManager objectManager;
-    private Socket socket;
+    private DatagramSocket socket;
+    private InetAddress address;
+    private int port;
     private Thread listenerThread;
     private Thread senderThread;
 
     // Data Queue
     private Queue<String> sendDataQueue = new LinkedList<>();
-
-    private BufferedReader reader;
-    private BufferedWriter writer;
     private ReentrantLock sendLock;
 
     public Client(ObjectManager objectManager) {
@@ -39,18 +36,17 @@ public class Client {
 
         // Connect to the server
         try {
-            socket = new Socket("127.0.0.1", 8080);
-            System.out.println("Connected to the server - " + socket.getInetAddress() + ":" + socket.getPort());
+            address = InetAddress.getByName("127.0.0.1");
+            port = 5555;
+
+            socket = new DatagramSocket();
+            System.out.println("Connected to the server - " + address + ":" + port);
 
             // Generate userID based on time of connection
             userID = "u" + System.currentTimeMillis();
 
             // Set socket to blocking
             socket.setSoTimeout(0);
-
-            // Prepare reader-writer
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
             listenerThread.start();
             senderThread.start();
@@ -153,29 +149,27 @@ public class Client {
         while (true) {
             // Receive data from the server
             try {
-                String data = reader.readLine();
-                while (data != null) {
-                    // Process data
-                    if (data.startsWith("<p>") || data.startsWith("<b>")) {
-                        parseParticleData(data);
-                    } else if (data.startsWith("<r>") || data.startsWith("<d>")) {
-                        // This is for loading client data
-                        // <r> is for receiving the player's position
-                        // <d> means done loading
-                        if (data.startsWith("<r>")) {
-                            loadClient(data);
-                        } else {
-                            // TODO: Update particles by X ticks since loading
-                            System.out.println("Done loading client data");
-                            objectManager.clientLoaded = true;
-                        }
+                DatagramPacket packet = new DatagramPacket(new byte[1024], 1024, address, port);
+                String data = new String(packet.getData(), 0, packet.getLength());
+                // Process data
+                if (data.startsWith("<p>") || data.startsWith("<b>")) {
+                    parseParticleData(data);
+                } else if (data.startsWith("<r>") || data.startsWith("<d>")) {
+                    // This is for loading client data
+                    // <r> is for receiving the player's position
+                    // <d> means done loading
+                    if (data.startsWith("<r>")) {
+                        loadClient(data);
                     } else {
-                        System.out.println(data);
+                        // TODO: Update particles by X ticks since loading
+                        System.out.println("Done loading client data");
+                        objectManager.clientLoaded = true;
                     }
+                } else {
 
-                    data = reader.readLine(); // Read next line
                 }
-            } catch (IOException e) {
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -184,18 +178,20 @@ public class Client {
     public void sender() {
         while (true) {
             // Send data to the server
-            if (!sendDataQueue.isEmpty()) {
-                try {
-                    // Get first data from the queue
-                    sendLock.lock();
-                    String data = sendDataQueue.poll();
-                    sendLock.unlock();
+            try {
+                // Get first data from the queue
+                sendLock.lock();
+                String data = sendDataQueue.poll();
+                sendLock.unlock();
 
-                    writer.write(data); // Send data to socket by writing to the buffer
-                    writer.flush(); // Flush the buffer to send the data
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (data != null) {
+                    byte[] sendData = data.getBytes();
+                    DatagramPacket packet = new DatagramPacket(sendData, sendData.length, address, port);
+                    socket.send(packet);
                 }
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
