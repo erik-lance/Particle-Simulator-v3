@@ -46,11 +46,11 @@ void ObjectManager::updateParticles(double delta)
 
 /**
  * Updates the particle positions and draws them
+ * @param renderer The SDL renderer to draw the particles
  * @param delta The time elapsed since the last update
  */
-void ObjectManager::updateAndDrawParticles(double delta)
+void ObjectManager::updateAndDrawParticles(SDL_Renderer* renderer, double delta)
 {
-    // Temporary non multi-threaded update
     for (int i = 0; i < current_max_particles; i++)
     {
         particles[i].updatePosition(delta);
@@ -59,9 +59,11 @@ void ObjectManager::updateAndDrawParticles(double delta)
     }
 
     // Draw player objects
+    readyPlayers(renderer);
+
     for (int i = 0; i < players.size(); i++)
     {
-        players[i].draw();
+        players[i].draw(renderer);
     }
 }
 /**
@@ -80,19 +82,33 @@ void ObjectManager::updateAndDrawParticlesIndices(int* indices, int count)
 }
 
 /**
- * Generates a player object and adds it to the players vector
+ * Generates a player object and adds it to the uninitialized players vector
  */
-Player* ObjectManager::generatePlayer(std::string UUID, Position pos)
+void ObjectManager::generatePlayer(std::string UUID, Position pos)
 {
-    Player player = Player(UUID, pos, renderer);
+    std::cout << "Spawning " << UUID << " at position (" << pos.x << ", " << pos.y << ")\n" << std::endl;
+    Player player = Player(UUID, pos);
 
-    // Set player texture based on last character of UUID
-    char last_char = UUID.back();
-    int num = last_char - '0';
-    player.loadSpriteFromNumber(num);
+    mtx.lock();
+	uninitialized_players.push_back(player);
+    mtx.unlock();
+}
 
-	players.push_back(player);
-	return &players[players.size()-1];
+void ObjectManager::readyPlayers(SDL_Renderer* renderer)
+{
+    if (uninitialized_players.size() > 0)
+    {
+        mtx.lock();
+		players.push_back(uninitialized_players[0]);
+		uninitialized_players.erase(uninitialized_players.begin());
+        mtx.unlock();
+
+        // Load the player's sprite
+        char last_char = players[players.size()-1].getUUID().back();
+        int num = last_char - '0';
+        num = num % 4;
+        players[players.size()-1].loadSpriteFromNumber(renderer, num);
+	}
 }
 
 void ObjectManager::logParticleRecord(std::string command)

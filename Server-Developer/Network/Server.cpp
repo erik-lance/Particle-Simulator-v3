@@ -185,7 +185,8 @@ void Server::processor()
 				User user;
 				user.address = response.address;
 				user.UUID = UUID;
-				user.player = object_manager->generatePlayer(UUID, position);
+				
+				object_manager->generatePlayer(UUID, position);
 
 				// Start loading client
 				// Send to client all previous particles by batch

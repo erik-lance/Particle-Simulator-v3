@@ -34,7 +34,6 @@ struct Response {
 struct User {
 	std::string address;
 	std::string UUID;
-	Player* player;
 };
 
 class Server {

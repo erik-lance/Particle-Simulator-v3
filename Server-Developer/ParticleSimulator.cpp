@@ -113,7 +113,6 @@ int main()
 
 	// Set delta time of object manager
 	object_manager.setDeltaTime(&delta_time);
-	object_manager.setRenderer(renderer);
 
 	server.start();
 
@@ -144,7 +143,7 @@ int main()
 		// if (drawGrid) object_manager.drawGridLines();
 
 		// Move the particles
-		object_manager.updateAndDrawParticles(delta_time);
+		object_manager.updateAndDrawParticles(renderer, delta_time);
 
 		// Update FPS every 0.5 seconds
 		static double time = 0;
