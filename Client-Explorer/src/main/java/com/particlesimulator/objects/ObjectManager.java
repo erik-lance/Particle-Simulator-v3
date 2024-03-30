@@ -144,7 +144,7 @@ public class ObjectManager {
 
     public void updateParticles() {
         for (int i = 0; i < numParticles; i++) {
-            particles[i].update(0.10);
+            particles[i].update(1);
         }
     }
 
