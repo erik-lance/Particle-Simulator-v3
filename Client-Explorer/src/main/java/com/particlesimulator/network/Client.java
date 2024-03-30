@@ -136,16 +136,19 @@ public class Client {
      * @param record - contains ticks and particle command (e.g.:<r>23<p>particle_data</p></r>)
      */
     public void loadClient(String record) {
+        System.out.println("Loading record: " + record);
+
         // Get ticks after <r> and before next '<'
         int ticks = Integer.parseInt(record.substring(3, record.indexOf("<", 3)));
 
         // Get particle command. Note: Can be <p> or <b>
         String particle_command = record.substring(record.indexOf("<", 3));
         
-        // Keep only the particle data
-        String particle_data = particle_command.substring(3, particle_command.length() - 8);
+        // Keep only the particle data (with <p> or <b> tags included)
+        String particle_data = particle_command.substring(0, particle_command.indexOf("</"));
 
         // Process the particle data
+        System.out.println("Parsing particle data: " + particle_data);
         parseParticleData(particle_data);
 
         // Update all particles in the object manager by the number of ticks
@@ -173,7 +176,7 @@ public class Client {
                         loadClient(data);
                     } else {
                         // TODO: Update particles by X ticks since loading
-                        System.out.println("Done loading client data");
+                        System.out.println("Done loading client data. Added: " + objectManager.getNumParticles() + " particles."); 
                         objectManager.clientLoaded = true;
                     }
                 } else {

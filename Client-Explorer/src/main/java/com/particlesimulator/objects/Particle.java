@@ -19,8 +19,17 @@ public class Particle {
         this.m_id = id;
         this.curPosition = position;
         this.oldPosition = position;
-        this.angle = angle;
         this.velocity = velocity;
+
+        // Fix angle
+        this.angle = 360 - angle;
+        if (this.angle == 360) { this.angle = 0; }
+
+        // Convert to radians
+        this.angle = Math.toRadians(this.angle);
+
+        // Normalize the angle
+        this.angle = normalizeAngle(this.angle);
     }
 
     /**

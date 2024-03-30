@@ -142,6 +142,7 @@ void SimulatorGUI::ParticlesGUI()
 		std::cout << "Particle Added" << std::endl;
 
 		m_object_manager->addParticle(m_particle_x, m_particle_y, m_particle_angle, m_particle_velocity);
+		message_parser->addParticleMessage(Position(m_particle_x, m_particle_y), m_particle_angle, m_particle_velocity);
 
 		// Increment particle id
 		m_particle_id++;

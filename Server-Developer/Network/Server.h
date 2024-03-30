@@ -46,7 +46,7 @@ public:
 	void processor();
 	void sender();
 
-	void clientLoader(User u, std::string spawn, std::vector<ParticleHistoryRecord>* history);
+	void clientLoader(User u, std::string spawn, std::vector<ParticleHistoryRecord> history);
 	void sendToOtherClients(std::string msg, std::string address);
 	void sendToAllClients(std::string msg);
 private:

@@ -194,7 +194,7 @@ void Server::processor()
 				// We take a pointer to the history of the particles because the history is updated in real-time
 				// To avoid '&' requires I-value error, we use a pointer to the history
 				std::vector<ParticleHistoryRecord> history = object_manager->getParticleHistory();
-				client_loader_threads.push_back(std::thread(&Server::clientLoader, this, user, response.message, &history));
+				client_loader_threads.push_back(std::thread(&Server::clientLoader, this, user, response.message, history));
 			}
 			else if (type == "<m>") {
 				// Player movement update (Contains player pos and direction)
@@ -307,17 +307,17 @@ void Server::sender()
  * @param spawn The spawn message that contains position of the player
  * @param history The particle history to send to the client
  */
-void Server::clientLoader(User u, std::string spawn, std::vector<ParticleHistoryRecord>* history)
+void Server::clientLoader(User u, std::string spawn, std::vector<ParticleHistoryRecord> history)
 {
 	std::cout << "["+  u.address + "] Loading in player: " + u.UUID << std::endl;
-	std::cout << "Current history size: " << history->size() << std::endl;
+	std::cout << "Current history size: " << history.size() << std::endl;
 
 	// Generate the message to send to the client
 	std::string address = u.address;
 	std::string response = spawn;
 
 	// Add all the particles to the message
-	for (ParticleHistoryRecord record : *history)
+	for (ParticleHistoryRecord record : history)
 	{
 		std::string message = "<r>";
 

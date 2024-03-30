@@ -168,4 +168,6 @@ public class ObjectManager {
         int num = textNum % 4;
         player.setTexture(textures[num]);
     }
+
+    public int getNumParticles() { return numParticles; }
 }
