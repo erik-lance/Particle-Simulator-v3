@@ -29,7 +29,6 @@ void Player::move(double deltaTime)
 {
 	if (currentDirection.x == 0 && currentDirection.y == 0) return;
 
-	std::cout << "Moving player " << UUID << " in direction (" << currentDirection.x << ", " << currentDirection.y << ")" << std::endl;
 	double newX = position.x + (currentDirection.x * moveSpeed * deltaTime);
 	double newY = position.y + (currentDirection.y * moveSpeed * deltaTime);
 

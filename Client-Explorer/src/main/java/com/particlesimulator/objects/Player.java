@@ -36,7 +36,6 @@ public class Player extends Entity {
             direction = direction.add(new Position(1, 0));
         }
         
-        System.out.println("Direction: " + direction.getX() + ", " + direction.getY());
         move(direction, deltaTime);
     }
 }
