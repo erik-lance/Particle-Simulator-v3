@@ -197,18 +197,50 @@ void Server::processor()
 				client_loader_threads.push_back(std::thread(&Server::clientLoader, this, user, response.message, &history));
 			}
 			else if (type == "<m>") {
-				// Player movement update
+				// Player movement update (Contains player pos and direction)
+				// "<m>x,y,dirX,dirY</m>"
 				std::string message = response.message.substr(3);
 				message = message.substr(0, message.size() - 4); // Remove the last 4 character (</m>)
 
-				int x = std::stoi(message.substr(0, message.find(',')));
-				int y = std::stoi(message.substr(message.find(',') + 1));
+				// First get indices of all the commas
+				std::vector<int> indices;
+				for (int i = 0; i < message.size(); i++)
+				{
+					if (message[i] == ',') { indices.push_back(i); }
+				}
+
+				// Get the player x and y
+				int x = std::stoi(message.substr(0, indices[0]));
+				int y = std::stoi(message.substr(indices[0] + 1, indices[1]));
+
+				// Get the direction of the player
+				int dirX = std::stoi(message.substr(indices[1] + 1, indices[2]));
+				int dirY = std::stoi(message.substr(indices[2] + 1));
+
 
 				// X and Y are the direction of the player
-				Position direction{ x, y };
+				Position position = { x, y };
+				Position direction = { dirX, dirY };
 
 				// Distribute message to all clients that are not the sender
 				sendToOtherClients(response.message, response.address);
+
+				// Get player's index based on address and client list
+				int index = -1;
+				for (int i = 0; i < clients.size(); i++)
+				{
+					if (clients[i].address == response.address)
+					{
+						index = i;
+						break;
+					}
+				}
+
+				// Update player's position and direction
+				if (index != -1)
+				{
+					object_manager->updatePlayerMovement(index, position, direction);
+				}
 			}
 			else {
 				std::cout << "Unknown message type: " << type << std::endl;

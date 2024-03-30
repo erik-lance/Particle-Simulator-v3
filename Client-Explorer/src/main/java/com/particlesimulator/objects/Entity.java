@@ -7,6 +7,7 @@ import static com.particlesimulator.Utils.windowWidth;
 import static org.lwjgl.opengl.GL11.*;
 
 import com.particlesimulator.Utils.Position;
+import com.particlesimulator.network.Client;
 import com.particlesimulator.render.Texture;
 
 
@@ -16,12 +17,15 @@ import com.particlesimulator.render.Texture;
  * by Players and helps with rendering.
  */
 public abstract class Entity {
+    private Client client;
     private Position position;
     private Texture texture;
     private boolean isUser;
     private float speed = 10.0f;
     private int entityWidth = 39;
     private int entityHeight = 38;
+    private Position oldDirection = new Position(0, 0);
+    private Position curDirection = new Position(0, 0);
     
     public Entity(Position pos, boolean isUser) {
         this.position = pos;
@@ -34,6 +38,9 @@ public abstract class Entity {
     }
 
     public void move(Position direction, double deltaTime) { 
+        oldDirection = curDirection;
+        curDirection = direction;
+
         double newX = position.getX() + (direction.getX() * deltaTime * speed);
         double newY = position.getY() + (direction.getY() * deltaTime * speed);
 
@@ -45,6 +52,10 @@ public abstract class Entity {
 
         position = new Position(newX, newY);
 
+        // If client is not null and direction has changed, send the new position and direction
+        if (client != null && !oldDirection.equals(curDirection)) {
+            client.updatePlayer(position, curDirection);
+        }
     }
 
     public Position getPosition() { return this.position; }
@@ -133,4 +144,6 @@ public abstract class Entity {
 
         glEnd();
     }
+
+    public void setClient(Client client) { this.client = client; }
 }

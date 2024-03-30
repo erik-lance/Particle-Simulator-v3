@@ -29,6 +29,7 @@ public:
 	Player getPlayer(int index) const { return players[index]; }
 	void generatePlayer(std::string UUID, Position pos);
 	void readyPlayers(SDL_Renderer* renderer);
+	void updatePlayerMovement(int index, Position pos, Position dir) { players[index].setPosition(pos); players[index].updateDirection(dir); }
 
 	void logParticleRecord(std::string command);
 	std::vector<ParticleHistoryRecord> getParticleHistory() const { return particle_history; }

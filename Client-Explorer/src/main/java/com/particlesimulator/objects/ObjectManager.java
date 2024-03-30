@@ -27,17 +27,15 @@ public class ObjectManager {
     /**
      * Spawns a player at the given position.
      * @param position The position to spawn the player at
-     * @return The player object
      */
-    public Player spawnPlayer(Position position) {
+    public void spawnPlayer(Position position) {
         System.out.println("Adding you to game at position: " + position.getX() + ", " + position.getY());
         player = new Player(0, position, true);
 
         // Set texture
         player.setTexture(textures[0]);
         client.addPlayerToServer(position);
-
-        return player;
+        player.setClient(client);
     }
 
     /***

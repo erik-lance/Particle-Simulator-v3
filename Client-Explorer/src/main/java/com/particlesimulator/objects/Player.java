@@ -22,6 +22,7 @@ public class Player extends Entity {
      */
     public void input(long window, double deltaTime) {
         Position direction = new Position(0, 0);
+
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
             direction = direction.add(new Position(0, -1));
         }
@@ -34,9 +35,8 @@ public class Player extends Entity {
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
             direction = direction.add(new Position(1, 0));
         }
-
-        if (direction.getX() != 0 || direction.getY() != 0) {
-            move(direction, deltaTime);
-        }
+        
+        System.out.println("Direction: " + direction.getX() + ", " + direction.getY());
+        move(direction, deltaTime);
     }
 }

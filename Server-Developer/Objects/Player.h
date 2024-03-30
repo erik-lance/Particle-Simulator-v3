@@ -15,13 +15,15 @@ public:
 	std::string getUUID() const { return UUID; }
 
 	void setPosition(Position pos) { position = pos; }
-	void move(Position dir, double deltaTime);
+	void updateDirection(Position dir) { currentDirection = dir; }
+	void move(double deltaTime);
 	void loadSpriteFromNumber(SDL_Renderer* renderer, int num);
 	void draw(SDL_Renderer* renderer) const;
 	void place(Position pos) { position = pos; }
 private:
 	std::string UUID;
 	Position position;
+	Position currentDirection = { 0, 0 };
 	SDL_Texture* sprite = NULL;
 	int moveSpeed = 500;
 	int spriteWidth = 32;

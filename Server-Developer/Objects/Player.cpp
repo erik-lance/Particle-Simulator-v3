@@ -23,13 +23,15 @@ Player::~Player()
 
 /**
  * Moves the player, called in the game loop.
- * @param dir The direction to move the player. 0 = up, 1 = down, 2 = left, 3 = right
  * @param deltaTime The time since the last frame
  */
-void Player::move(Position dir, double deltaTime)
+void Player::move(double deltaTime)
 {
-	double newX = position.x + (dir.x * moveSpeed * deltaTime);
-	double newY = position.y + (dir.y * moveSpeed * deltaTime);
+	if (currentDirection.x == 0 && currentDirection.y == 0) return;
+
+	std::cout << "Moving player " << UUID << " in direction (" << currentDirection.x << ", " << currentDirection.y << ")" << std::endl;
+	double newX = position.x + (currentDirection.x * moveSpeed * deltaTime);
+	double newY = position.y + (currentDirection.y * moveSpeed * deltaTime);
 
 	// Clamp
 	if (newX < (spriteWidth/2)) newX = spriteWidth/2;
@@ -38,8 +40,6 @@ void Player::move(Position dir, double deltaTime)
 	if (newY > (720 - spriteHeight/2)) newY = 720 - spriteHeight/2;
 
 	position = { newX, newY };
-
-	std::cout << "Player position: (" << position.x << ", " << position.y << ")" << std::endl;
 }
 
 void Player::loadSpriteFromNumber(SDL_Renderer* renderer, int num)

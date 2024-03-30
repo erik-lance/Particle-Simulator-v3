@@ -63,6 +63,7 @@ void ObjectManager::updateAndDrawParticles(SDL_Renderer* renderer, double delta)
 
     for (int i = 0; i < players.size(); i++)
     {
+        players[i].move(delta);
         players[i].draw(renderer);
     }
 }

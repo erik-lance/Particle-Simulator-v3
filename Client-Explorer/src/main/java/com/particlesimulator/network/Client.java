@@ -24,6 +24,7 @@ public class Client {
     private int port;
     private Thread listenerThread;
     private Thread senderThread;
+    private Thread playerListener;
 
     // Data Queue
     private Queue<String> sendDataQueue = new LinkedList<>();
@@ -79,10 +80,11 @@ public class Client {
     /**
      * Update the player's position to the server
      * @param pos - Position of the player
+     * @param dir - Direction of the player
      */
-    public void updatePlayer(Position pos) {
+    public void updatePlayer(Position pos, Position dir) {
         // Send data to the server
-        String data = "<m>" + pos.getX() + "," + pos.getY() + "</m>";
+        String data = "<m>" + pos.getX() + "," + pos.getY() + "," + dir.getX() + "," + dir.getY() + "</m>";
 
         sendLock.lock();
         sendDataQueue.add(data);
