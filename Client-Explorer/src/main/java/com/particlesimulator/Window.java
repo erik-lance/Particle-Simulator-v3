@@ -115,11 +115,15 @@ public class Window {
         // the window or has pressed the ESCAPE key.
 
         double deltaTime = 0.0;
+        double time = GLFW.glfwGetTime();
+        double lastTime = 0;
+        
 
         while (!GLFW.glfwWindowShouldClose(glfwWindow)) {
-            double time = GLFW.glfwGetTime();
-            deltaTime = time - deltaTime;
-            deltaTime = deltaTime > 0.1 ? 0.1 : deltaTime;
+            // Calculate delta time
+            time = GLFW.glfwGetTime();
+            deltaTime = time - lastTime;
+            lastTime = time;
 
             // Clear the screen
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

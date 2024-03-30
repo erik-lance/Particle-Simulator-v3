@@ -25,7 +25,7 @@ private:
 	Position position;
 	Position currentDirection = { 0, 0 };
 	SDL_Texture* sprite = NULL;
-	int moveSpeed = 500;
+	int moveSpeed = 100;
 	int spriteWidth = 32;
 	int spriteHeight = 32;
 };

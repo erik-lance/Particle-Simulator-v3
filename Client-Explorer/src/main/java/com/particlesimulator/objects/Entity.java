@@ -21,7 +21,7 @@ public abstract class Entity {
     private Position position;
     private Texture texture;
     private boolean isUser;
-    private float speed = 10.0f;
+    private float speed = 100.0f;
     private int entityWidth = 39;
     private int entityHeight = 38;
     private Position oldDirection = new Position(0, 0);
