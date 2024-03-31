@@ -36,14 +36,22 @@ public class Client {
 
         // Connect to the server
         try {
-            address = InetAddress.getByName(Utils.SERVER_IP);
-            port = Utils.SERVER_PORT;
+            address = InetAddress.getByName(Utils.SERVER_IP); // Get server IP
+            port = Utils.SERVER_PORT; // Get server port
 
             socket = new DatagramSocket();
-            System.out.println("Connected to the server - " + address + ":" + port);
 
-            // Generate userID based on time of connection
-            userID = "u" + System.currentTimeMillis();
+            // Get own ip and port
+            String ownIP = socket.getLocalAddress().getHostAddress();
+            int ownPort = socket.getLocalPort();
+
+            // Generate userID by hashing the IP
+            userID = "u" + ownIP.hashCode() + ownPort;
+            
+            System.out.println("Connected to the server - " + address + ":" + port + " as " + userID);
+            System.out.println("Your address is " + ownIP + ":" + ownPort);
+
+            
 
             // Set socket to blocking
             socket.setSoTimeout(0);
@@ -84,7 +92,7 @@ public class Client {
      */
     public void updatePlayer(Position pos, Position dir) {
         // Send data to the server
-        String data = "<m>" + pos.getX() + "," + pos.getY() + "," + dir.getX() + "," + dir.getY() + "</m>";
+        String data = "<m>"+ userID + pos.getX() + "," + pos.getY() + "," + dir.getX() + "," + dir.getY() + "</m>";
 
         sendLock.lock();
         sendDataQueue.add(data);

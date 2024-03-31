@@ -198,7 +198,7 @@ void Server::processor()
 			}
 			else if (type == "<m>") {
 				// Player movement update (Contains player pos and direction)
-				// "<m>x,y,dirX,dirY</m>"
+				// "<m>UID,x,y,dirX,dirY</m>"
 				std::string message = response.message.substr(3);
 				message = message.substr(0, message.size() - 4); // Remove the last 4 character (</m>)
 
@@ -209,13 +209,16 @@ void Server::processor()
 					if (message[i] == ',') { indices.push_back(i); }
 				}
 
+				// Get UID
+				std::string UID = message.substr(0, indices[0]);
+
 				// Get the player x and y
-				int x = std::stoi(message.substr(0, indices[0]));
-				int y = std::stoi(message.substr(indices[0] + 1, indices[1]));
+				int x = std::stoi(message.substr(indices[0] + 1, indices[1] - indices[0] - 1));
+				int y = std::stoi(message.substr(indices[1] + 1, indices[2] - indices[1] - 1));
 
 				// Get the direction of the player
-				int dirX = std::stoi(message.substr(indices[1] + 1, indices[2]));
-				int dirY = std::stoi(message.substr(indices[2] + 1));
+				int dirX = std::stoi(message.substr(indices[2] + 1, indices[3] - indices[2] - 1));
+				int dirY = std::stoi(message.substr(indices[3] + 1));
 
 
 				// X and Y are the direction of the player
