@@ -92,7 +92,7 @@ public class Client {
      */
     public void updatePlayer(Position pos, Position dir) {
         // Send data to the server
-        String data = "<m>"+ userID + pos.getX() + "," + pos.getY() + "," + dir.getX() + "," + dir.getY() + "</m>";
+        String data = "<m>"+ userID + "," + pos.getX() + "," + pos.getY() + "," + dir.getX() + "," + dir.getY() + "</m>";
 
         sendLock.lock();
         sendDataQueue.add(data);
