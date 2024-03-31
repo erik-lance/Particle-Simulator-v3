@@ -15,13 +15,13 @@ Developer server must be able to add particles to the simulation. The simulation
 The Server and Client communicate with each other using a custom message passing protocol.
 
 ## Messages
-1	. `<c>uid,x,y</c>` - New client connection with uid and position x, y
-2	. `<m>uid,x,y,dirX,dirY</m>` - Move client with uid to x, y with direction dirX, dirY
-3	. `<p>x,y,angle,velocity</p>` - Add particle to the simulation with position x, y, angle and velocity
-4	. `<b>1,num,startX,endX,startY,endY,angle,velocity</b>` - Particle batch method 1
-5	. `<b>2,num,startAngle,endAngle,startX,startY,velocity</b>` - Particle batch method 2
-6	. `<b>3,num,startX,startY,angle,startVelocity,endVelocity</b>` - Particle batch method 3
-7	. `<r>either <p> or <b> message</r>` - (Used in client loader) load particle history record
+1. `<c>uid,x,y</c>` - New client connection with uid and position x, y
+2. `<m>uid,x,y,dirX,dirY</m>` - Move client with uid to x, y with direction dirX, dirY
+3. `<p>x,y,angle,velocity</p>` - Add particle to the simulation with position x, y, angle and velocity
+4. `<b>1,num,startX,endX,startY,endY,angle,velocity</b>` - Particle batch method 1
+5. `<b>2,num,startAngle,endAngle,startX,startY,velocity</b>` - Particle batch method 2
+6. `<b>3,num,startX,startY,angle,startVelocity,endVelocity</b>` - Particle batch method 3
+7. `<r>either <p> or <b> message</r>` - (Used in client loader) load particle history record
 
 - A client connects to the server with #1, and the server returns #7 that contains #3 or #4 or #5 or #6, depending on if particles were added before client joined the simulation. Otherwise, just sends "DONE".
 - A client moves with #2. It updates its position in the server and direction if it is moving. It only sends if the client's direction changes.
