@@ -313,7 +313,7 @@ void Server::sender()
  */
 void Server::clientLoader(User u, std::string spawn, std::vector<ParticleHistoryRecord> history)
 {
-	std::cout << "["+  u.address + "] Loading in player: " + u.UUID + " from " + u.address << std::endl;
+	std::cout << "["+  u.address + "] Loading in player: " + u.UUID << std::endl;
 	std::cout << "Current history size: " << history.size() << std::endl;
 
 	// Generate the message to send to the client
