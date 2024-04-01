@@ -127,22 +127,26 @@ public abstract class Entity {
             float width = texture.getWidth();
             float height = texture.getHeight();
 
-            float x = (float) playerPos.getX() - (float) position.getX();
-            float y = (float) playerPos.getY() - (float) position.getY();
+            float centerX = windowWidth / 2;
+            float centerY = windowHeight / 2;
+
+            // Translate relative to player (each screen pixel is 39x38)
+            int newDrawPosX = (int) (centerX + (position.getX() - playerPos.getX()) * 39);
+            int newDrawPosY = (int) (centerY + (position.getY() - playerPos.getY()) * 38);
 
             glBegin(GL_QUADS);
-
+            
             glTexCoord2f(0, 0);
-            glVertex2f(x - width / 2, y - height / 2);
+            glVertex2f(newDrawPosX - width / 2, newDrawPosY - height / 2);
 
             glTexCoord2f(1, 0);
-            glVertex2f(x + width / 2, y - height / 2);
+            glVertex2f(newDrawPosX + width / 2, newDrawPosY - height / 2);
 
             glTexCoord2f(1, 1);
-            glVertex2f(x + width / 2, y + height / 2);
+            glVertex2f(newDrawPosX + width / 2, newDrawPosY + height / 2);
 
             glTexCoord2f(0, 1);
-            glVertex2f(x - width / 2, y + height / 2);
+            glVertex2f(newDrawPosX - width / 2, newDrawPosY + height / 2);
 
             glEnd();
 
@@ -180,7 +184,9 @@ public abstract class Entity {
      */
     public void draw(Position playerPos) {
         // Check if within 33x19 pixels of the player
-        if (Math.abs(playerPos.getX() - position.getX()) < 33 && Math.abs(playerPos.getY() - position.getY()) < 19) {
+        boolean withinX = Math.abs(playerPos.getX() - position.getX()) <= 33;
+        boolean withinY = Math.abs(playerPos.getY() - position.getY()) <= 19;
+        if (withinX && withinY) {
             this.playerPos = playerPos;
             draw();
         }

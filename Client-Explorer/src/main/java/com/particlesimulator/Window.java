@@ -6,6 +6,8 @@ import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
+import com.particlesimulator.Utils.Position;
+import com.particlesimulator.objects.NPC;
 import com.particlesimulator.objects.ObjectManager;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -118,6 +120,9 @@ public class Window {
         double time = GLFW.glfwGetTime();
         double lastTime = 0;
         
+        // Add dummy players
+        objectManager.addNPC("1234", new Position(660, 360));
+        objectManager.addNPC("5678", new Position(660, 460));
 
         while (!GLFW.glfwWindowShouldClose(glfwWindow)) {
             // Calculate delta time

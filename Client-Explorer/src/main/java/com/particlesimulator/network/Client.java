@@ -195,6 +195,7 @@ public class Client {
                     Position position = new Position(Float.parseFloat(pos[0]), Float.parseFloat(pos[1]));
                     objectManager.addNPC(id, position);
                     System.out.println(id + " has joined the game at " + position.getX() + ", " + position.getY());
+                    
                 } else if (data.startsWith("<m>")) {
                     // Move player "<m>id,x,y,dx,dy</m>"
                     String[] values = data.substring(3, data.length() - 4).split(","); // Get the values and remove tags

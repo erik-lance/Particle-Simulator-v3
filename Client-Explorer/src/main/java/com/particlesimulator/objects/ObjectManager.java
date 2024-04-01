@@ -47,6 +47,12 @@ public class ObjectManager {
      */
     public void addNPC(String id, Position position) {
         NPC npc = new NPC(id, this, position);
+
+        // Set texture
+        char last_digit = id.charAt(id.length() - 1);
+        int textureNum = Character.getNumericValue(last_digit);
+        npc.setTexture(textures[textureNum % 4]);
+
         npcs.add(npc);
     }
     
@@ -182,6 +188,8 @@ public class ObjectManager {
             npc.setPosition(pos);
         }
     }
+
+    public Texture[] getTextures() { return textures; }
 
     /**
      * Sets the player texture based on the given number. Taken from
