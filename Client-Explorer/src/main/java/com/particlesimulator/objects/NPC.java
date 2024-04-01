@@ -10,4 +10,6 @@ public class NPC extends Entity {
         this.uid = id;
         this.objectManager = manager;
     }
+
+    public String getUID() { return uid; }
 }

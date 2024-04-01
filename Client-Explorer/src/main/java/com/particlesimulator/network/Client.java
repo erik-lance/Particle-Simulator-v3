@@ -187,6 +187,21 @@ public class Client {
                         System.out.println("Done loading client data. Added: " + objectManager.getNumParticles() + " particles."); 
                         objectManager.clientLoaded = true;
                     }
+                } else if (data.startsWith("<c>")) {
+                    // New NPC "<c>id:x,y</c>"
+                    String[] values = data.substring(3, data.length() - 4).split(":"); // Get the values and remove tags
+                    String id = values[0];
+                    String[] pos = values[1].split(",");
+                    Position position = new Position(Float.parseFloat(pos[0]), Float.parseFloat(pos[1]));
+                    objectManager.addNPC(id, position);
+                    System.out.println(id + " has joined the game at " + position.getX() + ", " + position.getY());
+                } else if (data.startsWith("<m>")) {
+                    // Move player "<m>id,x,y,dx,dy</m>"
+                    String[] values = data.substring(3, data.length() - 4).split(","); // Get the values and remove tags
+                    String id = values[0];
+                    Position pos = new Position(Float.parseFloat(values[1]), Float.parseFloat(values[2]));
+                    Position dir = new Position(Float.parseFloat(values[3]), Float.parseFloat(values[4]));
+                    objectManager.updateNPC(id, pos, dir);
                 } else {
                     // Print if data starts with a "<"
                     if (data.startsWith("<")) {

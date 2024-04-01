@@ -69,9 +69,8 @@ public class ObjectManager {
             }
 
             // NPCs
-            for (int i = 0; i < npcs.length; i++) {
-                if (npcs[i] != null) npcs[i].draw(player.getPosition());
-                
+            for (int i = 0; i < npcs.size(); i++) { 
+                npcs.get(i).draw(player.getPosition()); 
             }
 
             // Particles
@@ -88,8 +87,8 @@ public class ObjectManager {
             }
 
             // NPCs
-            for (int i = 0; i < npcs.length; i++) {
-                if (npcs[i] != null) npcs[i].draw(player.getPosition());
+            for (int i = 0; i < npcs.size(); i++) { 
+                npcs.get(i).draw(player.getPosition()); 
             }
 
             // Particles
@@ -173,6 +172,18 @@ public class ObjectManager {
     }
 
     /**
+     * Updates NPC movement direction based on the given ID.
+     * @param id The ID of the NPC to update
+     */
+    public void updateNPC(String id, Position pos, Position dir) {
+        NPC npc = getNPCbyId(id);
+        if (npc != null) { 
+            npc.setDirection(dir); 
+            npc.setPosition(pos);
+        }
+    }
+
+    /**
      * Sets the player texture based on the given number. Taken from
      * first digit of the player's unique ID.
      * @param textNum
@@ -183,4 +194,12 @@ public class ObjectManager {
     }
 
     public int getNumParticles() { return numParticles; }
+    public NPC getNPCbyId(String id) {
+        for (int i = 0; i < npcs.size(); i++) {
+            if (npcs.get(i).getUID().equals(id)) {
+                return npcs.get(i);
+            }
+        }
+        return null;
+    }
 }

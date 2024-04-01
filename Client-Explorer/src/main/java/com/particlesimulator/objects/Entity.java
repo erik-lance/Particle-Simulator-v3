@@ -59,6 +59,14 @@ public abstract class Entity {
         }
     }
 
+    /**
+     * Called by NPCs to move based on currently held direction
+     * @param deltaTime - Time since last frame
+     */
+    public void move(double deltaTime) {
+        move(curDirection, deltaTime);
+    }
+
     public Position getPosition() { return this.position; }
 
     public void setTexture(Texture texture) { this.texture = texture; }
@@ -179,4 +187,6 @@ public abstract class Entity {
     }
 
     public void setClient(Client client) { this.client = client; }
+    public void setDirection(Position direction) { this.curDirection = direction; }
+    public void setPosition(Position position) { this.position = position; }
 }
