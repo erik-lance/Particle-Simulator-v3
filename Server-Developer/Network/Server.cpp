@@ -91,6 +91,7 @@ void Server::start()
 	// Start threads
 	receiver_thread = std::thread(&Server::receiver, this);
 	processor_thread = std::thread(&Server::processor, this);
+	client_updater_thread = std::thread(&Server::clientUpdater, this);
 
 	// Generate sender threads
 	for (int i = 0; i < 3; i++) { sender_threads.push_back(std::thread(&Server::sender, this)); }
@@ -327,6 +328,105 @@ void Server::sender()
 }
 
 /**
+ * Loops through all clients and checks if it's been 30 seconds since they connected/updated
+ * If so, create a thread to update the client
+ */
+void Server::clientUpdater()
+{
+	while (running)
+	{
+		// Sleep for 30 seconds
+		std::this_thread::sleep_for(std::chrono::seconds(30));
+
+		// Store current list of clients
+		std::vector<User> current_clients = clients;
+
+		for (User client : current_clients)
+		{
+			// Get the time since the last update
+			auto now = std::chrono::system_clock::now();
+			std::chrono::duration<double> elapsed_seconds = now - client.time;
+
+			// If it's been 30 seconds since the last update, update the client
+			if (elapsed_seconds.count() > 30)
+			{
+				// Get the particles from the object manager
+				Particle* particles = object_manager->getParticles();
+				int particleCount = object_manager->getParticleCount();
+
+				// Update the client using a thread
+				client_loader_threads.push_back(std::thread(&Server::updateParticles, this, client, particles, particleCount));
+
+				// Update the time
+				client.time = std::chrono::system_clock::now();
+			}
+		}
+	}
+}
+
+/**
+ * Updates the particles for a client (called from clientUpdater)
+ * @param client The client to update
+ * @param particles The particles to update in client
+ * @param particleCount The number of particles to update
+ */
+void Server::updateParticles(User client, Particle* particles, int particleCount)
+{
+	std::cout << "["+ client.address + "] Updating player: " + client.UUID << std::endl;
+
+	// Generate the message to send to the client
+	std::string address = client.address;
+
+	// Send the message to the client directly here
+	std::string host = address.substr(0, address.find(':'));
+	std::string port = address.substr(address.find(':') + 1);
+
+	struct sockaddr_in client_address;
+	client_address.sin_family = AF_INET;
+	client_address.sin_port = htons(std::stoi(port));
+	InetPtonA(AF_INET, host.c_str(), &client_address.sin_addr);
+
+	// Send each particle to the client as
+	// <u>idx,x,y,angle</u>
+	for (int i = 0; i < particleCount; i++)
+	{
+		std::string message = "<u>";
+
+		// Convert particle to string
+		std::string idx = std::to_string(i);
+		std::string x = std::to_string(particles[i].getPosition().x);
+		std::string y = std::to_string(particles[i].getPosition().y);
+		std::string angle = std::to_string(particles[i].getAngle());
+
+		message += idx + "," + x + "," + y + "," + angle;
+
+		// Add the end tag
+		message += "</u>";
+
+		// Send the message
+		int bytes_sent = sendto(m_socket, message.c_str(), message.size(), 0, (struct sockaddr*)&client_address, sizeof(client_address));
+
+		if (bytes_sent < 0)
+		{
+			int error_code = WSAGetLastError();
+			std::cout << "Error sending message: " << error_code << std::endl;
+
+			// Disconnect the client by removing from the list
+			for (int i = 0; i < clients.size(); i++)
+			{
+				if (clients[i].address == address)
+				{
+					clients.erase(clients.begin() + i);
+					break;
+				}
+			}
+		}
+	}
+
+	std::cout << "["+ client.address + "] Updated player: " + client.UUID << std::endl;
+}
+
+/**
  * This is called when a new client connects to the server. A thread is used to perform this function
  * and send the client all the particle records that have been generated so far. This comes with ticks
  * since last particle added for each record.
@@ -398,6 +498,7 @@ void Server::clientLoader(User u, std::string spawn, std::vector<ParticleHistory
 	std::cout << "["+ u.address + "] Added " << clients.size() << " players to client" << std::endl;
 
 	// Finally add to list of clients once caught up
+	u.time = std::chrono::system_clock::now(); // Start the timer
 	clients.push_back(u);
 
 	std::cout << "[" + u.address + "] Player loaded: " + u.UUID << std::endl;

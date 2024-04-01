@@ -23,6 +23,7 @@ public:
 	void updateAndDrawParticles(SDL_Renderer* renderer, double delta);
 	void updateAndDrawParticlesIndices(int* indices, int count);
 
+	Particle* getParticles() const { return particles; }
 	int getParticleCount() const { return current_max_particles; }
 
 	Player* getPlayers() const { return players; }

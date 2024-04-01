@@ -140,4 +140,6 @@ public class Particle {
     public int getRadius() { return radius; }
     public double getAngle() { return angle; }
     public double getVelocity() { return velocity; }
+    public void setPosition(Position position) { curPosition = position; }
+    public void setAngle(double angle) { this.angle = angle; }
 }

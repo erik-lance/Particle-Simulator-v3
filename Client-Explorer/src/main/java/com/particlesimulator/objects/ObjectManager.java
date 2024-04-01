@@ -236,4 +236,9 @@ public class ObjectManager {
     public void disconnect() {
         client.disconnect();
     }
+
+    public void updateParticle(int idx, Position pos, double angle) {
+        particles[idx].setPosition(pos);
+        particles[idx].setAngle(angle);
+    }
 }

@@ -34,6 +34,7 @@ struct Response {
 struct User {
 	std::string address;
 	std::string UUID;
+	std::chrono::time_point<std::chrono::system_clock> time;
 };
 
 class Server {
@@ -45,7 +46,9 @@ public:
 	void receiver();
 	void processor();
 	void sender();
-
+	
+	void clientUpdater();
+	void updateParticles(User client, Particle* particles, int particleCount);
 	void clientLoader(User u, std::string spawn, std::vector<ParticleHistoryRecord> history);
 	void sendToOtherClients(std::string msg, std::string address);
 	void sendToAllClients(std::string msg);
@@ -71,6 +74,7 @@ private:
 	std::thread receiver_thread;
 	std::thread processor_thread;
 	std::vector<std::thread> sender_threads;
+	std::thread client_updater_thread;
 
 	bool loadingClient = false;
 	std::vector<std::thread> client_loader_threads;

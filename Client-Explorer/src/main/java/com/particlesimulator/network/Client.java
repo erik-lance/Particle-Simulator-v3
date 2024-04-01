@@ -208,6 +208,13 @@ public class Client {
                     // Remove NPC "<l>id</l>"
                     String id = data.substring(3, data.length() - 4);
                     objectManager.removeNPC(id);
+                } else if (data.startsWith("<u>")) {
+                    // Update particle "<u>idx,x,y,angle</u>"
+                    String[] values = data.substring(3, data.length() - 4).split(","); // Get the values and remove tags
+                    int idx = Integer.parseInt(values[0]);
+                    Position pos = new Position(Float.parseFloat(values[1]), Float.parseFloat(values[2]));
+                    double angle = Double.parseDouble(values[3]);
+                    objectManager.updateParticle(idx, pos, angle);
                 } else {
                     // Print if data starts with a "<"
                     if (data.startsWith("<")) {
