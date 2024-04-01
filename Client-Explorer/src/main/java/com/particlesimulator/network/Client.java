@@ -8,7 +8,9 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 // UDP Socket
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Queue;
 import java.io.IOException;
 import java.util.concurrent.locks.ReentrantLock;
@@ -116,25 +118,31 @@ public class Client {
         // <b>3,num,startX,startY,angle,startVelocity,endVelocity</b>
         char type = data.charAt(1); // Get the type of data
         String[] values = data.substring(3, data.length() - 4).split(","); // Get the values
-
+        System.out.println("Parsing particle data: " + data);
+        System.out.println("Type: " + type);
+        System.out.println("Values: " + Arrays.toString(values));
         if (type == 'p') {
             // Add particle
             Position pos = new Position(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
+            System.out.println("Adding particle at " + pos.getX() + ", " + pos.getY() + " with angle " + values[2] + " and velocity " + values[3]);
             objectManager.addParticle(pos, Double.parseDouble(values[2]), Double.parseDouble(values[3]));
         } else if (type == 'b') {
             // Batch particles
-            if (values[0] == "1") {
+            if (Objects.equals(values[0], "1")) {
                 // Batch method 1
                 Position start = new Position(Float.parseFloat(values[1]), Float.parseFloat(values[2]));
                 Position end = new Position(Float.parseFloat(values[3]), Float.parseFloat(values[4]));
+                System.out.println("BM1: Adding " + values[1] + " particles between " + start.getX() + ", " + start.getY() + " and " + end.getX() + ", " + end.getY() + " with angle " + values[6] + " and velocity " + values[7]);
                 objectManager.batchParticleMethodOne(Integer.parseInt(values[1]), start, end, Double.parseDouble(values[6]), Double.parseDouble(values[7]));
-            } else if (values[0] == "2") {
+            } else if (Objects.equals(values[0], "2")) {
                 // Batch method 2
                 Position start = new Position(Float.parseFloat(values[3]), Float.parseFloat(values[4]));
+                System.out.println("BM2: Adding " + values[1] + " particles between " + values[2] + " and " + values[3] + " with angle " + values[5] + " and velocity " + values[6]);
                 objectManager.batchParticleMethodTwo(Integer.parseInt(values[1]), Double.parseDouble(values[2]), Double.parseDouble(values[3]), start, Double.parseDouble(values[5]));
-            } else if (values[0] == "3") {
+            } else if (Objects.equals(values[0], "3")) {
                 // Batch method 3
                 Position start = new Position(Float.parseFloat(values[1]), Float.parseFloat(values[2]));
+                System.out.println("BM3: Adding " + values[1] + " particles at " + start.getX() + ", " + start.getY() + " with angle " + values[3] + " and velocity between " + values[4] + " and " + values[5]);
                 objectManager.batchParticleMethodThree(Integer.parseInt(values[1]), start, Double.parseDouble(values[3]), Double.parseDouble(values[4]), Double.parseDouble(values[5]));
             }
         }
