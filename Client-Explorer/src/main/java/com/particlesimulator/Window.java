@@ -119,10 +119,6 @@ public class Window {
         double deltaTime = 0.0;
         double time = GLFW.glfwGetTime();
         double lastTime = 0;
-        
-        // Add dummy players
-        objectManager.addNPC("1234", new Position(660, 360));
-        objectManager.addNPC("5678", new Position(660, 460));
 
         while (!GLFW.glfwWindowShouldClose(glfwWindow)) {
             // Calculate delta time
