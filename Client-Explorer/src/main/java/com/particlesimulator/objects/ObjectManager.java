@@ -238,7 +238,14 @@ public class ObjectManager {
     }
 
     public void updateParticle(int idx, Position pos, double angle) {
-        particles[idx].setPosition(pos);
-        particles[idx].setAngle(angle);
+        // Check if particle exists
+        if (idx < 0 || idx >= numParticles) {
+            // Add a new particle
+            addParticle(pos, angle, 100);
+        } else {
+            particles[idx].setPosition(pos);
+            particles[idx].setAngle(angle);
+        }
+        
     }
 }
