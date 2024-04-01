@@ -6,5 +6,8 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
-# IntelliJ
-.idea/
+
+compiler.xml
+jarRepositories.xml
+vcs.xml
+misc.xml
