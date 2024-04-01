@@ -1,11 +1,11 @@
 #include "SimulatorGUI.h"
 #include <iostream>
 
-SimulatorGUI::SimulatorGUI(SDL_Window* window, SDL_Renderer* renderer, ObjectManager* manager, MessageParser* mp)
+SimulatorGUI::SimulatorGUI(SDL_Window *window, SDL_Renderer *renderer, ObjectManager *manager, MessageParser *mp)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
+	ImGuiIO &io = ImGui::GetIO();
 
 	// Setup Platform/Renderer bindings
 	ImGui_ImplSDL2_InitForSDLRenderer(window, renderer);
@@ -20,7 +20,6 @@ SimulatorGUI::SimulatorGUI(SDL_Window* window, SDL_Renderer* renderer, ObjectMan
 
 SimulatorGUI::~SimulatorGUI()
 {
-	
 }
 
 void SimulatorGUI::NewFrame()
@@ -29,11 +28,11 @@ void SimulatorGUI::NewFrame()
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	//ImGui::ShowDemoWindow();
+	// ImGui::ShowDemoWindow();
 }
 
 void SimulatorGUI::Update()
-{	
+{
 	// Main Menu
 	MainMenuGUI();
 
@@ -113,9 +112,9 @@ void SimulatorGUI::InfoGUI()
 	ImGui::Text("Number of Obstacles: %d", m_obstacle_id);
 
 	// Tick Box for Grid
-	//ImGui::Separator();
-	//ImGui::Spacing();
-	//ImGui::Checkbox("Grid", &drawGrid);
+	// ImGui::Separator();
+	// ImGui::Spacing();
+	// ImGui::Checkbox("Grid", &drawGrid);
 }
 
 void SimulatorGUI::ParticlesGUI()
@@ -138,7 +137,8 @@ void SimulatorGUI::ParticlesGUI()
 
 	ImGui::Spacing();
 
-	if (ImGui::Button("Add Particle")) {
+	if (ImGui::Button("Add Particle"))
+	{
 		std::cout << "Particle Added" << std::endl;
 
 		m_object_manager->addParticle(m_particle_x, m_particle_y, m_particle_angle, m_particle_velocity);
@@ -168,23 +168,29 @@ void SimulatorGUI::ParticlesBatchGUI()
 
 	// Display error if any of the batch methods' start is greater than end or vice versa
 	// and button to automatically fix the error
-	if (method_one_start_x > method_one_end_x || method_one_start_y > method_one_end_y) {
+	if (method_one_start_x > method_one_end_x || method_one_start_y > method_one_end_y)
+	{
 		ImGui::TextColored(ImVec4(1, 0, 0, 1), "Error: Method 1 Start is greater than End");
-		if (ImGui::Button("Fix Error (Method 1)")) {
+		if (ImGui::Button("Fix Error (Method 1)"))
+		{
 			ResolveMethodOne();
 		}
 	}
 
-	if (method_two_start_angle > method_two_end_angle) {
+	if (method_two_start_angle > method_two_end_angle)
+	{
 		ImGui::TextColored(ImVec4(1, 0, 0, 1), "Error: Method 2 Start is greater than End");
-		if (ImGui::Button("Fix Error (Method 2)")) {
+		if (ImGui::Button("Fix Error (Method 2)"))
+		{
 			ResolveMethodTwo();
 		}
 	}
 
-	if (method_three_start_velocity > method_three_end_velocity) {
+	if (method_three_start_velocity > method_three_end_velocity)
+	{
 		ImGui::TextColored(ImVec4(1, 0, 0, 1), "Error: Method 3 Start is greater than End");
-		if (ImGui::Button("Fix Error (Method 3)")) {
+		if (ImGui::Button("Fix Error (Method 3)"))
+		{
 			ResolveMethodThree();
 		}
 	}
@@ -221,7 +227,6 @@ void SimulatorGUI::ParticlesBatchMethodOneGUI()
 	InputClamp(method_one_start_y, 0, 720);
 	InputClamp(method_one_end_y, 0, 720);
 
-
 	// Angle and Velocity constant for all particles
 	ImGui::InputInt("Angle", &method_one_angle);
 	InputClamp(method_one_angle, 0, 360);
@@ -230,10 +235,12 @@ void SimulatorGUI::ParticlesBatchMethodOneGUI()
 
 	ImGui::Spacing();
 
-	if (ImGui::Button("Add Particle Batch (Method 1)")) {
+	if (ImGui::Button("Add Particle Batch (Method 1)"))
+	{
 		ResolveMethodOne();
 		std::cout << "Particle Batch Added (Method 1)" << std::endl;
-		for (int i = 0; i < m_batch_size; i++) {
+		for (int i = 0; i < m_batch_size; i++)
+		{
 			// Calculate the distance between start and end points
 			double distance = sqrt(pow(method_one_end_x - method_one_start_x, 2) + pow(method_one_end_y - method_one_start_y, 2));
 			double x = method_one_start_x + (method_one_end_x - method_one_start_x) * i / m_batch_size;
@@ -247,6 +254,7 @@ void SimulatorGUI::ParticlesBatchMethodOneGUI()
 			// Increment particle id
 			m_particle_id++;
 		}
+		message_parser->addParticleBatchMessageOne(m_batch_size, Position(method_one_start_x, method_one_start_y), Position(method_one_end_x, method_one_end_y), method_one_angle, method_one_velocity);
 	}
 
 	ImGui::End();
@@ -281,16 +289,19 @@ void SimulatorGUI::ParticlesBatchMethodTwoGUI()
 
 	ImGui::Spacing();
 
-	if (ImGui::Button("Add Particle Batch (Method 2)")) {
+	if (ImGui::Button("Add Particle Batch (Method 2)"))
+	{
 		ResolveMethodTwo();
 		std::cout << "Particle Batch Added (Method 2)" << std::endl;
-		for (int i = 0; i < m_batch_size; i++) {
+		for (int i = 0; i < m_batch_size; i++)
+		{
 			double angle = method_two_start_angle + (method_two_end_angle - method_two_start_angle) * i / m_batch_size;
 			m_object_manager->addParticle(method_two_start_x, method_two_start_y, angle, method_two_velocity);
 
 			// Increment particle id
 			m_particle_id++;
 		}
+		message_parser->addParticleBatchMessageTwo(m_batch_size, method_two_start_angle, method_two_end_angle, Position(method_two_start_x, method_two_start_y), method_two_velocity);
 	}
 
 	ImGui::End();
@@ -324,16 +335,19 @@ void SimulatorGUI::ParticlesBatchMethodThreeGUI()
 
 	ImGui::Spacing();
 
-	if (ImGui::Button("Add Particle Batch (Method 3)")) {
+	if (ImGui::Button("Add Particle Batch (Method 3)"))
+	{
 		ResolveMethodThree();
 		std::cout << "Particle Batch Added (Method 3)" << std::endl;
-		for (int i = 0; i < m_batch_size; i++) {
+		for (int i = 0; i < m_batch_size; i++)
+		{
 			double velocity = (double)method_three_start_velocity + (double)(method_three_end_velocity - method_three_start_velocity) * (double)i / (double)m_batch_size;
 			m_object_manager->addParticle(method_three_start_x, method_three_start_y, method_three_angle, velocity);
 
 			// Increment particle id
 			m_particle_id++;
 		}
+		message_parser->addParticleBatchMessageThree(m_batch_size, Position(method_three_start_x, method_three_start_y), method_three_angle, method_three_start_velocity, method_three_end_velocity);
 	}
 
 	ImGui::End();
@@ -348,9 +362,10 @@ void SimulatorGUI::PresetsAndMenuGUI()
 	ImGui::SetWindowSize(ImVec2(presets_size_x, presets_size_y));
 
 	// Presets
-	if (ImGui::Button("Preset 1")) {
+	if (ImGui::Button("Preset 1"))
+	{
 		std::cout << "Preset 1" << std::endl;
-		
+
 		// Set Method 1 Preset
 		method_one_start_x = 255;
 		method_one_start_y = 255;
@@ -376,7 +391,8 @@ void SimulatorGUI::PresetsAndMenuGUI()
 
 	ImGui::SameLine();
 
-	if (ImGui::Button("Preset 2")) {
+	if (ImGui::Button("Preset 2"))
+	{
 		std::cout << "Preset 2" << std::endl;
 
 		// Set Method 1 Preset
@@ -404,7 +420,8 @@ void SimulatorGUI::PresetsAndMenuGUI()
 
 	ImGui::SameLine();
 
-	if (ImGui::Button("Preset 3")) {
+	if (ImGui::Button("Preset 3"))
+	{
 		std::cout << "Preset 3" << std::endl;
 
 		// Set Method 1 Preset
@@ -434,7 +451,8 @@ void SimulatorGUI::PresetsAndMenuGUI()
 	ImGui::SetCursorPosX(ImGui::GetWindowWidth() - 50);
 	ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 30);
 
-	if (ImGui::Button("Exit")) {
+	if (ImGui::Button("Exit"))
+	{
 		std::cout << "Exit" << std::endl;
 
 		// Stop the program
@@ -444,32 +462,46 @@ void SimulatorGUI::PresetsAndMenuGUI()
 	ImGui::End();
 }
 
-void SimulatorGUI::InputClamp(int& num, int min, int max) { if (num < min) num = min; if (num > max) num = max; }
-
-void SimulatorGUI::InputClampRelativeStart(int& num, int min, int max, int& relative_max)
+void SimulatorGUI::InputClamp(int &num, int min, int max)
 {
-	if (num < min) num = min;
-	if (num > relative_max && num <= max) relative_max = num;	// If start is greater than end, set end to start (Increment)
+	if (num < min)
+		num = min;
+	if (num > max)
+		num = max;
 }
 
-void SimulatorGUI::InputClampRelativeEnd(int& num, int min, int max, int& relative_min)
+void SimulatorGUI::InputClampRelativeStart(int &num, int min, int max, int &relative_max)
 {
-	if (num > max) num = max;
-	if (num < relative_min && num >= min) relative_min = num;		// If end is less than start, set start to end (Decrement)
+	if (num < min)
+		num = min;
+	if (num > relative_max && num <= max)
+		relative_max = num; // If start is greater than end, set end to start (Increment)
+}
+
+void SimulatorGUI::InputClampRelativeEnd(int &num, int min, int max, int &relative_min)
+{
+	if (num > max)
+		num = max;
+	if (num < relative_min && num >= min)
+		relative_min = num; // If end is less than start, set start to end (Decrement)
 }
 
 void SimulatorGUI::ResolveMethodOne()
 {
-	if (method_one_start_x > method_one_end_x) method_one_start_x = method_one_end_x;
-	if (method_one_start_y > method_one_end_y) method_one_start_y = method_one_end_y;
+	if (method_one_start_x > method_one_end_x)
+		method_one_start_x = method_one_end_x;
+	if (method_one_start_y > method_one_end_y)
+		method_one_start_y = method_one_end_y;
 }
 
 void SimulatorGUI::ResolveMethodTwo()
 {
-	if (method_two_start_angle > method_two_end_angle) method_two_start_angle = method_two_end_angle;
+	if (method_two_start_angle > method_two_end_angle)
+		method_two_start_angle = method_two_end_angle;
 }
 
 void SimulatorGUI::ResolveMethodThree()
 {
-	if (method_three_start_velocity > method_three_end_velocity) method_three_start_velocity = method_three_end_velocity;
+	if (method_three_start_velocity > method_three_end_velocity)
+		method_three_start_velocity = method_three_end_velocity;
 }
