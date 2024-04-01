@@ -5,16 +5,12 @@ import com.particlesimulator.Utils.Position;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Player extends Entity {
-    private int playerId = 0;
-
-    public Player(int playerId, Position pos, boolean isUser) {
+    public Player(Position pos, boolean isUser) {
         super(pos, isUser);
-        this.playerId = playerId;
     }
     
-    public Player(int playerId, Position pos) {
+    public Player(Position pos) {
         super(pos);
-        this.playerId = playerId;
     }
 
     /**

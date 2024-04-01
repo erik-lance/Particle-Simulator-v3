@@ -26,6 +26,7 @@ public abstract class Entity {
     private int entityHeight = 38;
     private Position oldDirection = new Position(0, 0);
     private Position curDirection = new Position(0, 0);
+    private Position playerPos = new Position(0, 0);
     
     public Entity(Position pos, boolean isUser) {
         this.position = pos;
@@ -53,7 +54,7 @@ public abstract class Entity {
         position = new Position(newX, newY);
 
         // If client is not null and direction has changed, send the new position and direction
-        if (client != null && !oldDirection.equals(curDirection)) {
+        if (client != null && !oldDirection.equals(curDirection) && isUser) {
             client.updatePlayer(position, curDirection);
         }
     }
@@ -114,9 +115,29 @@ public abstract class Entity {
 
             glEnd();
         } else if (!isUser) {
-            /** TODO: Conditional drawing based on player position
-             *  if within the 33 x 19 grid requirement.
-            */
+            // Draw the NPC relative to the player
+            float width = texture.getWidth();
+            float height = texture.getHeight();
+
+            float x = (float) playerPos.getX() - (float) position.getX();
+            float y = (float) playerPos.getY() - (float) position.getY();
+
+            glBegin(GL_QUADS);
+
+            glTexCoord2f(0, 0);
+            glVertex2f(x - width / 2, y - height / 2);
+
+            glTexCoord2f(1, 0);
+            glVertex2f(x + width / 2, y - height / 2);
+
+            glTexCoord2f(1, 1);
+            glVertex2f(x + width / 2, y + height / 2);
+
+            glTexCoord2f(0, 1);
+            glVertex2f(x - width / 2, y + height / 2);
+
+            glEnd();
+
         } else if (isUser) {
             // Draw the user at center of screen
             float width = texture.getWidth();
@@ -143,6 +164,18 @@ public abstract class Entity {
         }
 
         glEnd();
+    }
+
+    /**
+     * This draw is called by NPC to see if they should be drawn
+     * @param playerPos - Position of the player
+     */
+    public void draw(Position playerPos) {
+        // Check if within 33x19 pixels of the player
+        if (Math.abs(playerPos.getX() - position.getX()) < 33 && Math.abs(playerPos.getY() - position.getY()) < 19) {
+            this.playerPos = playerPos;
+            draw();
+        }
     }
 
     public void setClient(Client client) { this.client = client; }

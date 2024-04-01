@@ -2,6 +2,8 @@ package com.particlesimulator.objects;
 
 import static com.particlesimulator.Utils.DEBUG_MODE;
 
+import java.util.ArrayList;
+
 import com.particlesimulator.Utils.Position;
 import com.particlesimulator.network.Client;
 import com.particlesimulator.render.Texture;
@@ -13,7 +15,7 @@ public class ObjectManager {
     private Client client;
     private Texture[] textures = new Texture[4];
     private Player player;
-    private Player[] npcs = new Player[3];
+    private ArrayList<NPC> npcs = new ArrayList<>();
 
     private int numParticles = 0;
     private int particlesCapacity = 1024;
@@ -30,7 +32,7 @@ public class ObjectManager {
      */
     public void spawnPlayer(Position position) {
         System.out.println("Adding you to game at position: " + position.getX() + ", " + position.getY());
-        player = new Player(0, position, true);
+        player = new Player(position, true);
 
         // Set texture
         player.setTexture(textures[0]);
@@ -40,12 +42,12 @@ public class ObjectManager {
 
     /***
      * Spawns a npc at the given position.
+     * @param id The id of the npc
      * @param position The position to spawn the npc at
      */
-    public void addNPC(Position position) {
-        int npcNum = npcs.length;
-        Player player = new Player(npcNum, position);
-        npcs[npcNum] = player;
+    public void addNPC(String id, Position position) {
+        NPC npc = new NPC(id, this, position);
+        npcs.add(npc);
     }
     
     public void loadTextures() {
@@ -66,6 +68,12 @@ public class ObjectManager {
                 player.draw();
             }
 
+            // NPCs
+            for (int i = 0; i < npcs.length; i++) {
+                if (npcs[i] != null) npcs[i].draw(player.getPosition());
+                
+            }
+
             // Particles
             for (int i = 0; i < numParticles; i++) {
                 particles[i].update(deltaTime);
@@ -77,6 +85,11 @@ public class ObjectManager {
             if (player != null) {
                 player.input(window, deltaTime);
                 player.draw();
+            }
+
+            // NPCs
+            for (int i = 0; i < npcs.length; i++) {
+                if (npcs[i] != null) npcs[i].draw(player.getPosition());
             }
 
             // Particles
