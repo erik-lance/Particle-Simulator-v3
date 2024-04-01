@@ -90,6 +90,8 @@ public abstract class Entity {
 
         glDisable(GL_BLEND);
         glDisable(GL_TEXTURE_2D);
+
+        // TODO: Draw walls when at edge of screen
     }
 
     /**
