@@ -153,7 +153,14 @@ public class ObjectManager {
      * @param velocity
      */
     public void batchParticleMethodOne(int num, Position start, Position end, double angle, double velocity) {
+        for (int i = 0; i < num; i++) {
+            double distance = Math.sqrt(Math.pow(end.getX() - start.getX(), 2) + Math.pow(end.getY() - start.getY(), 2));
+            double x = start.getX() + (end.getX() - start.getX()) * i / num;
+            double y = start.getY() + (end.getY() - start.getY()) * i / num;
 
+            Position pos = new Position((int)x, (int)y);
+            addParticle(pos, angle, velocity);
+        }
     }
 
     /**
@@ -166,7 +173,10 @@ public class ObjectManager {
      * @param velocity
      */
     public void batchParticleMethodTwo(int num, double startAngle, double endAngle, Position start, double velocity) {
-
+        for (int i = 0; i < num; i++) {
+            double angle = startAngle + (endAngle - startAngle) * i / num;
+            addParticle(start, angle, velocity);
+        }
     }
 
     /**
@@ -179,7 +189,10 @@ public class ObjectManager {
      * @param endVelocity
      */
     public void batchParticleMethodThree(int num, Position start, double angle, double startVelocity, double endVelocity) {
-
+        for (int i = 0; i < num; i++) {
+            double velocity = startVelocity + (endVelocity - startVelocity) * i / num;
+            addParticle(start, angle, velocity);
+	    }
     }
 
     public void updateParticles() {
