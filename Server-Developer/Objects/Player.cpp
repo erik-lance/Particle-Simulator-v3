@@ -87,6 +87,7 @@ void Player::loadSpriteFromNumber(SDL_Renderer* renderer, int num)
  */
 void Player::draw(SDL_Renderer* renderer) const
 {
+	if (sprite == NULL) return;
 	const int width = 16;
 	const int height = 16;
 	// Create a rectangle to draw the sprite

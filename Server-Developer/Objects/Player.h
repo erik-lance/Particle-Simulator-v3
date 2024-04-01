@@ -8,6 +8,7 @@
 class Player
 {
 public:
+	Player() { this->UUID = "0"; this->position = { 0, 0 }; }
 	Player(std::string ID, Position pos);
 	~Player();
 

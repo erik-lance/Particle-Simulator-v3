@@ -61,7 +61,7 @@ void ObjectManager::updateAndDrawParticles(SDL_Renderer* renderer, double delta)
     // Draw player objects
     readyPlayers(renderer);
 
-    for (int i = 0; i < players.size(); i++)
+    for (int i = 0; i < num_players; i++)
     {
         players[i].move(delta);
         players[i].draw(renderer);
@@ -99,16 +99,22 @@ void ObjectManager::readyPlayers(SDL_Renderer* renderer)
 {
     if (uninitialized_players.size() > 0)
     {
+        // Get last character of UUID
+        std::string last_char = uninitialized_players[0].getUUID().substr(uninitialized_players[0].getUUID().size() - 1);
+        int num = std::stoi(last_char) % 4;
+
+        std::cout << "New player detected, adding to player list" << std::endl;
         mtx.lock();
-		players.push_back(uninitialized_players[0]);
+
+        players[num_players] = uninitialized_players[0];
 		uninitialized_players.erase(uninitialized_players.begin());
+
+        // Set Sprite Number of Player
+        players[num_players].loadSpriteFromNumber(renderer, num);
+        num_players++;
         mtx.unlock();
 
-        // Load the player's sprite
-        char last_char = players[players.size()-1].getUUID().back();
-        int num = last_char - '0';
-        num = num % 4;
-        players[players.size()-1].loadSpriteFromNumber(renderer, num);
+        std::cout << "Player added to player list (Player Size = " << num_players << ")" << std::endl;
 	}
 }
 

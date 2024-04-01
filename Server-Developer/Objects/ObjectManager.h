@@ -25,7 +25,7 @@ public:
 
 	int getParticleCount() const { return current_max_particles; }
 
-	std::vector<Player> getPlayers() const { return players; }
+	Player* getPlayers() const { return players; }
 	Player getPlayer(int index) const { return players[index]; }
 	void generatePlayer(std::string UUID, Position pos);
 	void readyPlayers(SDL_Renderer* renderer);
@@ -48,7 +48,8 @@ private:
 	Particle* particles = new Particle[particle_capacity];
 
 	std::vector<Player> uninitialized_players = std::vector<Player>();
-	std::vector<Player> players = std::vector<Player>();
+	int num_players = 0;
+	Player* players = new Player[4];
 
 	// Particle History
 	std::vector<ParticleHistoryRecord> particle_history = std::vector<ParticleHistoryRecord>();

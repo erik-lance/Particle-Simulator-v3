@@ -109,7 +109,7 @@ void Server::receiver()
 
 		if (bytes_received > 0)
 		{
-			std::cout << "Received message: " << buffer << std::endl;
+			// std::cout << "Received message: " << buffer << std::endl;
 			// Get string of the client address host:port
 			char client_host[NI_MAXHOST];
 			char client_service[NI_MAXSERV];
@@ -199,6 +199,7 @@ void Server::processor()
 			else if (type == "<m>") {
 				// Player movement update (Contains player pos and direction)
 				// "<m>UID,x,y,dirX,dirY</m>"
+				std::cout << "["+ response.address +"] Player movement: " << response.message << std::endl;
 				std::string message = response.message.substr(3);
 				message = message.substr(0, message.size() - 4); // Remove the last 4 character (</m>)
 
@@ -312,7 +313,7 @@ void Server::sender()
  */
 void Server::clientLoader(User u, std::string spawn, std::vector<ParticleHistoryRecord> history)
 {
-	std::cout << "["+  u.address + "] Loading in player: " + u.UUID << std::endl;
+	std::cout << "["+  u.address + "] Loading in player: " + u.UUID + " from " + u.address << std::endl;
 	std::cout << "Current history size: " << history.size() << std::endl;
 
 	// Generate the message to send to the client
