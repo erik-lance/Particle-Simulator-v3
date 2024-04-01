@@ -246,6 +246,29 @@ void Server::processor()
 					object_manager->updatePlayerMovement(index, position, direction);
 				}
 			}
+			else if (type == "<l>") {
+				// Client disconnect "<l>uid</l>"
+				std::cout << "["+ response.address +"] Client disconnect: " << response.message << std::endl;
+				std::string UUID = response.message.substr(3);
+				UUID = UUID.substr(0, UUID.size() - 4); // Remove the last 4 character (</l>)
+
+				// Remove the client from the list
+				for (int i = 0; i < clients.size(); i++)
+				{
+					if (clients[i].UUID == UUID)
+					{
+						clients.erase(clients.begin() + i);
+						break;
+					}
+				}
+
+				// Object manager will handle the removal of the player
+				object_manager->removePlayer(UUID);
+
+				// Send the message to all clients
+				sendToAllClients(response.message);
+
+			}
 			else {
 				std::cout << "Unknown message type: " << type << std::endl;
 				std::cout << "Message: " << response.message << std::endl;

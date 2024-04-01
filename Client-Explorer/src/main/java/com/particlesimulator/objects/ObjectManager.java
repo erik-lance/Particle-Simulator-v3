@@ -3,6 +3,8 @@ package com.particlesimulator.objects;
 import static com.particlesimulator.Utils.DEBUG_MODE;
 
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import com.particlesimulator.Utils.Position;
 import com.particlesimulator.network.Client;
@@ -20,10 +22,13 @@ public class ObjectManager {
     private int numParticles = 0;
     private int particlesCapacity = 1024;
     private Particle[] particles = new Particle[particlesCapacity];
+
+    private Lock mtx;
     public boolean clientLoaded = false;
 
     public ObjectManager() {
         this.client = new Client(this);
+        this.mtx = new ReentrantLock();
     }
 
     /**
@@ -55,6 +60,17 @@ public class ObjectManager {
 
         npcs.add(npc);
     }
+
+    public void removeNPC(String id) {
+        for (int i = 0; i < npcs.size(); i++) {
+            if (npcs.get(i).getUID().equals(id)) {
+                mtx.lock();
+                npcs.remove(i);
+                mtx.unlock();
+                break;
+            }
+        }
+    }
     
     public void loadTextures() {
         textures[0] = new Texture("1.png");
@@ -75,9 +91,12 @@ public class ObjectManager {
             }
 
             // NPCs
+            mtx.lock();
             for (int i = 0; i < npcs.size(); i++) { 
+                npcs.get(i).move(deltaTime);
                 npcs.get(i).draw(player.getPosition()); 
             }
+            mtx.unlock();
 
             // Particles
             for (int i = 0; i < numParticles; i++) {
@@ -93,9 +112,12 @@ public class ObjectManager {
             }
 
             // NPCs
+            mtx.lock();
             for (int i = 0; i < npcs.size(); i++) { 
+                npcs.get(i).move(deltaTime);
                 npcs.get(i).draw(player.getPosition()); 
             }
+            mtx.unlock();
 
             // Particles
             for (int i = 0; i < numParticles; i++) {
@@ -209,5 +231,9 @@ public class ObjectManager {
             }
         }
         return null;
+    }
+
+    public void disconnect() {
+        client.disconnect();
     }
 }

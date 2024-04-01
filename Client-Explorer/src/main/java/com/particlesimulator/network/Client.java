@@ -17,6 +17,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * This communicates with the server to send and receive data.
  */
 public class Client {
+    private boolean running = true;
     private String userID;
     private ObjectManager objectManager;
     private DatagramSocket socket;
@@ -166,7 +167,7 @@ public class Client {
     }
 
     public void receiver() {
-        while (true) {
+        while (running) {
             // Receive data from the server
             try {
                 DatagramPacket packet = new DatagramPacket(new byte[1024], 1024);
@@ -203,6 +204,10 @@ public class Client {
                     Position pos = new Position(Float.parseFloat(values[1]), Float.parseFloat(values[2]));
                     Position dir = new Position(Float.parseFloat(values[3]), Float.parseFloat(values[4]));
                     objectManager.updateNPC(id, pos, dir);
+                } else if (data.startsWith("<l>")) {
+                    // Remove NPC "<l>id</l>"
+                    String id = data.substring(3, data.length() - 4);
+                    objectManager.removeNPC(id);
                 } else {
                     // Print if data starts with a "<"
                     if (data.startsWith("<")) {
@@ -217,7 +222,7 @@ public class Client {
     }
 
     public void sender() {
-        while (true) {
+        while (running) {
             // Send data to the server
             try {
                 // Get first data from the queue
@@ -235,5 +240,28 @@ public class Client {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void disconnect() {
+        // Disconnect from the server
+        running = false;
+
+        // Send disconnect message
+        String data = "<l>" + userID + "</l>";
+        byte[] sendData = data.getBytes();
+        DatagramPacket packet = new DatagramPacket(sendData, sendData.length, address, port);
+        try {
+            socket.send(packet);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        socket.close();
+
+        // Stop threads
+        listenerThread.interrupt();
+        senderThread.interrupt();
+
+        System.out.println("Disconnected from the server.");
     }
 }

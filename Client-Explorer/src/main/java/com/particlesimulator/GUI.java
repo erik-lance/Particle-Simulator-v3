@@ -110,13 +110,13 @@ public class GUI {
         } else {
             ImGui.text("RELEASE");
             ImGui.sameLine();
-            if (spawned.get()) {
-                if (ImGui.button("Particle")) {
-                    Position particlePos = new Position(Utils.windowWidth/2, Utils.windowHeight/2);
-                    objectManager.addParticle(particlePos, 0.0, 1.0);
-                }
-            }
             
+            if (ImGui.button("Disconnect")) {
+                objectManager.disconnect();
+
+                // Close the game
+                System.exit(0);
+            }
         }
 
         ImGui.end();

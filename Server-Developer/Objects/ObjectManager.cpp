@@ -118,6 +118,23 @@ void ObjectManager::readyPlayers(SDL_Renderer* renderer)
 	}
 }
 
+void ObjectManager::removePlayer(std::string UUID)
+{
+    for (int i = 0; i < num_players; i++)
+    {
+        if (players[i].getUUID() == UUID)
+        {
+			std::cout << "Removing player " << UUID << " from player list" << std::endl;
+			mtx.lock();
+			players[i] = players[num_players - 1];
+			num_players--;
+			mtx.unlock();
+			std::cout << "Player removed from player list (Player Size = " << num_players << ")" << std::endl;
+			break;
+		}
+	}
+}
+
 void ObjectManager::logParticleRecord(std::string command)
 {
 	// Log the particle record
