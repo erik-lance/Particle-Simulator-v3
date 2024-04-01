@@ -138,6 +138,38 @@ public class GUI {
             spawned.set(true);
         }
 
+        // Presets
+        if (ImGui.button("Center")) {
+            posX.set(Utils.windowWidth/2);
+            posY.set(Utils.windowHeight/2);
+        }
+
+        if (ImGui.button("Top Left")) {
+            posX.set(0);
+            posY.set(0);
+        }
+
+        ImGui.sameLine();
+
+        if (ImGui.button("Top Right")) {
+            posX.set(Utils.windowWidth);
+            posY.set(0);
+        }
+
+        if (ImGui.button("Bottom Left")) {
+            posX.set(0);
+            posY.set(Utils.windowHeight);
+        }
+
+        ImGui.sameLine();
+
+        if (ImGui.button("Bottom Right")) {
+            posX.set(Utils.windowWidth);
+            posY.set(Utils.windowHeight);
+        }
+
+
+
         ImGui.end();
     }
 
