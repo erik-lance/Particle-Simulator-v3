@@ -145,6 +145,25 @@ void ObjectManager::logParticleRecord(std::string command)
     particle_history.push_back(record);
 }
 
+std::vector<std::string> ObjectManager::getPreviousPlayers(std::string UUID)
+{
+    std::cout << "Getting previous players (" << num_players << ")\n" << std::endl;
+    // Generate "<c>" for each player except the last one
+    if (num_players > 0)
+    {
+		std::vector<std::string> previous_players;
+        for (int i = 0; i < num_players; i++)
+        {
+            if (players[i].getUUID() == UUID) continue;
+            Position pos = players[i].getPosition();
+            std::string connection = "<c>" + players[i].getUUID() + ":" + std::to_string(pos.x) + "," + std::to_string(pos.y) + "</c>";
+			previous_players.push_back(connection);
+		}
+		return previous_players;
+	}
+    return std::vector<std::string>();
+}
+
 /**
  * Draws the grid lines based on the collision manager's grid
  * width and height and column and row count

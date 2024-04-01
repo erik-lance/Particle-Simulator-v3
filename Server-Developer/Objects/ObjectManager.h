@@ -33,6 +33,7 @@ public:
 
 	void logParticleRecord(std::string command);
 	std::vector<ParticleHistoryRecord> getParticleHistory() const { return particle_history; }
+	std::vector<std::string> getPreviousPlayers(std::string UUID);
 
 private:
 	int screen_width, screen_height;

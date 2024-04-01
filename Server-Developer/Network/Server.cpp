@@ -356,6 +356,24 @@ void Server::clientLoader(User u, std::string spawn, std::vector<ParticleHistory
 	// Send the message to all clients
 	sendToOtherClients(response, address);
 
+	// Send player all other current players
+	std::vector<std::string> player_connections = object_manager->getPreviousPlayers(u.UUID);
+	std::cout << "Found " << player_connections.size() << " players to send to client" << std::endl;
+	for (std::string player : player_connections)
+	{
+		Message msg;
+		msg.dest_address = address;
+		msg.message = player;
+
+		// Add the message to the queue
+		mtx.lock();
+		messages.push(msg);
+		cv.notify_one();
+		mtx.unlock();
+	}
+
+	std::cout << "["+ u.address + "] Added " << clients.size() << " players to client" << std::endl;
+
 	// Finally add to list of clients once caught up
 	clients.push_back(u);
 
