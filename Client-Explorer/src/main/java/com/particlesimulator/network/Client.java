@@ -130,20 +130,20 @@ public class Client {
             // Batch particles
             if (Objects.equals(values[0], "1")) {
                 // Batch method 1
-                Position start = new Position(Float.parseFloat(values[1]), Float.parseFloat(values[2]));
-                Position end = new Position(Float.parseFloat(values[3]), Float.parseFloat(values[4]));
+                Position start = new Position(Float.parseFloat(values[2]), Float.parseFloat(values[3]));
+                Position end = new Position(Float.parseFloat(values[4]), Float.parseFloat(values[5]));
                 System.out.println("BM1: Adding " + values[1] + " particles between " + start.getX() + ", " + start.getY() + " and " + end.getX() + ", " + end.getY() + " with angle " + values[6] + " and velocity " + values[7]);
                 objectManager.batchParticleMethodOne(Integer.parseInt(values[1]), start, end, Double.parseDouble(values[6]), Double.parseDouble(values[7]));
             } else if (Objects.equals(values[0], "2")) {
                 // Batch method 2
-                Position start = new Position(Float.parseFloat(values[3]), Float.parseFloat(values[4]));
+                Position start = new Position(Float.parseFloat(values[4]), Float.parseFloat(values[5]));
                 System.out.println("BM2: Adding " + values[1] + " particles between " + values[2] + " and " + values[3] + " with angle " + values[5] + " and velocity " + values[6]);
-                objectManager.batchParticleMethodTwo(Integer.parseInt(values[1]), Double.parseDouble(values[2]), Double.parseDouble(values[3]), start, Double.parseDouble(values[5]));
+                objectManager.batchParticleMethodTwo(Integer.parseInt(values[1]), Double.parseDouble(values[2]), Double.parseDouble(values[3]), start, Double.parseDouble(values[6]));
             } else if (Objects.equals(values[0], "3")) {
                 // Batch method 3
-                Position start = new Position(Float.parseFloat(values[1]), Float.parseFloat(values[2]));
+                Position start = new Position(Float.parseFloat(values[2]), Float.parseFloat(values[3]));
                 System.out.println("BM3: Adding " + values[1] + " particles at " + start.getX() + ", " + start.getY() + " with angle " + values[3] + " and velocity between " + values[4] + " and " + values[5]);
-                objectManager.batchParticleMethodThree(Integer.parseInt(values[1]), start, Double.parseDouble(values[3]), Double.parseDouble(values[4]), Double.parseDouble(values[5]));
+                objectManager.batchParticleMethodThree(Integer.parseInt(values[1]), start, Double.parseDouble(values[4]), Double.parseDouble(values[5]), Double.parseDouble(values[6]));
             }
         }
     }
