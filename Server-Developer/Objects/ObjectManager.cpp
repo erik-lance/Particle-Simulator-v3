@@ -51,7 +51,7 @@ void ObjectManager::updateParticles(double delta)
  */
 void ObjectManager::updateAndDrawParticles(SDL_Renderer* renderer, double delta)
 {
-    for (int i = 0; i < current_max_particles; i++)
+    for (int i = 0; i < current_max_particles-1; i++)
     {
         particles[i].updatePosition(delta);
 		particles[i].handleScreenCollision();
