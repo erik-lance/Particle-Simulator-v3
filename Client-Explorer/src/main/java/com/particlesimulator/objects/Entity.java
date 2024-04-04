@@ -53,6 +53,9 @@ public abstract class Entity {
 
         position = new Position(newX, newY);
 
+        // Round to nearest pixel
+        position = new Position(Math.round(position.getX()), Math.round(position.getY()));
+
         // If client is not null and direction has changed, send the new position and direction
         if (client != null && !oldDirection.equals(curDirection) && isUser) {
             client.updatePlayer(position, curDirection);
@@ -77,7 +80,8 @@ public abstract class Entity {
             throw new IllegalStateException("Texture not set for entity");
         }
 
-        drawEdgeWalls();
+        // If own player (not NPC)
+        if (isUser) { drawEdgeWalls(); }
 
         // Color white
         glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -110,18 +114,18 @@ public abstract class Entity {
         if (roundedPos.getX() < 16) {
             // Draw left wall, width changes based on position
             glBegin(GL_QUADS);
-            glVertex2f(0, 0);
-            glVertex2f((float) (entityWidth * (16 - roundedPos.getX())), 0);
-            glVertex2f((float) (entityWidth * (16 - roundedPos.getX())), windowHeight);
-            glVertex2f(0, windowHeight);
+            glVertex2f(0, 0); // Top-left
+            glVertex2f((float) (entityWidth * (16 - roundedPos.getX() - 1)), 0); // Top-right
+            glVertex2f((float) (entityWidth * (16 - roundedPos.getX() - 1)), windowHeight); // Bottom-right
+            glVertex2f(0, windowHeight); // Bottom-left
             glEnd();
-        } else if (roundedPos.getX() > windowWidth - 16 - entityWidth) {
+        } else if (roundedPos.getX() > windowWidth - 16) {
             // Draw right wall, width changes based on position
             glBegin(GL_QUADS);
             glVertex2f(windowWidth, 0);
             glVertex2f(windowWidth, windowHeight);
-            glVertex2f((float) (windowWidth - entityWidth * (roundedPos.getX() - (windowWidth - 16 - entityWidth))), windowHeight);
-            glVertex2f((float) (windowWidth - entityWidth * (roundedPos.getX() - (windowWidth - 16 - entityWidth))), 0);
+            glVertex2f((float) (windowWidth - entityWidth * (roundedPos.getX() - (windowWidth - 15) + 1)), windowHeight);
+            glVertex2f((float) (windowWidth - entityWidth * (roundedPos.getX() - (windowWidth - 15) + 1)), 0);
             glEnd();
         }
         if (roundedPos.getY() < 9) {
@@ -129,16 +133,16 @@ public abstract class Entity {
             glBegin(GL_QUADS);
             glVertex2f(0, 0);
             glVertex2f(windowWidth, 0);
-            glVertex2f((float) windowWidth, (float) (entityHeight * (9 - roundedPos.getY())));
-            glVertex2f((float) 0, (float) (entityHeight * (9 - roundedPos.getY())));
+            glVertex2f((float) windowWidth, (float) (entityHeight * (9 - roundedPos.getY() - 1)));
+            glVertex2f((float) 0, (float) (entityHeight * (9 - roundedPos.getY() - 1)));
             glEnd();
-        } else if (roundedPos.getY() > windowHeight - 9 - entityHeight) {
+        } else if (roundedPos.getY() > windowHeight - 9) {
             // Draw bottom wall, height changes based on position
             glBegin(GL_QUADS);
             glVertex2f(0, windowHeight);
             glVertex2f(windowWidth, windowHeight);
-            glVertex2f((float) windowWidth, (float) (windowHeight - entityHeight * (roundedPos.getY() - (windowHeight - 9 - entityHeight))));
-            glVertex2f((float) 0, (float) (windowHeight - entityHeight * (roundedPos.getY() - (windowHeight - 9 - entityHeight))));
+            glVertex2f((float) windowWidth, (float) (windowHeight - entityHeight * (roundedPos.getY() - (windowHeight - 8) + 1)));
+            glVertex2f((float) 0, (float) (windowHeight - entityHeight * (roundedPos.getY() - (windowHeight - 8) + 1)));
             glEnd();
         }
     }
