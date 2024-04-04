@@ -71,7 +71,7 @@ private:
 
 	// Threads
 	bool running = true;
-	std::vector<std::thread> receiver_threads;
+	std::thread receiver_thread;
 	std::thread processor_thread;
 	std::vector<std::thread> sender_threads;
 	std::thread client_updater_thread;

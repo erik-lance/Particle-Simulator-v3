@@ -25,7 +25,7 @@ Server::~Server()
 	this->running = false;
 
 	// Join threads
-	for (std::thread& t : receiver_threads) { t.join(); }
+	receiver_thread.join();
 	processor_thread.join();
 
 	std::cout << "Shutting down sender threads..." << std::endl;
@@ -90,10 +90,7 @@ void Server::start()
 {
 	// Start threads
 	// Start receiver threads
-	receiver_threads.push_back(std::thread(&Server::receiver, this));
-	receiver_threads.push_back(std::thread(&Server::receiver, this));
-	receiver_threads.push_back(std::thread(&Server::receiver, this));
-
+	receiver_thread = std::thread(&Server::receiver, this);
 	processor_thread = std::thread(&Server::processor, this);
 	client_updater_thread = std::thread(&Server::clientUpdater, this);
 
