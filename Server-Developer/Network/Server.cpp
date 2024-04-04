@@ -146,6 +146,9 @@ void Server::receiver()
 			// std::cout << "["+ response.address +"] Added: " << response.message << " to queue" << std::endl;
 
 			mtx.unlock();
+
+			// Flush the buffer
+			memset(buffer, 0, sizeof(buffer));
 		}
 		else
 		{
