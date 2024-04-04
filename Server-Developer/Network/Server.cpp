@@ -119,14 +119,16 @@ void Server::receiver()
 			address = address.substr(0, address.find(']') + 1);
 
 			// Remove the brackets
-			address = address.substr(1, address.size() - 1);
+			address = address.substr(1, address.size() - 2);
 
 			// Get the host and port
 			std::string host = address.substr(0, address.find(':'));
 			std::string port = address.substr(address.find(':') + 1);
 
-			// Remove address from message
-			std::string message = std::string(buffer).substr(address.size() + 1);
+			std::cout << "Full address: " << host << ":" << port << std::endl;
+
+			// Remove address from message (only keep everything after `]`)
+			std::string message = std::string(buffer).substr(std::string(buffer).find(']') + 1);
 
 
 			// Add the message to the responses queue
