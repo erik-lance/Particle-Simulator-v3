@@ -109,7 +109,6 @@ void SimulatorGUI::InfoGUI()
 	ImGui::Spacing();
 
 	ImGui::Text("Number of Particles: %d", m_particle_id);
-	ImGui::Text("Number of Obstacles: %d", m_obstacle_id);
 
 	// Tick Box for Grid
 	// ImGui::Separator();
