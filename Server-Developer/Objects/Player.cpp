@@ -33,10 +33,10 @@ void Player::move(double deltaTime)
 	double newY = position.y + (currentDirection.y * moveSpeed * deltaTime);
 
 	// Clamp
-	if (newX < (spriteWidth/2)) newX = spriteWidth/2;
-	if (newX > (1280 - spriteWidth/2)) newX = 1280 - spriteWidth/2;
-	if (newY < (spriteHeight/2)) newY = spriteHeight/2;
-	if (newY > (720 - spriteHeight/2)) newY = 720 - spriteHeight/2;
+	if (newX < 0) newX = 0;
+	if (newX > 1280) newX = 1280;
+	if (newY < 0) newY = 0;
+	if (newY > 720) newY = 720;
 
 	position = { newX, newY };
 }
