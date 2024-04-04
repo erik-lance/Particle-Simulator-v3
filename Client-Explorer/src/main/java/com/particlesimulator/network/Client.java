@@ -274,8 +274,11 @@ public class Client {
         // Disconnect from the server
         running = false;
 
+        // Add [address:port] at the start of the data
+        String bracketedAddress = "[" + currentAddress + ":" + currentPort + "]";
+
         // Send disconnect message
-        String data = "<l>" + userID + "</l>";
+        String data = bracketedAddress + "<l>" + userID + "</l>";
         byte[] sendData = data.getBytes();
         DatagramPacket packet = new DatagramPacket(sendData, sendData.length, address, port);
         try {
