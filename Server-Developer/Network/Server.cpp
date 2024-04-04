@@ -321,7 +321,9 @@ void Server::sender()
 		InetPtonA(AF_INET, host.c_str(), &client_address.sin_addr);
 
 		// Send the message
+		send_mtx.lock();
 		int bytes_sent = sendto(m_socket, message.message.c_str(), message.message.size(), 0, (struct sockaddr*)&client_address, sizeof(client_address));
+		send_mtx.unlock();
 
 		if (bytes_sent < 0)
 		{
@@ -419,7 +421,9 @@ void Server::updateParticles(User client, Particle* particles, int particleCount
 		message += "</u>";
 
 		// Send the message
+		send_mtx.lock();
 		int bytes_sent = sendto(m_socket, message.c_str(), message.size(), 0, (struct sockaddr*)&client_address, sizeof(client_address));
+		send_mtx.unlock();
 
 		if (bytes_sent < 0)
 		{

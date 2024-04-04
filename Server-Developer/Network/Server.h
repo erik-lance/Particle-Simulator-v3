@@ -56,6 +56,7 @@ private:
 	std::string host;
 	int port;
 	std::mutex mtx; // to lock the messages queue
+	std::mutex send_mtx; // to lock extra send
 	std::condition_variable cv;
 
 	ObjectManager* object_manager;
