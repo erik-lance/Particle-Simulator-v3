@@ -77,6 +77,11 @@ public abstract class Entity {
             throw new IllegalStateException("Texture not set for entity");
         }
 
+        drawEdgeWalls();
+
+        // Color white
+        glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
         glEnable(GL_TEXTURE_2D);
 
         // Bind the texture
@@ -90,10 +95,6 @@ public abstract class Entity {
 
         glDisable(GL_BLEND);
         glDisable(GL_TEXTURE_2D);
-
-        // TODO: Draw walls when at edge of screen
-        drawEdgeWalls();
-        // System.out.println("Player pos: " + position.getX() + ", " + position.getY());
     }
 
     /**
