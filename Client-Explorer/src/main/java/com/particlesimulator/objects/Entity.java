@@ -27,6 +27,9 @@ public abstract class Entity {
     private Position oldDirection = new Position(0, 0);
     private Position curDirection = new Position(0, 0);
     private Position playerPos = new Position(0, 0);
+
+    // Timer
+    private long lastTime;
     
     public Entity(Position pos, boolean isUser) {
         this.position = pos;
@@ -59,6 +62,13 @@ public abstract class Entity {
         // If client is not null and direction has changed, send the new position and direction
         if (client != null && !oldDirection.equals(curDirection) && isUser) {
             client.updatePlayer(position, curDirection);
+            lastTime = System.currentTimeMillis();
+        } else if (client != null) {
+            // If 5 seconds has passed, and direction is not neutral, send the new position and direction
+            if (!curDirection.equals(new Position(0, 0)) && System.currentTimeMillis() - lastTime > 5000) {
+                client.updatePlayer(position, curDirection);
+                lastTime = System.currentTimeMillis();
+            }
         }
     }
 
