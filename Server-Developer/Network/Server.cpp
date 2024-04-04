@@ -25,7 +25,7 @@ Server::~Server()
 	this->running = false;
 
 	// Join threads
-	receiver_thread.join();
+	for (std::thread& t : receiver_threads) { t.join(); }
 	processor_thread.join();
 
 	std::cout << "Shutting down sender threads..." << std::endl;
@@ -89,7 +89,11 @@ void Server::init()
 void Server::start()
 {
 	// Start threads
-	receiver_thread = std::thread(&Server::receiver, this);
+	// Start receiver threads
+	receiver_threads.push_back(std::thread(&Server::receiver, this));
+	receiver_threads.push_back(std::thread(&Server::receiver, this));
+	receiver_threads.push_back(std::thread(&Server::receiver, this));
+
 	processor_thread = std::thread(&Server::processor, this);
 	client_updater_thread = std::thread(&Server::clientUpdater, this);
 
@@ -110,23 +114,32 @@ void Server::receiver()
 
 		if (bytes_received > 0)
 		{
-			// std::cout << "Received message: " << buffer << std::endl;
-			// Get string of the client address host:port
-			char client_host[NI_MAXHOST];
-			char client_service[NI_MAXSERV];
+			std::cout << "Received message from " << client_address.sin_addr.s_addr << ":" << client_address.sin_port << std::endl;
+			std::cout << "Message: " << buffer << std::endl;
 
-			// Get client address
-			getnameinfo((struct sockaddr*)&client_address, client_address_length, client_host, NI_MAXHOST, client_service, NI_MAXSERV, 0);
+			// Grab [host:port] from start of message (assume `]` is the end of the address)
+			std::string address = std::string(buffer);
+			address = address.substr(0, address.find(']') + 1);
 
-			// Transform address to string
-			inet_ntop(AF_INET, &client_address.sin_addr, client_host, NI_MAXHOST);
+			// Remove the brackets
+			address = address.substr(1, address.size() - 1);
+
+			// Get the host and port
+			std::string host = address.substr(0, address.find(':'));
+			std::string port = address.substr(address.find(':') + 1);
+
+			// Remove address from message
+			std::string message = std::string(buffer).substr(address.size() + 1);
+
 
 			// Add the message to the responses queue
 			mtx.lock();
 
 			Response response;
-			response.address = std::string(client_host) + ":" + std::string(client_service);
-			response.message = std::string(buffer, bytes_received);
+			response.address = address;
+			response.message = message;
+
+			std::cout << "Pushing message to queue: " << response.message << std::endl;
 
 			// Add the message to the queue
 			responses.push(response);

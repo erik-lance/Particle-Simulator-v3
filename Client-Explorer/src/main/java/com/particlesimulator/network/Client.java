@@ -28,6 +28,8 @@ public class Client {
     private Thread listenerThread;
     private Thread senderThread;
     private Thread playerListener;
+    private String currentAddress;
+    private int currentPort;
 
     // Data Queue
     private Queue<String> sendDataQueue = new LinkedList<>();
@@ -43,16 +45,17 @@ public class Client {
             port = Utils.SERVER_PORT; // Get server port
 
             socket = new DatagramSocket();
+            socket.connect(address, port);
 
             // Get own ip and port
-            String ownIP = socket.getLocalAddress().getHostAddress();
-            int ownPort = socket.getLocalPort();
+            currentAddress = socket.getLocalSocketAddress().toString().split(":")[0].substring(1);
+            currentPort = socket.getLocalPort();
 
             // Generate userID by hashing the IP
-            userID = "u" + ownIP.hashCode() + ownPort;
+            userID = "u" + currentAddress.hashCode() + currentPort;
             
             System.out.println("Connected to the server - " + address + ":" + port + " as " + userID);
-            System.out.println("Your address is " + ownIP + ":" + ownPort);
+            System.out.println("Your address is " + currentAddress + ":" + currentPort);
 
             
 
@@ -240,15 +243,25 @@ public class Client {
         while (running) {
             // Send data to the server
             try {
-                // Get first data from the queue
+                // Get first data from the queue if it is not empty
+                String data = null;
                 sendLock.lock();
-                String data = sendDataQueue.poll();
+                if (!sendDataQueue.isEmpty()) {
+                    data = sendDataQueue.poll();
+                }
                 sendLock.unlock();
 
+                // Send data if it is not null
                 if (data != null) {
+                    // Add [address:port] at the start of the data
+                    String bracketedAddress = "[" + currentAddress + ":" + currentPort + "]";
+                    data = bracketedAddress + data;
+
+                    System.out.println("Sending data: " + data);
                     byte[] sendData = data.getBytes();
                     DatagramPacket packet = new DatagramPacket(sendData, sendData.length, address, port);
                     socket.send(packet);
+                    System.out.println("Data sent.");
                 }
 
             } catch (IOException e) {
