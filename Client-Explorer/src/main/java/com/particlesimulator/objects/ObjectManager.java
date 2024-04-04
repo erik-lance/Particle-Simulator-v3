@@ -153,13 +153,12 @@ public class ObjectManager {
      * @param velocity
      */
     public void batchParticleMethodOne(int num, Position start, Position end, double angle, double velocity) {
+        System.out.println("Adding particles between " + start + " and " + end);
         for (int i = 0; i < num; i++) {
-            double distance = Math.sqrt(Math.pow(end.getX() - start.getX(), 2) + Math.pow(end.getY() - start.getY(), 2));
             double x = start.getX() + (end.getX() - start.getX()) * i / num;
             double y = start.getY() + (end.getY() - start.getY()) * i / num;
-
-            Position pos = new Position((int)x, (int)y);
-            addParticle(pos, angle, velocity);
+            System.out.println("X: " + x + " Y: " + y);
+            addParticle(new Position(x, y), angle, velocity);
         }
     }
 

@@ -130,8 +130,8 @@ public class Client {
             // Batch particles
             if (Objects.equals(values[0], "1")) {
                 // Batch method 1
-                Position start = new Position(Float.parseFloat(values[2]), Float.parseFloat(values[3]));
-                Position end = new Position(Float.parseFloat(values[4]), Float.parseFloat(values[5]));
+                Position start = new Position(Float.parseFloat(values[2]), Float.parseFloat(values[4]));
+                Position end = new Position(Float.parseFloat(values[3]), Float.parseFloat(values[5]));
                 System.out.println("BM1: Adding " + values[1] + " particles between " + start.getX() + ", " + start.getY() + " and " + end.getX() + ", " + end.getY() + " with angle " + values[6] + " and velocity " + values[7]);
                 objectManager.batchParticleMethodOne(Integer.parseInt(values[1]), start, end, Double.parseDouble(values[6]), Double.parseDouble(values[7]));
             } else if (Objects.equals(values[0], "2")) {
