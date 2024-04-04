@@ -45,11 +45,11 @@ public abstract class Entity {
         double newX = position.getX() + (direction.getX() * deltaTime * speed);
         double newY = position.getY() + (direction.getY() * deltaTime * speed);
 
-        if (newX < (entityWidth/2)) { newX = (entityWidth/2); }
-        else if (newX > windowWidth - (entityWidth/2)) { newX = windowWidth - (entityWidth/2); }
+        if (newX < 0) { newX = 0; }
+        else if (newX > windowWidth) { newX = windowWidth; }
 
-        if (newY < (entityHeight/2)) { newY = (entityHeight/2); } 
-        else if (newY > windowHeight - (entityHeight/2)) { newY = windowHeight - (entityHeight/2); }
+        if (newY < 0) { newY = 0; } 
+        else if (newY > windowHeight) { newY = windowHeight; }
 
         position = new Position(newX, newY);
 
@@ -92,7 +92,58 @@ public abstract class Entity {
         glDisable(GL_TEXTURE_2D);
 
         // TODO: Draw walls when at edge of screen
+        drawEdgeWalls();
+        // System.out.println("Player pos: " + position.getX() + ", " + position.getY());
     }
+
+    /**
+     * Draws walls when the player is at the edge of the screen
+     */
+    public void drawEdgeWalls() {
+        // Color: 42, 74, 115
+        glColor4f(42f / 255f, 74f / 255f, 115f / 255f, 1.0f);
+
+        Position roundedPos = new Position((int) position.getX(), (int) position.getY());
+        
+
+        if (roundedPos.getX() < 16) {
+            // Draw left wall, width changes based on position
+            glBegin(GL_QUADS);
+            glVertex2f(0, 0);
+            glVertex2f((float) (entityWidth * (16 - roundedPos.getX())), 0);
+            glVertex2f((float) (entityWidth * (16 - roundedPos.getX())), windowHeight);
+            glVertex2f(0, windowHeight);
+            glEnd();
+        } else if (roundedPos.getX() > windowWidth - 16 - entityWidth) {
+            // Draw right wall, width changes based on position
+            glBegin(GL_QUADS);
+            glVertex2f(windowWidth, 0);
+            glVertex2f(windowWidth, windowHeight);
+            glVertex2f((float) (windowWidth - entityWidth * (roundedPos.getX() - (windowWidth - 16 - entityWidth))), windowHeight);
+            glVertex2f((float) (windowWidth - entityWidth * (roundedPos.getX() - (windowWidth - 16 - entityWidth))), 0);
+            glEnd();
+        }
+        if (roundedPos.getY() < 9) {
+            // Draw top wall, height changes based on position
+            glBegin(GL_QUADS);
+            glVertex2f(0, 0);
+            glVertex2f(windowWidth, 0);
+            glVertex2f((float) windowWidth, (float) (entityHeight * (9 - roundedPos.getY())));
+            glVertex2f((float) 0, (float) (entityHeight * (9 - roundedPos.getY())));
+            glEnd();
+        } else if (roundedPos.getY() > windowHeight - 9 - entityHeight) {
+            // Draw bottom wall, height changes based on position
+            glBegin(GL_QUADS);
+            glVertex2f(0, windowHeight);
+            glVertex2f(windowWidth, windowHeight);
+            glVertex2f((float) windowWidth, (float) (windowHeight - entityHeight * (roundedPos.getY() - (windowHeight - 9 - entityHeight))));
+            glVertex2f((float) 0, (float) (windowHeight - entityHeight * (roundedPos.getY() - (windowHeight - 9 - entityHeight))));
+            glEnd();
+        }
+    }
+
+
+
 
     /**
      * Prepares the quad for rendering based on position. Draws
