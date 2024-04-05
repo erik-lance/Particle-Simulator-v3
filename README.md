@@ -62,3 +62,5 @@ Whenever a client moves, the client sends the server the new position and direct
 1. Open the folder `Client-Explorer` in Visual Studio Code.
 2. Run the project with `Main.java` as the main class.
    Note: You may need to install the Java Extension Pack in Visual Studio Code. See instructions at (Client-Explorer-README)[https://github.com/erik-lance/Particle-Simulator-v3/blob/master/Client-Explorer/README.md].
+
+Otherwise, you can also simply open the `Client-Explorer.jar` found under `Client-Explorer/`.
