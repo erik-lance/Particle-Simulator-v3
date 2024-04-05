@@ -46,16 +46,19 @@ Whenever a client moves, the client sends the server the new position and direct
 
 ## How to run C++ Server in Visual Studio
 
-1. Go to `CMakeLists.txt` and hit `CTRL+S` to automatically start downloading required packages.
-2. Run the project with `CMakeLists.txt` as the startup file.
+1. Go to `Server-Developer` folder and make sure the `vcpkg` folder has files.
+   - If it does not have files, you can clone `https://github.com/microsoft/vcpkg.git` in the `Server-Developer` folder. 
+3. Go to `CMakeLists.txt` and hit `CTRL+S` to automatically start downloading the required packages.
+4. Run the project with `CMakeLists.txt` as the startup file.
 
 ## How to run Java Client in IntelliJ IDEA
 
 1. Open the project in IntelliJ IDEA.
-2. Run the project with `Main.java` as the main class.
+2. Build the project in Maven
+3. Run the project with `Main.java` as the main class.
 
 ## How to run Java Client in Visual Studio Code
 
 1. Open the folder `Client-Explorer` in Visual Studio Code.
 2. Run the project with `Main.java` as the main class.
-   Note: You may need to install the Java Extension Pack in Visual Studio Code.
+   Note: You may need to install the Java Extension Pack in Visual Studio Code. See instructions at (Client-Explorer-README)[https://github.com/erik-lance/Particle-Simulator-v3/blob/master/Client-Explorer/README.md].
