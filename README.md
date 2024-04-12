@@ -1,7 +1,9 @@
 # Particle Simulator
 
-A simulation project for Distributed Computing (STDISCM) course. This involves simulating particles in a 2D space with elastic collisions.
-Developer server must be able to add particles to the simulation. The simulation must be able to calculate the collisions between particles and edges.
+A simulation project for Distributed Computing (STDISCM) course. This is the third iteration and is our final project. This involves simulating particles in a 2D space with elastic collisions.
+The developer server must be able to add particles to the simulation. The simulation must be able to calculate the collisions between particles and screen edges. Clients connect and move around the simulation space in a zoomed up screen and can also see each other. They can also disconnect and connect again at any time, however, only up to three (3) existing clients as a limitation.
+
+The server acts as a state checker that all clients will follow. Essentially, the program runs and computes on both server and client, but the client tries to refresh based on the server's current state to stay synced up with other clients and the server itself. Made with nonblocking UDP sockets.
 
 ## (C++ Server) Packages used
 
